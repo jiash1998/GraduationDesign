@@ -1,0 +1,150 @@
+$headHeight: 55px;
+
+ul,
+li,
+ol {
+  margin: 0;
+  padding: 0;
+}
+::selection {
+  background-color: #67c23a;
+  color: #fff;
+}
+::-moz-selection {
+  background-color: #67c23a;
+  color: #fff;
+}
+body {
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  min-width: 1000px;
+
+  // .headFixed {
+  //   position: fixed;
+  //   top: 0;
+  //   z-index: 999;
+  //   top: 0;
+  // }
+  .head {
+    width: 100%;
+    min-width: 1000px;
+    display: flex;
+    //禁止左键拉取复制
+    user-select: none;
+    position: absolute;
+    top: 0;
+    z-index: 999;
+    // background-color: black;
+    .logo {
+      width: 6%;
+      height: $headHeight;
+      background-color: #f8faff;
+      // flex实现垂直水平居中
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-width: 70px;
+      img {
+        background-size: 100% auto;
+        height: 50px;
+        width: 50px;
+      }
+    }
+
+    .head-center {
+      background-color: #f8faff;
+      // background-color: yellow;
+      width: 5%;
+      height: $headHeight;
+      min-width: 60px;
+      span {
+        display: inline-block;
+        // color: #2f495e;
+        font-weight: bold;
+        font-size: 1.3em;
+        width: 230px;
+        line-height: $headHeight;
+      }
+    }
+
+    .head-contral {
+      // background-color: pink;
+      display: flex;
+      background-color: #f8faff;
+      width: 30%;
+      height: $headHeight;
+      min-width: 250px;
+      align-items: center;
+      justify-content: space-evenly;
+      color: gray;
+
+      .contralItems {
+        // background-color: bisque;
+        font-size: 1em;
+      }
+
+      .contralItems:hover {
+        color: black;
+      }
+    }
+
+    //41%width已用
+    .header_other {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      width: 59%;
+      background-color: #f8faff;
+      height: $headHeight;
+
+      .prompt {
+        height: $headHeight;
+        // background-color: yellow;
+        display: flex;
+        align-items: center;
+        //字体大小为图标大小
+
+        color: gray;
+        margin-right: 25px;
+
+        .el-dropdown {
+          font-size: 25px;
+        }
+      }
+
+      .prompt:hover {
+        color: black;
+      }
+
+      .contralItems {
+        // background-color: bisque;
+        margin-right: 20px;
+        font-size: 0.7em;
+
+        .el-dropdown {
+          .el-avatar {
+            background-color: #f0f9eb;
+          }
+
+          .otherBgc {
+            background-color: #67c23a;
+          }
+        }
+      }
+    }
+  }
+
+  // .test {
+  //   position: fixed;
+  //   width: 100px;
+  //   // height: 100px;
+  //   top: 75%;
+  //   left: 40px;
+  //   background-color: pink;
+  //   z-index: 999;
+  // }
+}
