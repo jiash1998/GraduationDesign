@@ -12,6 +12,8 @@ import VueAxios from "vue-axios"; //axios
 //引入sass
 //npm install node-sass --save-dev
 //npm install sass-loader --save-dev
+//引入querystring POST请求
+import qs from "querystring";
 
 Vue.config.productionTip = false
 
