@@ -9,10 +9,11 @@ var port = 3000;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+//配置跨域
 app.use(cors());
 //路由
 app.use("/", Router);
 
 app.listen(port, () => {
-  console.log("Starting...mineback");
+  console.log("Starting...GraduationBack");
 });

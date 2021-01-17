@@ -222,12 +222,12 @@
 </template>
 
 <script>
-// import PublicFood from "../components/publicFood.vue";
+import PublicFood from "../components/publicFood.vue";
 
 export default {
   name: "main1",
   components: {
-    // PublicFood
+    PublicFood
   },
   data() {
     return {

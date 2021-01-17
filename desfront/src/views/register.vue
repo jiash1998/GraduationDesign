@@ -41,7 +41,7 @@
 </template>
 
 <script>
-// import insertUserApi from "../api/postRequest.js";
+import comRegisterApi from "../api/postRequest.js";
 import PublicFood from "../components/publicFood.vue";
 export default {
   name: "register",
@@ -118,7 +118,7 @@ export default {
         if (val) {
           var data = this.register;
           console.log(data);
-          insertUserApi.insertUser(data).then(res => {
+          comRegisterApi.comRegister(data).then(res => {
             this.$message({
               message: "注册成功",
               type: "success",

@@ -23,11 +23,10 @@
           </el-form-item>
           <el-form-item label>
             <el-button
-              v-model="signForm.submit"
               style="margin-left:5%;"
               type="success"
               plain
-              @click="sub(vm)"
+              @click="signin"
             >登录</el-button>
             <el-button type="success">
               <router-link to="/register" tag="span">注册</router-link>
@@ -41,10 +40,9 @@
 </template>
 
 <script>
-// import checkLoginApi from "../api/postRequest.js";
+import comSignApi from "../api/postRequest.js";
 import qs from "querystring";
 import publicFootMini from "../components/publicFootMini.vue";
-// import { debounce } from "../util/debounce.js";
 
 export default {
   name: "signin",
@@ -75,9 +73,7 @@ export default {
       signForm: {
         username: "",
         password: "",
-        submit: ""
       },
-      vm: this
     };
   },
   mounted() {
@@ -85,7 +81,15 @@ export default {
   },
 
   methods: {
-
+    signin(){
+      let data = this.signForm;
+      console.log(data);
+      comSignApi.comSign(data).then(res=>{
+        console.log(res);
+      }).catch(err=>{
+        console.log(err);
+      })
+    }
   }
 };
 </script>

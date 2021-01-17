@@ -28,14 +28,20 @@ var postStringJson = (urlSelf, methodSelf, dataSelf, headerSelf) => {
 };
 
 export default {
-  //用户注册
-  insertUser(data) {
-    return interceptor(postString("/insertUser", methodsAll, data, headersAll));
-  },
+  /**公共模块 */
   //用户登录
-  checkLogin(data) {
-    return interceptor(postString("/checkLogin", methodsAll, data, headersAll));
+  comSign(data) {
+    return interceptor(
+      postString("/apis/sign", methodsAll, data, headersAll)
+    );
   },
+  //用户注册
+  comRegister(data) {
+    return interceptor(
+      postString("/apis/register", methodsAll, data, headersAll)
+    );
+  },
+
   //提交session保存姓名，获取个人资料
   getUserByUsername(name) {
     return interceptor(

@@ -1,25 +1,40 @@
 var mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost/MyBlog", {
+mongoose.connect("mongodb://localhost/GraduationBase", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
 var Schema = mongoose.Schema;
 
-var SchemaDemo = new Schema({
-  name: {
+console.log("connect");
+//用户表
+var SchemaUser = new Schema({
+  username: {
     type: String,
     required: true,
   },
-  age: {
-    type: Number,
-    default: 18,
+  password: {
+    type: String,
+    required: true,
+    default: "",
   },
-  birthday: {
-    type: Date,
-    default: new Date(),
+  email:{
+    type:String,
+    default:""
   },
+  phone: {
+    type: String,
+    default: "",
+  },
+  identity: {
+    type: String,
+    defalut: "",
+  },
+
 });
 
-module.exports = mongoose.model("MyBlog", SchemaDemo);
+module.exports = {
+  users: mongoose.model("users", SchemaUser),
+
+};

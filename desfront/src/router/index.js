@@ -5,6 +5,9 @@ import VueRouter from 'vue-router'
 import Home from "../views/home.vue";
 import Signin from "../views/signin.vue";
 import Register from "../views/register.vue";
+import Notice from "../views/notice.vue";
+import Account from "../views/account.vue";
+
 
 
 Vue.use(VueRouter)
@@ -28,6 +31,16 @@ const routes = [
     component: Register,
     name: "register",
     path: "/register",
+  },
+  {
+    component: Account,
+    name: "account",
+    path: "/account",
+  },
+  {
+    component: Notice,
+    name: "notice",
+    path: "/notice",
   },
 ];
 

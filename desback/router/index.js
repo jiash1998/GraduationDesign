@@ -6,46 +6,35 @@ router.get("/", (req, res) => {
   res.send("Hello");
 });
 
-router.get("/insertData", (req, res) => {
-  operateDB.insert((err, data) => {
-    if (err) {
+//公共模块
+//登录接口
+router.post("/sign", (req, res) => {
+  operateDB.signin(req.body, (err, data) => {
+    if (err || data.length === 0) {
       return res.json({
-        status: "发送错误",
-        msg: "连接错误",
+        status: 200,
+        value:data,
+        msg: "查询失败",
       });
     }
     return res.json({
-      status: "data success",
-      msg: "保存成功",
-    });
-  });
-});
-
-router.get("/getAll", (req, res) => {
-  operateDB.findAll((err, data) => {
-    if (err) {
-      return res.json({
-        status: "发送错误",
-        msg: "连接错误",
-      });
-    }
-    return res.json({
-      status: "200",
+      status: 200,
       value: data,
       msg: "查询成功",
     });
   });
 });
 
-router.post("/getData", (req, res) => {
-  operateDB.find(req.body, (err, data) => {
+//注册接口
+router.post("/register", (req, res) => {
+  console.log(req.body);
+  operateDB.register(req.body, (err, data) => {
     if (err) {
       return res.json({
         status: "发送错误",
         msg: err,
       });
     }
-    // console.log(data);
     return res.json({
       status: "200",
       value: data,
