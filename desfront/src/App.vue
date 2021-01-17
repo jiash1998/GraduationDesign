@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- :xs="24" :sm="24" :md="24" :lg="24" :xl="24" -->
-    <div class="head" id="head" >
+    <div class="head" id="head">
       <div class="logo">
         <router-link to="/home">
           <img src="./assets/img/logo2.png" />
@@ -14,10 +14,13 @@
         <div class="contralItems">
           <router-link tag="span" to="/notice">最新公告</router-link>
         </div>
-        <div class="contralItems" v-if="identityApp == '管理员'?true:false">
+        <div class="contralItems" v-if="identityApp == '管理员' ? true : false">
           <router-link tag="span" to="/ContralNew">管理员中心</router-link>
         </div>
-        <div class="contralItems" v-if="identityApp == '沿街商家'?true:false">
+        <div
+          class="contralItems"
+          v-if="identityApp == '沿街商家' ? true : false"
+        >
           <router-link tag="span" to="/merchartContral">商户中心</router-link>
         </div>
         <div class="contralItems">
@@ -43,15 +46,21 @@
         <div class="contralItems">
           <el-dropdown @command="handleCommand">
             <!-- //三元运算符添加 -->
-            <el-avatar :class="isShow === true?'otherBgc':''">{{$store.state.username}}</el-avatar>
+            <el-avatar :class="isShow === true ? 'otherBgc' : ''">{{
+              $store.state.username
+            }}</el-avatar>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>
-                <router-link to="/signin" tag="div" v-show="!isShow">登录/注册</router-link>
+                <router-link to="/signin" tag="div" v-show="!isShow"
+                  >登录/注册</router-link
+                >
               </el-dropdown-item>
               <el-dropdown-item>
                 <router-link to="/Account" tag="div">编辑资料</router-link>
               </el-dropdown-item>
-              <el-dropdown-item command="exit" v-show="isShow">退出</el-dropdown-item>
+              <el-dropdown-item command="exit" v-show="isShow"
+                >退出</el-dropdown-item
+              >
             </el-dropdown-menu>
           </el-dropdown>
         </div>
@@ -70,12 +79,36 @@ export default {
       headFix: false,
       offsetTop: 0,
       //提示
-      isDot: false,
       isShow: false,
-      identityApp: ""
+      isDot:"",
+      identityApp: "",
     };
   },
-  
+  created() {
+    this.$store.commit("viewUsername", sessionStorage.getItem("username"));
+    console.log(sessionStorage.getItem("userName"));
+  },
+  mounted() {
+    console.log(sessionStorage.getItem("username"));
+    //退出键显示
+    this.isShow = JSON.parse(sessionStorage.getItem("isExit"));
+    this.identityApp = sessionStorage.getItem("identity");
+  },
+  methods: {
+    handleCommand(command) {
+      if (command == "exit") {
+        //退出
+        sessionStorage.setItem("isExit", "false");
+        sessionStorage.removeItem("isExit");
+        sessionStorage.setItem("token", "false");
+        sessionStorage.removeItem("username");
+        sessionStorage.removeItem("identity");
+        this.$router.push("/signin");
+        //路由刷新页面，使得数据搭载
+        this.$router.go(0);
+      }
+    },
+  },
 };
 </script>
 <style lang="scss">

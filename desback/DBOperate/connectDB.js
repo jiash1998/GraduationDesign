@@ -8,6 +8,7 @@ mongoose.connect("mongodb://localhost/GraduationBase", {
 var Schema = mongoose.Schema;
 
 console.log("connect");
+/**公共模块 */
 //用户表
 var SchemaUser = new Schema({
   username: {
@@ -31,10 +32,32 @@ var SchemaUser = new Schema({
     type: String,
     defalut: "",
   },
+});
 
+var SchemaNotice = new Schema({
+  title: {
+    type: String,
+    required: true,
+  },
+  content: {
+    type: String,
+    required: true,
+    default: "",
+  },
+  tip: {
+    type: String,
+    default: "",
+  },
+  type: {
+    type: String,
+    default: "",
+  },
+  time: {
+    type: Date,
+  },
 });
 
 module.exports = {
   users: mongoose.model("users", SchemaUser),
-
+  notices: mongoose.model("notices", SchemaNotice),
 };

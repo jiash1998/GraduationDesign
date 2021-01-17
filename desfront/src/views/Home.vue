@@ -305,9 +305,9 @@ export default {
   },
   methods: {
     //跳转
-    // goCus() {
-    //   this.$router.push("/merchartContral/Son1Custom");
-    // },
+    goCus() {
+      // this.$router.push("/merchartContral/Son1Custom");
+    },
     //v-for循环的div展示
     select(type) {
       this.info[type].state = true;
