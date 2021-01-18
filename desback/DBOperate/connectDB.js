@@ -34,6 +34,7 @@ var SchemaUser = new Schema({
   },
 });
 
+//公告表
 var SchemaNotice = new Schema({
   title: {
     type: String,
@@ -54,6 +55,88 @@ var SchemaNotice = new Schema({
   },
   time: {
     type: Date,
+  },
+});
+
+//商户定制表
+var SchemaCustom = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  type: {
+    type: String,
+    required: true,
+    default: "",
+  },
+  address: {
+    type: String,
+    default: "",
+  },
+  address_detail: {
+    type: String,
+    default: "",
+  },
+  header: {
+    type: String,
+    default: "",
+  },
+  sex: {
+    type: String,
+    default: "",
+  },
+  social_credit_code: {
+    type: String,
+    default: "",
+  },
+  user: {
+    type: String,
+    default: "",
+  },
+  phone: {
+    type: String,
+    default: "",
+  },
+  cycle_times: {
+    type: String,
+    default: "",
+  },
+  cycle_date: {
+    type: String,
+    default: "",
+  },
+  sustain_month: {
+    type: String,
+    default: "",
+  },
+  pay_type: {
+    type: String,
+    default: "",
+  },
+});
+
+//反馈表
+var SchemaFeedback = new Schema({
+  username: {
+    type: String,
+    required: true,
+  },
+  feedback_date: {
+    type: String,
+    required: true,
+    default: "",
+  },
+  content: {
+    type: String,
+    default: "",
+  },
+  state: {
+    type: String,
+    default: "",
+  },
+  deleted: {
+    type: String,
+    default: "",
   },
 });
 
