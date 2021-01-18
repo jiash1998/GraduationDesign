@@ -1,5 +1,5 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from "vue";
+import VueRouter from "vue-router";
 
 //common
 import Home from "../views/home.vue";
@@ -8,9 +8,11 @@ import Register from "../views/register.vue";
 import Notice from "../views/notice.vue";
 import Account from "../views/account.vue";
 
+//merchart
+import MerchartContral from "../views/merchartCon/merchartContral.vue";
+import MerConCustom from "../views/merchartCon/merConCustom.vue";
 
-
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -42,13 +44,32 @@ const routes = [
     name: "notice",
     path: "/notice",
   },
+
+  {
+    component: MerchartContral,
+    name: "merchartContral",
+    path: "/merchartContral",
+    children: [
+      {
+        path: "",
+        redirect: "/merchartContral/merConCustom",
+      },
+      {
+        component: MerConCustom,
+        name: "merConCustom",
+        path: "/merchartContral/merConCustom",
+        meta: {
+          requireAuth: true,
+        },
+      },
+    ],
+  },
 ];
 
-
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;
