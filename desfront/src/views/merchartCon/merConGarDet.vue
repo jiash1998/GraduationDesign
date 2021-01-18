@@ -162,5 +162,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../assets/css/son5GarDetail.scss";
+@import "../../assets/css/merchartCss/merConGarDet.scss";
 </style>

@@ -95,5 +95,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../assets/css/son4ServiceDet.scss";
+@import "../../assets/css/merchartCss/merConServiceDet.scss";
 </style>

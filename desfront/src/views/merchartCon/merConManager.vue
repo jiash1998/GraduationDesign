@@ -25,5 +25,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../assets/css/son2Manager.scss";
+@import "../../assets/css/merchartCss/merConManager.scss";
 </style>

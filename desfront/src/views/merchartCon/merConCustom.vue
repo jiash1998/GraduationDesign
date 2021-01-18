@@ -233,54 +233,6 @@ export default {
       console.log(this.address2);
       this.initMap();
     },
-    //异步
-    add_img(e) {
-      //兼容多个浏览器
-      e = event || e;
-      let reader = new FileReader();
-      let img1 = e.target.files[0];
-      let type = img1.type; //文件的类型，判断是否是图片
-      let size = img1.size; //文件的大小，判断图片的大小
-      if (this.imgData.accept.indexOf(type) == -1) {
-        alert("请选择我们支持的图片格式！");
-        return false;
-      }
-      if (size > 3145728) {
-        alert("请选择3M以内的图片！");
-        return false;
-      }
-      var uri = "";
-      //formdata里的命名要和后端一致
-      let form = new FormData();
-      form.append("photo", img1, img1.name);
-      //上传图片的请求头
-      this.axios
-        .post("http://118.31.12.146:8080/upload", form, {
-          headers: { "Content-Type": "multipart/form-data" }
-        })
-        .then(response => {
-          console.log(response.data);
-          this.$message({
-            message: "图片上传成功",
-            type: "success",
-            duration: 1500
-          });
-          this.customUrl = response.data.url;
-          uri = response.data.url;
-          reader.readAsDataURL(img1);
-          var that = this;
-          reader.onloadend = function() {
-            that.imgs.push(uri);
-          };
-        })
-        .catch(error => {
-          this.$message({
-            message: "图片上传失败",
-            type: "error",
-            duration: 2000
-          });
-        });
-    },
     submitUpload() {
       this.$refs.upload.submit();
     },

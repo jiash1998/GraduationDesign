@@ -524,5 +524,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../assets/css/son2_2ManageInner.scss";
+@import "../../assets/css/merchartCss/merConManageInner.scss";
 </style>

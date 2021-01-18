@@ -11,6 +11,13 @@ import Account from "../views/account.vue";
 //merchart
 import MerchartContral from "../views/merchartCon/merchartContral.vue";
 import MerConCustom from "../views/merchartCon/merConCustom.vue";
+import MerConManager from "../views/merchartCon/merConManager.vue";
+import MerConManageInner from "../views/merchartCon/merConManageInner.vue";
+import MerConManagerOuter from "../views/merchartCon/merConManageOuter.vue";
+import MerConFeedback from "../views/merchartCon/merConFeedback.vue";
+import MerConServiceDet from "../views/merchartCon/merConServiceDet.vue";
+import MerConGarDet from "../views/merchartCon/merConGarDet.vue";
+
 
 Vue.use(VueRouter);
 
@@ -61,6 +68,32 @@ const routes = [
         meta: {
           requireAuth: true,
         },
+      },
+      {
+        component: MerConManager,
+        name: "merConManager",
+        path: "/merchartContral/merConManager",
+        children: [
+          {
+            path: "",
+            redirect: "/merchartContral/merConManager/merConManagerOuter",
+          },
+          {
+            component: MerConManageInner,
+            name: "merConManageInner",
+            path: "/merchartContral/merConManager/merConManageInner",
+          },
+          {
+            component: MerConManagerOuter,
+            name: "merConManagerOuter",
+            path: "/merchartContral/merConManager/merConManagerOuter",
+          },
+        ],
+      },
+      {
+        component: MerConFeedback,
+        name: "merConFeedback",
+        path: "/merchartContral/merConFeedback",
       },
     ],
   },

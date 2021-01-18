@@ -269,5 +269,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../assets/css/son2_1ManageOuter.scss";
+@import "../../assets/css/merchartCss/merConManageOuter.scss";
 </style>

@@ -22,7 +22,7 @@
 <script>
 import publicFootMini from "../../components/publicFootMini.vue";
 import addFeedbackApi from "../../api/postRequest.js";
-import { debounce } from "../../util/debounce";
+// import { debounce } from "../../util/debounce";
 
 export default {
   name: "son3Feedback",
@@ -44,36 +44,36 @@ export default {
     };
   },
   methods: {
-    postFeedback: debounce(
-      vm => {
-        vm.feedback.username = sessionStorage.getItem("userName");
-        var data = vm.feedback;
-        addFeedbackApi
-          .addFeedback(data)
-          .then(res => {
-            console.log(res);
-            vm.$message({
-              message: "发送成功",
-              type: "success",
-              duration: 1800
-            });
-          })
-          .catch(err => {
-            console.log(err);
-            vm.$message({
-              message: "发送失败",
-              type: "error",
-              duration: 1800
-            });
-          });
-      },
-      3000,
-      true
-    )
+  //   postFeedback: debounce(
+  //     vm => {
+  //       vm.feedback.username = sessionStorage.getItem("userName");
+  //       var data = vm.feedback;
+  //       addFeedbackApi
+  //         .addFeedback(data)
+  //         .then(res => {
+  //           console.log(res);
+  //           vm.$message({
+  //             message: "发送成功",
+  //             type: "success",
+  //             duration: 1800
+  //           });
+  //         })
+  //         .catch(err => {
+  //           console.log(err);
+  //           vm.$message({
+  //             message: "发送失败",
+  //             type: "error",
+  //             duration: 1800
+  //           });
+  //         });
+  //     },
+  //     3000,
+  //     true
+  //   )
   }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "../../assets/css/son3Feedback.scss";
+@import "../../assets/css/merchartCss/merConFeedback.scss";
 </style>
