@@ -120,5 +120,5 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "../../assets/css/son4Custom.scss";
+@import "../../assets/css/adminCss/adminCustom.scss";
 </style>

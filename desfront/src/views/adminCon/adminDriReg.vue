@@ -48,7 +48,7 @@
 
 <script>
 import addDriverApi from "../../api/postRequest.js";
-// import { debounce } from "../../util/debounce";
+import { debounce } from "../../util/debounce";
 
 export default {
   name: "son2_2DriReg",
@@ -67,30 +67,30 @@ export default {
   },
   mounted() {},
   methods: {
-  //   regDriver: debounce(
-  //     vm => {
-  //       var data = vm.driver;
+    regDriver: debounce(
+      vm => {
+        var data = vm.driver;
 
-  //       addDriverApi
-  //         .addDriver(data)
-  //         .then(res => {
-  //           vm.$message({
-  //             message: "注册成功",
-  //             type: "success",
-  //             duration: 1500
-  //           });
-  //         })
-  //         .catch(err => {
-  //           vm.$message({
-  //             message: "注册失败",
-  //             type: "error",
-  //             duration: 1500
-  //           });
-  //         });
-  //     },
-  //     2000,
-  //     true
-  //   )
+        addDriverApi
+          .addDriver(data)
+          .then(res => {
+            vm.$message({
+              message: "注册成功",
+              type: "success",
+              duration: 1500
+            });
+          })
+          .catch(err => {
+            vm.$message({
+              message: "注册失败",
+              type: "error",
+              duration: 1500
+            });
+          });
+      },
+      2000,
+      true
+    )
   }
 };
 </script>

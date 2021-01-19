@@ -138,5 +138,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../assets/css/son8Echarts.scss";
+@import "../../assets/css/adminCss/adminEcharts.scss";
 </style>

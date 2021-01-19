@@ -137,5 +137,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../assets/css/son3MerchartMapNew.scss";
+@import "../../assets/css/adminCss/adminMerchartMap.scss";
 </style>

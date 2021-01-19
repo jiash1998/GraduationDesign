@@ -400,5 +400,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../assets/css/son10Detail.scss";
+@import "../../assets/css/adminCss/adminDetail.scss";
 </style>

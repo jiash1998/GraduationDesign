@@ -40,7 +40,7 @@
           </el-submenu>
           <el-menu-item index="3">
             <span slot="title">
-              <router-link tag="div" to="/adminContral/Son3MerchartMapNew">
+              <router-link tag="div" to="/adminContral/adminMerchartMap">
                 <i class="el-icon-menu"></i>商户分布图
               </router-link>
             </span>
@@ -50,22 +50,22 @@
               <i class="el-icon-office-building"></i>店铺管理
             </template>
             <el-menu-item index="4-1">
-              <router-link tag="div" to="/adminContral/Son4Custom">商铺信息</router-link>
+              <router-link tag="div" to="/adminContral/adminCustom">商铺信息</router-link>
             </el-menu-item>
             <el-menu-item index="4-2">
-              <router-link tag="div" to="/adminContral/Son9Enter">资源回收录入</router-link>
+              <router-link tag="div" to="/adminContral/adminEnter">资源回收录入</router-link>
             </el-menu-item>
             <el-menu-item index="4-3">
-              <router-link tag="div" to="/adminContral/Son10Detail">资源回收详情</router-link>
+              <router-link tag="div" to="/adminContral/adminDetail">资源回收详情</router-link>
             </el-menu-item>
           </el-submenu>
           <el-menu-item index="5">
-            <router-link tag="div" to="/adminContral/Son8Echarts">
+            <router-link tag="div" to="/adminContral/adminEcharts">
               <i class="el-icon-data-line"></i>资源分析及回收
             </router-link>
           </el-menu-item>
           <el-menu-item index="6">
-            <router-link tag="div" to="/adminContral/Son5Record">
+            <router-link tag="div" to="/adminContral/adminRecord">
               <i class="el-icon-view"></i>记录跟踪
             </router-link>
           </el-menu-item>

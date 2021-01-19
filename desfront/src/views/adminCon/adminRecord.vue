@@ -49,5 +49,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../assets/css/son5Record.scss";
+@import "../../assets/css/adminCss/adminRecord.scss";
 </style>

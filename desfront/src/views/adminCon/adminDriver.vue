@@ -57,7 +57,7 @@ import getLatandlogByDriverApi from "@/api/postRequest.js";
 import sendDriverNoticeToDriverApi from "@/api/postRequest.js";
 import getDriverNoticeByReceiveTodayApi from "@/api/postRequest.js";
 import getDriverNoticeBySendTodayApi from "@/api/postRequest.js";
-// import { debounce } from "../../util/debounce.js";
+import { debounce } from "../../util/debounce.js";
 
 export default {
   name: "son2_1Driver",
@@ -110,95 +110,95 @@ export default {
         }
       });
     },
-    // postNotice: debounce(
-    //   vm => {
-    //     var data = vm.notice;
-    //     sendDriverNoticeToDriverApi
-    //       .sendDriverNoticeToDriver(data)
-    //       .then(res => {
-    //         console.log(res.data);
-    //         if (res.data == "ok") {
-    //           vm.showDialog = false;
-    //           vm.$message({
-    //             message: "发送成功",
-    //             type: "success",
-    //             duration: 1500
-    //           });
-    //         } else {
-    //           vm.$message({
-    //             message: "发送失败",
-    //             type: "error",
-    //             duration: 1800
-    //           });
-    //         }
-    //       })
-    //       .catch(err => {
-    //         console.log(err);
-    //       });
-    //   },
-    //   2000,
-    //   true
-    // ),
-    // //获取位置和通知
-    // getLocation: debounce(
-    //   vm => {
-    //     vm.$refs["driver"].validate(val => {
-    //       if (val) {
-    //         vm.NoticeData = [];
-    //         //拿驾驶员接收的通知 位置
-    //         var data = { driver: vm.driver.username };
-    //         var data1 = { receiver: vm.driver.username };
-    //         var data2 = { sender: vm.driver.username };
+    postNotice: debounce(
+      vm => {
+        var data = vm.notice;
+        sendDriverNoticeToDriverApi
+          .sendDriverNoticeToDriver(data)
+          .then(res => {
+            console.log(res.data);
+            if (res.data == "ok") {
+              vm.showDialog = false;
+              vm.$message({
+                message: "发送成功",
+                type: "success",
+                duration: 1500
+              });
+            } else {
+              vm.$message({
+                message: "发送失败",
+                type: "error",
+                duration: 1800
+              });
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      },
+      2000,
+      true
+    ),
+    //获取位置和通知
+    getLocation: debounce(
+      vm => {
+        vm.$refs["driver"].validate(val => {
+          if (val) {
+            vm.NoticeData = [];
+            //拿驾驶员接收的通知 位置
+            var data = { driver: vm.driver.username };
+            var data1 = { receiver: vm.driver.username };
+            var data2 = { sender: vm.driver.username };
 
-    //         getDriverNoticeByReceiveTodayApi
-    //           .getDriverNoticeByReceiveToday(data1)
-    //           .then(res => {
-    //             for (const i of res.data) {
-    //               vm.NoticeData.push(i);
-    //             }
-    //             // this.NoticeData.push(res.data);
-    //           })
-    //           .catch(err => {
-    //             console.log(err);
-    //           });
-    //         getDriverNoticeBySendTodayApi
-    //           .getDriverNoticeBySendToday(data2)
-    //           .then(res => {
-    //             for (const i of res.data) {
-    //               vm.NoticeData.push(i);
-    //             }
-    //             // this.NoticeData.push(res.data);
-    //           })
-    //           .catch(err => {
-    //             console.log(err);
-    //           });
-    //         getLatandlogByDriverApi
-    //           .getLatandlogByDriver(data)
-    //           .then(res => {
-    //             if (res.data.msg == "查询数据为空") {
-    //               vm.$message({
-    //                 message: "暂无位置信息",
-    //                 type: "error",
-    //                 duration: 2000
-    //               });
-    //             } else {
-    //               for (const i of res.data.latandlogList) {
-    //                 vm.location.push({ lng: i.lon, lat: i.lat });
-    //               }
-    //               vm.initMap();
-    //             }
-    //           })
-    //           .catch(err => {
-    //             console.log(err);
-    //           });
-    //       } else {
-    //         return false;
-    //       }
-    //     });
-    //   },
-    //   3000,
-    //   true
-    // ),
+            getDriverNoticeByReceiveTodayApi
+              .getDriverNoticeByReceiveToday(data1)
+              .then(res => {
+                for (const i of res.data) {
+                  vm.NoticeData.push(i);
+                }
+                // this.NoticeData.push(res.data);
+              })
+              .catch(err => {
+                console.log(err);
+              });
+            getDriverNoticeBySendTodayApi
+              .getDriverNoticeBySendToday(data2)
+              .then(res => {
+                for (const i of res.data) {
+                  vm.NoticeData.push(i);
+                }
+                // this.NoticeData.push(res.data);
+              })
+              .catch(err => {
+                console.log(err);
+              });
+            getLatandlogByDriverApi
+              .getLatandlogByDriver(data)
+              .then(res => {
+                if (res.data.msg == "查询数据为空") {
+                  vm.$message({
+                    message: "暂无位置信息",
+                    type: "error",
+                    duration: 2000
+                  });
+                } else {
+                  for (const i of res.data.latandlogList) {
+                    vm.location.push({ lng: i.lon, lat: i.lat });
+                  }
+                  vm.initMap();
+                }
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          } else {
+            return false;
+          }
+        });
+      },
+      3000,
+      true
+    ),
     initMap() {
       loadBMap("faARwTpILZCsY9S5GUKe6LL2ILicSoDX")
         .then(() => {

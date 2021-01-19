@@ -49,7 +49,7 @@
 
 <script>
 import insertNoticeApi from "../../api/postRequest.js";
-// import { debounce } from "../../util/debounce.js";
+import { debounce } from "../../util/debounce.js";
 
 export default {
   name: "son6Notice",
@@ -128,36 +128,36 @@ export default {
       this.$refs[FormName].resetFields();
     },
 
-    // submitForm: debounce(
-    //   vm => {
-    //     vm.$refs["notice"].validate(val => {
-    //       if (val) {
-    //         vm.notice.inputvalue = vm.dynamicTags.join(",");
-    //         var data = vm.notice;
+    submitForm: debounce(
+      vm => {
+        vm.$refs["notice"].validate(val => {
+          if (val) {
+            vm.notice.inputvalue = vm.dynamicTags.join(",");
+            var data = vm.notice;
 
-    //         insertNoticeApi.insertNotice(data).then(res => {
-    //           //公告提示
-    //           // localStorage.setItem("isDot", "true");
-    //           vm.$message({
-    //             message: "发布成功",
-    //             type: "success",
-    //             duration: 2500
-    //           });
-    //         });
-    //         console.log(data);
-    //       } else {
-    //         vm.$message({
-    //           message: "发布失败",
-    //           type: "error",
-    //           duration: 1500
-    //         });
-    //         return false;
-    //       }
-    //     });
-    //   },
-    //   3000,
-    //   true
-    // )
+            insertNoticeApi.insertNotice(data).then(res => {
+              //公告提示
+              // localStorage.setItem("isDot", "true");
+              vm.$message({
+                message: "发布成功",
+                type: "success",
+                duration: 2500
+              });
+            });
+            console.log(data);
+          } else {
+            vm.$message({
+              message: "发布失败",
+              type: "error",
+              duration: 1500
+            });
+            return false;
+          }
+        });
+      },
+      3000,
+      true
+    )
   }
 };
 </script>

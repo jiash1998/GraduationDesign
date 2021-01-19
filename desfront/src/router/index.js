@@ -27,6 +27,13 @@ import AdminNotice from "../views/adminCon/adminNotice.vue";
 import AdminCarMap from "../views/adminCon/adminCarMap.vue";
 import AdminDriver from "../views/adminCon/adminDriver.vue";
 import AdminDriReg from "../views/adminCon/adminDriReg.vue";
+import AdminMerchartMap from "../views/adminCon/adminMerchartMap.vue";
+import AdminCustom from "../views/adminCon/adminCustom.vue";
+import AdminEnter from "../views/adminCon/adminEnter.vue";
+import AdminDetail from "../views/adminCon/adminDetail.vue";
+import AdminEcharts from "../views/adminCon/adminEcharts.vue";
+import AdminRecord from "../views/adminCon/adminRecord.vue";
+
 
 
 
@@ -153,6 +160,36 @@ const routes = [
         component: AdminDriReg,
         name: "adminDriReg",
         path: "/adminContral/adminDriReg",
+      },
+      {
+        component: AdminMerchartMap,
+        name: "adminMerchartMap",
+        path: "/adminContral/adminMerchartMap",
+      },
+      {
+        component: AdminCustom,
+        name: "adminCustom",
+        path: "/adminContral/adminCustom",
+      },
+      {
+        component: AdminEnter,
+        name: "adminEnter",
+        path: "/adminContral/adminEnter",
+      },
+      {
+        component: AdminDetail,
+        name: "adminDetail",
+        path: "/adminContral/adminDetail",
+      },
+      {
+        component: AdminEcharts,
+        name: "adminEcharts",
+        path: "/adminContral/adminEcharts",
+      },
+      {
+        component: AdminRecord,
+        name: "adminRecord",
+        path: "/adminContral/adminRecord",
       },
     ],
   },
