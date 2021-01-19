@@ -1,0 +1,71 @@
+// $switchDemoHeight: 50px;
+#son9Enter {
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
+  user-select: none;
+
+  .body {
+    flex: 1;
+    .select {
+      .el-card {
+        width: 95%;
+        margin: 10px 2.5%;
+
+        & > * {
+          span {
+            display: inline-block;
+            width: 80px;
+            font-size: 0.9em;
+            vertical-align: top;
+          }
+        }
+        .storeType {
+          .el-radio-group {
+            width: 60%;
+            .el-radio {
+              margin: 0 15px 10px 0;
+            }
+          }
+        }
+
+        .years {
+          .el-radio-group {
+            width: 60%;
+            .el-radio {
+              margin: 0 15px 10px 0;
+            }
+          }
+        }
+
+        .month {
+          .el-radio-group {
+            width: 90%;
+            .el-radio {
+              margin: 0 15px 10px 0;
+            }
+          }
+        }
+
+        .operate {
+          margin: 5px 80px;
+          .el-button {
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+
+    .insertDiv {
+      width: 95%;
+      margin: 10px 2.5% 50px;
+
+      .insertOpr {
+        .el-button {
+          float: right;
+          margin: 20px 0 20px 15px;
+        }
+      }
+    }
+  }
+}

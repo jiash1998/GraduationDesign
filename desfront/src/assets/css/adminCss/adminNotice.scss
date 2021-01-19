@@ -1,0 +1,49 @@
+#son6Notice {
+  width: 90%;
+  // height: 680px;
+  min-height: calc(100% - 50px);
+  // min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-width: 600px;
+  margin-left: 5%;
+  background-color: #fff;
+  // background-color: pink;
+
+  .body {
+    flex: 1;
+    
+    h4{
+      margin-left:20%;
+    }
+
+    .el-form{
+      width: 60%;
+      margin: 0 20%;
+    }
+    .el-tag {
+      margin-left: 10px;
+    }
+
+    .button-new-tag {
+      margin-left: 10px;
+      height: 32px;
+      line-height: 30px;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    .input-new-tag {
+      width: 90px;
+      margin-left: 10px;
+      vertical-align: bottom;
+    }
+
+    #tag_p {
+      display: inline;
+      font-size: 0.8em;
+      color: gray;
+      margin-left: 10px;
+      // background-color: red;
+    }
+  }
+}

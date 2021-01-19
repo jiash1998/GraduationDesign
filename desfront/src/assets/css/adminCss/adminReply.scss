@@ -1,0 +1,15 @@
+#Son7_1Replay {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  .body {
+      flex: 1;
+      height: auto;
+
+      .el-card {
+        width: 95%;
+        margin: 15px 2.5% 100px;
+      }
+  }
+}

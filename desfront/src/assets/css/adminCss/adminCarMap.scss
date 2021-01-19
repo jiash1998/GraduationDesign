@@ -1,0 +1,21 @@
+#son2CarMap {
+  display: flex;
+  min-height: 90vh;
+  flex-direction: column;
+  background-color: #fff;
+
+  .body {
+    flex: 1;
+    .bm-view {
+      height: 60vh;
+    }
+
+    .operate{
+      width: 100%;
+      height: 20vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}

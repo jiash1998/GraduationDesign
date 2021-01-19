@@ -1,0 +1,16 @@
+#son3MerchartMapNew{
+    // display: flex;
+    // flex-direction: column;
+    // min-height: 100vh;
+
+    .body{
+        // flex: 1;
+        min-height: 100vh;
+        background-color: #fff;
+
+
+        .map{
+            height: 100vh;
+        }
+    }
+}

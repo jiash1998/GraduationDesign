@@ -143,4 +143,5 @@ var SchemaFeedback = new Schema({
 module.exports = {
   users: mongoose.model("users", SchemaUser),
   notices: mongoose.model("notices", SchemaNotice),
+  notices: mongoose.model("feedbacks", SchemaFeedback),
 };

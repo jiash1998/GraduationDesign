@@ -18,6 +18,18 @@ import MerConFeedback from "../views/merchartCon/merConFeedback.vue";
 import MerConServiceDet from "../views/merchartCon/merConServiceDet.vue";
 import MerConGarDet from "../views/merchartCon/merConGarDet.vue";
 
+//admin
+import AdminContral from "../views/adminCon/adminContral.vue";
+import AdminManage from "../views/adminCon/adminManage.vue";
+import AdminFeedback from "../views/adminCon/adminFeedback.vue";
+import AdminReply from "../views/adminCon/adminReply.vue";
+import AdminNotice from "../views/adminCon/adminNotice.vue";
+import AdminCarMap from "../views/adminCon/adminCarMap.vue";
+import AdminDriver from "../views/adminCon/adminDriver.vue";
+import AdminDriReg from "../views/adminCon/adminDriReg.vue";
+
+
+
 
 Vue.use(VueRouter);
 
@@ -51,7 +63,7 @@ const routes = [
     name: "notice",
     path: "/notice",
   },
-
+  //merchart
   {
     component: MerchartContral,
     name: "merchartContral",
@@ -94,6 +106,53 @@ const routes = [
         component: MerConFeedback,
         name: "merConFeedback",
         path: "/merchartContral/merConFeedback",
+      },
+    ],
+  },
+  //admin
+  {
+    component: AdminContral,
+    name: "adminContral",
+    path: "/adminContral",
+    children: [
+      {
+        path: "",
+        redirect: "/adminContral/adminManage",
+      },
+      {
+        component: AdminManage,
+        name: "adminManage",
+        path: "/adminContral/adminManage",
+      },
+      {
+        component: AdminFeedback,
+        name: "adminFeedback",
+        path: "/adminContral/adminFeedback",
+      },
+      {
+        component: AdminReply,
+        name: "adminReply",
+        path: "/adminContral/adminReply",
+      },
+      {
+        component: AdminNotice,
+        name: "adminNotice",
+        path: "/adminContral/adminNotice",
+      },
+      {
+        component: AdminCarMap,
+        name: "adminCarMap",
+        path: "/adminContral/adminCarMap",
+      },
+      {
+        component: AdminDriver,
+        name: "adminDriver",
+        path: "/adminContral/adminDriver",
+      },
+      {
+        component: AdminDriReg,
+        name: "adminDriReg",
+        path: "/adminContral/adminDriReg",
       },
     ],
   },

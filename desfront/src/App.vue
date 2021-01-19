@@ -15,7 +15,7 @@
           <router-link tag="span" to="/notice">最新公告</router-link>
         </div>
         <div class="contralItems" v-if="identityApp == '管理员' ? true : false">
-          <router-link tag="span" to="/ContralNew">管理员中心</router-link>
+          <router-link tag="span" to="/adminContral">管理员中心</router-link>
         </div>
         <div
           class="contralItems"

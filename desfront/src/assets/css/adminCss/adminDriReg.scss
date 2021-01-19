@@ -1,0 +1,39 @@
+#son2_2DriReg {
+  min-height: 85vh;
+  display: flex;
+
+  .body {
+    flex: 1;
+
+    h4{
+        margin: 40px 12%;
+        width: 80px;
+        border-bottom: 3px solid #67C23A;
+        padding-bottom: 10px;
+    }
+    .formDiv {
+      height: 60vh;
+    //   background-color: #666;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+
+      .el-card{
+        width: 40%;
+        padding: 0px 20px;
+      }
+      // .el-form {
+      //   width: 40%;
+      // }
+
+      .introduce {
+        font-size: 0.8em;
+        h5::after {
+          content: "*";
+          color: red;
+          font-size: 120%;
+        }
+      }
+    }
+  }
+}
