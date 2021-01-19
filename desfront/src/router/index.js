@@ -24,9 +24,9 @@ import AdminManage from "../views/adminCon/adminManage.vue";
 import AdminFeedback from "../views/adminCon/adminFeedback.vue";
 import AdminReply from "../views/adminCon/adminReply.vue";
 import AdminNotice from "../views/adminCon/adminNotice.vue";
-// import AdminCarMap from "../views/adminCon/adminCarMap.vue";
-// import AdminDriver from "../views/adminCon/adminDriver.vue";
-// import AdminDriReg from "../views/adminCon/adminDriReg.vue";
+import AdminCarMap from "../views/adminCon/adminCarMap.vue";
+import AdminDriver from "../views/adminCon/adminDriver.vue";
+import AdminDriReg from "../views/adminCon/adminDriReg.vue";
 
 
 
@@ -139,21 +139,21 @@ const routes = [
         name: "adminNotice",
         path: "/adminContral/adminNotice",
       },
-      // {
-      //   component: AdminCarMap,
-      //   name: "adminCarMap",
-      //   path: "/adminContral/adminCarMap",
-      // },
-      // {
-      //   component: AdminDriver,
-      //   name: "adminDriver",
-      //   path: "/adminContral/adminDriver",
-      // },
-      // {
-      //   component: AdminDriReg,
-      //   name: "adminDriReg",
-      //   path: "/adminContral/adminDriReg",
-      // },
+      {
+        component: AdminCarMap,
+        name: "adminCarMap",
+        path: "/adminContral/adminCarMap",
+      },
+      {
+        component: AdminDriver,
+        name: "adminDriver",
+        path: "/adminContral/adminDriver",
+      },
+      {
+        component: AdminDriReg,
+        name: "adminDriReg",
+        path: "/adminContral/adminDriReg",
+      },
     ],
   },
 ];
