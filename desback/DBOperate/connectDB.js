@@ -113,6 +113,10 @@ var SchemaCustom = new Schema({
     type: String,
     default: "",
   },
+  is_cus: {
+    type: String,
+    default: "",
+  },
 });
 
 //反馈表
@@ -143,5 +147,6 @@ var SchemaFeedback = new Schema({
 module.exports = {
   users: mongoose.model("users", SchemaUser),
   notices: mongoose.model("notices", SchemaNotice),
+  notices: mongoose.model("customs", SchemaCustom),
   notices: mongoose.model("feedbacks", SchemaFeedback),
 };

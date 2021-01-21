@@ -7,6 +7,7 @@ import Signin from "../views/signin.vue";
 import Register from "../views/register.vue";
 import Notice from "../views/notice.vue";
 import Account from "../views/account.vue";
+import Test from "../views/test.vue";
 
 //merchart
 import MerchartContral from "../views/merchartCon/merchartContral.vue";
@@ -17,6 +18,7 @@ import MerConManagerOuter from "../views/merchartCon/merConManageOuter.vue";
 import MerConFeedback from "../views/merchartCon/merConFeedback.vue";
 import MerConServiceDet from "../views/merchartCon/merConServiceDet.vue";
 import MerConGarDet from "../views/merchartCon/merConGarDet.vue";
+
 
 //admin
 import AdminContral from "../views/adminCon/adminContral.vue";
@@ -49,6 +51,11 @@ const routes = [
     component: Home,
     name: "home",
     path: "/home",
+  },
+  {
+    component: Test,
+    name: "test",
+    path: "/test",
   },
   {
     component: Signin,
