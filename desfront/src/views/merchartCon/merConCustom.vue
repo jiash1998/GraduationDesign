@@ -47,10 +47,7 @@
             label-position="left"
           >
             <el-form-item label="店铺名称" prop="name">
-              <el-input
-                v-model="custom.name"
-                placeholder="请输入店铺名称"
-              ></el-input>
+              <el-input v-model="custom.name" placeholder="请输入店铺名称"></el-input>
             </el-form-item>
             <el-form-item label="经营类型" prop="type">
               <!-- <el-input v-model="custom.type" placeholder="输入店铺类型，如：奶茶店、网咖、烧烤店等"></el-input> -->
@@ -68,37 +65,7 @@
                 <el-radio label="其他类型" border>其他类型</el-radio>
               </el-radio-group>
             </el-form-item>
-            <!-- <div class="map-area" :id="mapId"></div> -->
-            <div class="map-area">
-              <!-- <el-amap
-                :center="center"
-                :zoom="zoom"
-              >
-              </el-amap> -->
-              <!-- <el-amap-search-box
-                class="search-box"
-                :search-option="searchOption"
-                :on-search-result="onSearchResult"
-              ></el-amap-search-box>
-              <el-amap :center="center" :zoom="12">
-                <el-amap-marker v-for="marker in markers" :key="marker" :position="marker"></el-amap-marker>
-              </el-amap> -->
-              <el-amap-search-box
-                class="search-box"
-                id="search"
-                :search-option="searchOption"
-                :on-search-result="onSearchResult"
-              ></el-amap-search-box>
-              <el-amap
-                vid="amap"
-                :zoom="zoom"
-                class="amap-demo"
-                :center="center"
-                :amapManager="amapManager"
-              >
-              </el-amap>
-            </div>
-            <div id="container" style="width:500px; height:300px"></div>
+            <div class="map-area" :id="mapId"></div>
             <el-form-item label="店铺地址" prop="address">
               <el-cascader
                 :options="options"
@@ -112,14 +79,11 @@
               <el-input
                 v-model="custom.addressDetail"
                 @change="handleChange2"
-                placeholder="详细至门牌号，与营业执照地址一致"
+                placeholder="详细内容由街道门牌号店名组成，可参考百度地图"
               ></el-input>
             </el-form-item>
             <el-form-item label="店铺负责人" prop="header">
-              <el-input
-                v-model="custom.header"
-                placeholder="请输入负责人姓名"
-              ></el-input>
+              <el-input v-model="custom.header" placeholder="请输入负责人姓名"></el-input>
             </el-form-item>
             <el-form-item label="性别" prop="sex">
               <el-radio-group v-model="custom.sex">
@@ -128,24 +92,13 @@
               </el-radio-group>
             </el-form-item>
             <el-form-item label="联系方式(手机)" prop="phone">
-              <el-input
-                v-model="custom.phone"
-                placeholder="请输入手机号"
-              ></el-input>
+              <el-input v-model="custom.phone" placeholder="请输入手机号"></el-input>
             </el-form-item>
             <el-form-item label="社会信用代码" prop="socialCreditCode">
-              <el-input
-                v-model="custom.socialCreditCode"
-                placeholder="请输入店铺名称"
-              ></el-input>
+              <el-input v-model="custom.socialCreditCode" placeholder="请输入店铺名称"></el-input>
             </el-form-item>
             <el-form-item label>
-              <el-button
-                type="success"
-                v-model="custom.submit"
-                @click="submitForm('custom')"
-                >提交</el-button
-              >
+              <el-button type="success" v-model="custom.submit" @click="submitForm('custom')">提交</el-button>
               <el-button type="primary" plain>返回</el-button>
             </el-form-item>
           </el-form>
@@ -162,13 +115,10 @@ import publicFootMini from "../../components/publicFootMini.vue";
 import options from "../../chzu.js";
 import loadBMap from "../../map";
 import addCustomApi from "../../api/postRequest.js";
-import { AMapManager } from "vue-amap";
-let amapManager = new AMapManager();
-
 export default {
   name: "custom",
   components: {
-    publicFootMini,
+    publicFootMini
   },
   data() {
     var validateName = (rule, value, callback) => {
@@ -228,14 +178,6 @@ export default {
       }
     };
     return {
-      amapManager,
-      zoom: 12,
-      center: [118.323509, 32.282115],
-      searchOption: {
-        city: "安徽",
-        citylimit: true,
-      },
-      markers: [],
       rules: {
         name: [{ validator: validateName, trigger: "change" }],
         type: [{ validator: validateType, trigger: "change" }],
@@ -244,7 +186,7 @@ export default {
         header: [{ validator: validateHeader, trigger: "change" }],
         sex: [{ validator: validateSex, trigger: "change" }],
         phone: [{ validator: validatePhone, trigger: "change" }],
-        socialCreditCode: [{ validator: validateCode, trigger: "change" }],
+        socialCreditCode: [{ validator: validateCode, trigger: "change" }]
       },
       custom: {
         name: "",
@@ -256,80 +198,25 @@ export default {
         user: "",
         sex: "",
         phone: "",
-        // url: "",
         socialCreditCode: "",
-        isCus: "未定制",
+        isCus: "未定制"
       },
       mapId: "BMap-" + parseInt(Date.now() + Math.random()),
       imgs: [],
       imgData: {
-        accept: "image/gif, image/jpeg, image/png, image/jpg",
+        accept: "image/gif, image/jpeg, image/png, image/jpg"
       },
       options: options,
       //记录所i在地区和详细地址
       address1: "",
       address2: "",
-      // customUrl: ""
+      customUrl: ""
     };
   },
   mounted() {
-    // this.initMap();
-    // this.init();
+    this.initMap();
   },
   methods: {
-    //
-    initSearch() {
-      let vm = this;
-      let map = this.amapManager.getMap();
-      this.toSearch = true;
-      AMapUI.loadUI(["misc/PoiPicker"], function(PoiPicker) {
-        var poiPicker = new PoiPicker({
-          input: "search", //输入框id
-          placeSearchOptions: {
-            map: map,
-            pageSize: 10,
-          }, //地点搜索配置
-          suggestContainer: "searchTip", //输入提示显示DOM
-          searchResultsContainer: "searchTip", //搜索结果显示DOM
-        });
-        vm.poiPicker = poiPicker;
-        //监听poi选中信息
-        poiPicker.on("poiPicked", function(poiResult) {
-          let source = poiResult.source;
-          let poi = poiResult.item;
-          if (source !== "search") {
-            poiPicker.searchByKeyword(poi.name);
-          } else {
-            poiPicker.clearSearchResults();
-            vm.center = [
-              poiResult.item.location.lng,
-              poiResult.item.location.lat,
-            ];
-            vm.address = poi.name;
-            vm.searchKey = "";
-            vm.toSearch = false;
-          }
-        });
-      });
-    },
-
-    onSearchResult(pois) {
-      let latSum = 0;
-      let lngSum = 0;
-      if (pois.length > 0) {
-        pois.forEach((poi) => {
-          let { lng, lat } = poi;
-          lngSum += lng;
-          latSum += lat;
-          this.markers.push([poi.lng, poi.lat]);
-        });
-        let tcenter = {
-          lng: lngSum / pois.length,
-          lat: latSum / pois.length,
-        };
-        this.center = [tcenter.lng, tcenter.lat];
-      }
-    },
     //获取address的值
     handleChange1(value) {
       value = value || "安徽省滁州市南谯区";
@@ -344,29 +231,28 @@ export default {
       this.$refs.upload.submit();
     },
     submitForm(formName) {
-      // this.$router.push("/merchartContral/Son2Manager");
-      this.$refs[formName].validate((val) => {
+      this.$router.push("/merchartContral/merConManager/merConManagerOuter");
+      this.$refs[formName].validate(val => {
         if (val) {
           this.custom.address = this.address1;
-          // this.custom.url = this.customUrl;
           this.custom.user = this.$store.state.username;
           var data = this.custom;
           console.log(data);
           //提交后台
-          // addCustomApi.addCustom(data).then(res => {
-          //   // console.log(res.data);
-          //   this.$message({
-          //     message: "商铺录入成功,可继续定制",
-          //     type: "success",
-          //     duration: 1800
-          //   });
-          //   this.$refs[formName].resetFields();
-          // });
+          addCustomApi.merAddCustom(data).then(res => {
+            console.log(res.data);
+            this.$message({
+              message: "商铺录入成功,可继续定制",
+              type: "success",
+              duration: 1800
+            });
+            this.$refs[formName].resetFields();
+          });
         } else {
           this.$message({
-            message: "请等待照片上传...",
+            message: "wait...",
             type: "warning",
-            duration: 2000,
+            duration: 2000
           });
           return false;
         }
@@ -395,21 +281,21 @@ export default {
                 this.$message({
                   message: "地址未解析成功",
                   type: "error",
-                  duration: 2000,
+                  duration: 2000
                 });
               }
             },
             "滁州市"
           );
         })
-        .catch((err) => {
+        .catch(err => {
           console.log("地图加载失败");
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" >
 @import "../../assets/css/merchartCss/merConCustom.scss";
 </style>

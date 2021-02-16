@@ -20,9 +20,9 @@ var SchemaUser = new Schema({
     required: true,
     default: "",
   },
-  email:{
-    type:String,
-    default:""
+  email: {
+    type: String,
+    default: "",
   },
   phone: {
     type: String,
@@ -73,7 +73,7 @@ var SchemaCustom = new Schema({
     type: String,
     default: "",
   },
-  address_detail: {
+  addressDetail: {
     type: String,
     default: "",
   },
@@ -85,7 +85,7 @@ var SchemaCustom = new Schema({
     type: String,
     default: "",
   },
-  social_credit_code: {
+  socialCreditCode: {
     type: String,
     default: "",
   },
@@ -97,23 +97,23 @@ var SchemaCustom = new Schema({
     type: String,
     default: "",
   },
-  cycle_times: {
+  cycleTimes: {
     type: String,
     default: "",
   },
-  cycle_date: {
+  cycleDate: {
     type: String,
     default: "",
   },
-  sustain_month: {
+  sustainMonth: {
     type: String,
     default: "",
   },
-  pay_type: {
+  payType: {
     type: String,
     default: "",
   },
-  is_cus: {
+  isCus: {
     type: String,
     default: "",
   },
@@ -147,6 +147,6 @@ var SchemaFeedback = new Schema({
 module.exports = {
   users: mongoose.model("users", SchemaUser),
   notices: mongoose.model("notices", SchemaNotice),
-  notices: mongoose.model("customs", SchemaCustom),
-  notices: mongoose.model("feedbacks", SchemaFeedback),
+  customs: mongoose.model("customs", SchemaCustom),
+  feedbacks: mongoose.model("feedbacks", SchemaFeedback),
 };

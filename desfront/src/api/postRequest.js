@@ -29,13 +29,11 @@ var postStringJson = (urlSelf, methodSelf, dataSelf, headerSelf) => {
 
 export default {
   /**公共模块 */
-  //用户登录
+  //用户登录1
   comSign(data) {
-    return interceptor(
-      postString("/apis/sign", methodsAll, data, headersAll)
-    );
+    return interceptor(postString("/apis/sign", methodsAll, data, headersAll));
   },
-  //用户注册
+  //用户注册1
   comRegister(data) {
     return interceptor(
       postString("/apis/register", methodsAll, data, headersAll)
@@ -125,7 +123,13 @@ export default {
       postString("/delFeedbackById", methodsAll, id, headersAll)
     );
   },
+
   //商家
+  //录入店铺1
+  merAddCustom(data) {
+    return interceptor(postString("/apis/addCustom", methodsAll, data, headersAll));
+  },
+
   //根据用户名获取通知
   getByPNoticeUsername(data) {
     return interceptor(
@@ -138,10 +142,7 @@ export default {
       postString("/changToRead", methodsAll, data, headersAll)
     );
   },
-  //录入店铺
-  addCustom(data) {
-    return interceptor(postString("/addCustom", methodsAll, data, headersAll));
-  },
+
   //删除店铺
   delCustomBySocialCode(data) {
     return interceptor(

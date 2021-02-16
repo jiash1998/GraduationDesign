@@ -5,17 +5,17 @@ var AllDB = require("../DBOperate/connectDB");
 exports.signin = (data, callback) => {
   let name = data.username;
   let pass = data.password;
-  console.log(name,pass);
- AllDB.users
-   .find({ username: name, password: pass })
-   .then((res) => {
-     console.log(res);
-     callback(null, res);
-   })
-   .catch((err) => {
-     console.log(err);
-     callback(err);
-   });
+  console.log(name, pass);
+  AllDB.users
+    .find({ username: name, password: pass })
+    .then((res) => {
+      console.log(res);
+      callback(null, res);
+    })
+    .catch((err) => {
+      console.log(err);
+      callback(err);
+    });
 };
 
 //注册接口
@@ -33,6 +33,20 @@ exports.register = (data, callback) => {
     });
 };
 
+//商户
+exports.addCustom = (data, callback) => {
+  console.log("addCustom:", data);
+  AllDB.customs
+    .insertMany(data)
+    .then((pro) => {
+      console.log("店铺保存成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("保存失败", err);
+      callback(err);
+    });
+};
 //管理员模块
 //创建组织
 exports.createOrgan = (data, callback) => {
