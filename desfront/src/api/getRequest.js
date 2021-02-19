@@ -58,11 +58,8 @@ export default {
   getAllReply() {
     return interceptor(getString("/getAllReply", methodAll));
   },
+
   //商铺接口
-  //获取名下店铺信息
-  getAllCustom() {
-    return interceptor(getString("/getAllCustom", methodAll));
-  },
   //获取店铺垃圾
   getAllStoreGarbage() {
     return interceptor(getString("/production/getAll", methodAll));

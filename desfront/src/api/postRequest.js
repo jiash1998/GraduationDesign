@@ -127,9 +127,16 @@ export default {
   //商家
   //录入店铺1
   merAddCustom(data) {
-    return interceptor(postString("/apis/addCustom", methodsAll, data, headersAll));
+    return interceptor(
+      postString("/apis/addCustom", methodsAll, data, headersAll)
+    );
   },
-
+  //商户反馈
+  addFeedback(data) {
+    return interceptor(
+      postString("/apis/addFeedback", methodsAll, data, headersAll)
+    );
+  },
   //根据用户名获取通知
   getByPNoticeUsername(data) {
     return interceptor(
@@ -163,12 +170,6 @@ export default {
   updateCustomById(id) {
     return interceptor(
       postString("/updateCustomById", methodsAll, id, headersAll)
-    );
-  },
-  //商户反馈
-  addFeedback(data) {
-    return interceptor(
-      postString("/addFeedback", methodsAll, data, headersAll)
     );
   },
 };

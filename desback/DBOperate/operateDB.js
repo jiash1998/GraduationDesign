@@ -1,7 +1,7 @@
 var AllDB = require("../DBOperate/connectDB");
 
 //公共模块
-//登录接口
+//登录接口1
 exports.signin = (data, callback) => {
   let name = data.username;
   let pass = data.password;
@@ -18,7 +18,7 @@ exports.signin = (data, callback) => {
     });
 };
 
-//注册接口
+//注册接口1
 exports.register = (data, callback) => {
   console.log("operate:", data);
   AllDB.users
@@ -34,6 +34,7 @@ exports.register = (data, callback) => {
 };
 
 //商户
+//注册店铺1
 exports.addCustom = (data, callback) => {
   console.log("addCustom:", data);
   AllDB.customs
@@ -44,6 +45,36 @@ exports.addCustom = (data, callback) => {
     })
     .catch((err) => {
       console.log("保存失败", err);
+      callback(err);
+    });
+};
+
+//获取名下店铺1
+exports.getAllCustom = (data, callback) => {
+  console.log("getAllCustom:", data);
+  AllDB.customs
+    .find({ user: data.username })
+    .then((res) => {
+      console.log(res.length);
+      callback(null, res);
+    })
+    .catch((err) => {
+      console.log(err);
+      callback(err);
+    });
+};
+
+//商户反馈接口1
+exports.addFeedback = (data, callback) => {
+  console.log("addFeedback:", data);
+  AllDB.feedbacks
+    .insertMany(data)
+    .then((pro) => {
+      console.log("反馈保存成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("反馈保存失败", err);
       callback(err);
     });
 };

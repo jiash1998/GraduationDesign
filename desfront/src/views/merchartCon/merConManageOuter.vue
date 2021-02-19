@@ -11,16 +11,24 @@
           </div>
           <!-- 店铺展示 -->
           <div class="storeDiv" v-else>
-            <div class="store" @click="choose(index)" v-for="(item,index) in custom" :key="index">
+            <div
+              class="store"
+              @click="choose(index)"
+              v-for="(item, index) in custom"
+              :key="index"
+            >
               <div class="storeImg">
-                <img :src="item.url" />
+                <!-- <img :src="item.url" /> -->
+                 <img src="../../assets/img/chart.png" />
               </div>
               <div class="storeCon">
-                <p id="p2">{{item.name}}</p>
-                <p id="p3">{{item.socialCreditCode}}</p>
+                <p id="p2">{{ item.name }}</p>
+                <p id="p3">{{ item.socialCreditCode }}</p>
                 <p id="p4">
-                  <span :class="item.isCus == '已付款'?'finished':'unfinished'"></span>
-                  {{item.isCus}}
+                  <span
+                    :class="item.isCus == '已付款' ? 'finished' : 'unfinished'"
+                  ></span>
+                  {{ item.isCus }}
                 </p>
               </div>
             </div>
@@ -41,7 +49,7 @@
           <div class="settlement">
             <div id="s1">
               <p id="settle_p1">历史结算(元)</p>
-              <span>{{historyPrice}}</span>
+              <span>{{ historyPrice }}</span>
             </div>
             <div id="s2">
               <p id="settle_p1">历史未结算(元)</p>
@@ -53,7 +61,12 @@
             </div>
           </div>
           <div class="choose">
-            <el-form :model="querySettle" ref="querySettle" :inline="true" size="small">
+            <el-form
+              :model="querySettle"
+              ref="querySettle"
+              :inline="true"
+              size="small"
+            >
               <el-form-item label="订单日期:">
                 <el-date-picker
                   v-model="querySettle.tradeTime"
@@ -63,7 +76,11 @@
                 ></el-date-picker>
               </el-form-item>
               <el-form-item label="状态:">
-                <el-select v-model="querySettle.isCus" @change="manageTrade" placeholder="选择状态">
+                <el-select
+                  v-model="querySettle.isCus"
+                  @change="manageTrade"
+                  placeholder="选择状态"
+                >
                   <el-option label="全部" value="all"></el-option>
                   <!-- <el-option label="已付款" value="yes"></el-option> -->
                 </el-select>
@@ -79,7 +96,7 @@
                       <span>{{ props.row.name }}</span>
                     </el-form-item>
                     <el-form-item label="社会信用代码">
-                      <span>{{ props.row.socialCreditCode}}</span>
+                      <span>{{ props.row.socialCreditCode }}</span>
                     </el-form-item>
                     <el-form-item label="负责人">
                       <span>{{ props.row.header }}</span>
@@ -97,7 +114,7 @@
                       <span>{{ props.row.tradeNo }}</span>
                     </el-form-item>
                     <el-form-item label="付款金额">
-                      <span>{{props.row.money}}</span>
+                      <span>{{ props.row.money }}</span>
                     </el-form-item>
                     <el-form-item label="交易时间">
                       <span>{{ props.row.tradeTime }}</span>
@@ -105,7 +122,11 @@
                   </el-form>
                 </template>
               </el-table-column>
-              <el-table-column label="店铺" prop="name" width="220"></el-table-column>
+              <el-table-column
+                label="店铺"
+                prop="name"
+                width="220"
+              ></el-table-column>
               <el-table-column label="负责人" prop="header"></el-table-column>
               <el-table-column label="应付金额" prop="money"></el-table-column>
               <el-table-column label="实付金额" prop="money"></el-table-column>
@@ -120,14 +141,14 @@
 
 <script>
 import publicFootMini from "../../components/publicFootMini.vue";
-import getAllCustomApi from "../../api/getRequest.js";
+import getAllCustomApi from "../../api/postRequest.js";
 import SkeletonScreen from "../../components/skeletonScreen.vue";
 
 export default {
   name: "son2Test",
   components: {
     publicFootMini,
-    SkeletonScreen
+    SkeletonScreen,
   },
   data() {
     return {
@@ -146,8 +167,8 @@ export default {
       querySettle: {
         payType: "",
         isCus: "",
-        tradeTime: ""
-      }
+        tradeTime: "",
+      },
     };
   },
   mounted() {
@@ -163,36 +184,33 @@ export default {
   },
   methods: {
     async getData() {
+      let name ={"username": sessionStorage.getItem("username")};
+      console.log("name", name);
       await getAllCustomApi
-        .getAllCustom()
-        .then(res => {
-          for (const i of res.data) {
+        .getAllCustom(name)
+        .then((res) => {
+          let value = res.data.value
+          console.log(res.data);
+          for (const i of value) {
             //获取用户全部定制
-            if (i.user == sessionStorage.getItem("userName")) {
-              this.custom.push(i);
-            }
+            this.custom.push(i);
 
             //获取除未定制以外的订单
-            if (
-              i.user == sessionStorage.getItem("userName") &&
-              i.isCus != "未定制"
-            ) {
+            if (i.isCus != "未定制") {
               this.trade.push(i);
               console.log(this.trade);
               this.tradeAll.push(i);
             }
             //获取已付款的订单
-            if (
-              i.user == sessionStorage.getItem("userName") &&
-              i.isCus == "已付款"
-            ) {
+            if (i.isCus == "已付款") {
               this.tradeYes.push(i);
             }
           }
           this.getHistoryPrice(this.tradeYes);
+          console.log(this.custom);
           this.custom.length > 0 ? (this.skl = !this.skl) : this.skl;
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     },
@@ -208,7 +226,7 @@ export default {
           num += parseInt(i.money);
         }
         console.log(num);
-        
+
         this.historyPrice = parseFloat(num).toFixed(2);
         console.log(this.historyPrice);
       }
@@ -263,8 +281,8 @@ export default {
           this.trade = this.tradeAll;
           break;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

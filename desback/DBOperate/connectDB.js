@@ -125,7 +125,7 @@ var SchemaFeedback = new Schema({
     type: String,
     required: true,
   },
-  feedback_date: {
+  feedbackDate: {
     type: String,
     required: true,
     default: "",
@@ -136,11 +136,11 @@ var SchemaFeedback = new Schema({
   },
   state: {
     type: String,
-    default: "",
+    default: "ing",
   },
   deleted: {
     type: String,
-    default: "",
+    default: "1",
   },
 });
 
