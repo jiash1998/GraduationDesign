@@ -54,7 +54,7 @@ var SchemaNotice = new Schema({
     default: "",
   },
   time: {
-    type: Date,
+    type: String,
   },
 });
 

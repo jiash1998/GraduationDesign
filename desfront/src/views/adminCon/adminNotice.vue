@@ -134,7 +134,7 @@ export default {
           if (val) {
             vm.notice.inputvalue = vm.dynamicTags.join(",");
             var data = vm.notice;
-
+            console.log(data);
             insertNoticeApi.insertNotice(data).then(res => {
               //公告提示
               // localStorage.setItem("isDot", "true");

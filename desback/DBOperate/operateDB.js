@@ -79,6 +79,21 @@ exports.addFeedback = (data, callback) => {
     });
 };
 //管理员模块
+//发送公告
+exports.insertNotice = (data, callback) => {
+  console.log("insertNotice:", data);
+  AllDB.notices
+    .insertMany(data)
+    .then((pro) => {
+      console.log("公告保存成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("保存失败", err);
+      callback(err);
+    });
+};
+
 //获取所有用户1
 exports.getAllUser = (callback) => {
   console.log("getAllUser");

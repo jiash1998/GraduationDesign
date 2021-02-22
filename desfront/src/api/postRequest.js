@@ -52,7 +52,14 @@ export default {
       postString("/updateUserByName", methodsAll, name, headersAll)
     );
   },
-  //管理员
+
+  /**管理员**/
+  //发布公告
+  insertNotice(data) {
+    return interceptor(
+      postString("/apis/insertNotice", methodsAll, data, headersAll)
+    );
+  },
   //根据用户 id 发生通知
   addPersonalNotice(data) {
     return interceptor(
@@ -104,12 +111,7 @@ export default {
       postStringJson("/production/add", methodsAll, data, headersJson)
     );
   },
-  //发布公告
-  insertNotice(data) {
-    return interceptor(
-      postString("/insertNotice", methodsAll, data, headersAll)
-    );
-  },
+
   //回复用户反馈
   replayFeedback(data) {
     return interceptor(

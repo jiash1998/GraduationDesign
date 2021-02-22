@@ -44,6 +44,24 @@ router.post("/register", (req, res) => {
 });
 
 //管理员模块
+//发送公告
+router.post("/insertNotice", (req, res) => {
+  console.log("insertNotice", req.body);
+  operateDB.insertNotice(req.body, (err, data) => {
+    if (err) {
+      return res.json({
+        status: "保存错误",
+        msg: err,
+      });
+    }
+    return res.json({
+      status: "200",
+      value: data,
+      msg: "保存成功",
+    });
+  });
+});
+
 //获取所有用户
 router.get("/getAllUser", (req, res) => {
   console.log("getAllUser");
@@ -97,6 +115,7 @@ router.get("/getAllReply", (req, res) => {
     });
   });
 });
+
 //商戶模块
 //店铺注册接口
 router.post("/addCustom", (req, res) => {
