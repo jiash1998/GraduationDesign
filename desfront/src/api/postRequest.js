@@ -53,7 +53,6 @@ export default {
     );
   },
   //管理员
-
   //根据用户 id 发生通知
   addPersonalNotice(data) {
     return interceptor(

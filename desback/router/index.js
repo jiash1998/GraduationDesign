@@ -43,10 +43,64 @@ router.post("/register", (req, res) => {
   });
 });
 
+//管理员模块
+//获取所有用户
+router.get("/getAllUser", (req, res) => {
+  console.log("getAllUser");
+  operateDB.getAllUser((err, data) => {
+    if (err) {
+      return res.json({
+        status: "获取错误",
+        msg: err,
+      });
+    }
+    return res.json({
+      status: "200",
+      value: data,
+      msg: "获取成功",
+    });
+  });
+});
+
+//获取用户反馈
+router.get("/getAllFeedBack", (req, res) => {
+  console.log("getAllFeedBack");
+  operateDB.getAllFeedBack((err, data) => {
+    if (err) {
+      return res.json({
+        status: "获取错误",
+        msg: err,
+      });
+    }
+    return res.json({
+      status: "200",
+      value: data,
+      msg: "获取成功",
+    });
+  });
+});
+
+//获取以处理的用户反馈
+router.get("/getAllReply", (req, res) => {
+  console.log("getAllReply");
+  operateDB.getAllReply((err, data) => {
+    if (err) {
+      return res.json({
+        status: "获取错误",
+        msg: err,
+      });
+    }
+    return res.json({
+      status: "200",
+      value: data,
+      msg: "获取成功",
+    });
+  });
+});
 //商戶模块
 //店铺注册接口
 router.post("/addCustom", (req, res) => {
-  console.log(req.body);
+  console.log("addCustom",req.body);
   operateDB.addCustom(req.body, (err, data) => {
     if (err) {
       return res.json({
@@ -64,7 +118,7 @@ router.post("/addCustom", (req, res) => {
 
 //获取名下所有店铺接口
 router.post("/getAllCustom", (req, res) => {
-  console.log("body:",req.body);
+  console.log("getAllCustom:", req.body);
   operateDB.getAllCustom(req.body, (err, data) => {
     if (err) {
       return res.json({
@@ -82,7 +136,7 @@ router.post("/getAllCustom", (req, res) => {
 
 //发送商户反馈接口
 router.post("/addFeedback", (req, res) => {
-  console.log("body:", req.body);
+  console.log("addFeedback:", req.body);
   operateDB.addFeedback(req.body, (err, data) => {
     if (err) {
       return res.json({

@@ -136,7 +136,7 @@ var SchemaFeedback = new Schema({
   },
   state: {
     type: String,
-    default: "ing",
+    default: "未回复",
   },
   deleted: {
     type: String,

@@ -201,13 +201,11 @@ export default {
       }
     },
     getInfo() {
-      // this.axios
-      //   .get("http://" + this.$store.state.path + ":8080/getAllFeedBack")
       getAllFeedbackApi
         .getAllFeedBack()
         .then(res => {
-          console.log(res.data);
-          this.feedback = res.data;
+          console.log(res.data.value);
+          this.feedback = res.data.value;
         })
         .catch(err => {
           console.log(err);

@@ -79,6 +79,50 @@ exports.addFeedback = (data, callback) => {
     });
 };
 //管理员模块
+//获取所有用户1
+exports.getAllUser = (callback) => {
+  console.log("getAllUser");
+  AllDB.users
+    .find()
+    .then((pro) => {
+      console.log("获取成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("获取失败", err);
+      callback(err);
+    });
+};
+
+//获取所有反馈1
+exports.getAllFeedBack = (callback) => {
+  console.log("getAllFeedBack");
+  AllDB.feedbacks
+    .find()
+    .then((pro) => {
+      console.log("获取成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("获取失败", err);
+      callback(err);
+    });
+};
+
+//获取所有已经反馈1
+exports.getAllReply = (callback) => {
+  console.log("getAllReply");
+  AllDB.feedbacks
+    .find()
+    .then((pro) => {
+      console.log("获取成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("获取失败", err);
+      callback(err);
+    });
+};
 //创建组织
 exports.createOrgan = (data, callback) => {
   AllDB.organs
@@ -108,20 +152,6 @@ exports.createOrgan = (data, callback) => {
 exports.getOrganByName = (data, callback) => {
   AllDB.organs
     .findOne({ organBoss: data.username })
-    .then((res) => {
-      console.log(res);
-      callback(null, res);
-    })
-    .catch((err) => {
-      console.log(err);
-      callback(err);
-    });
-};
-
-//获取员工
-exports.getAllUser = (data, callback) => {
-  AllDB.users
-    .find({ organName: data.organName })
     .then((res) => {
       console.log(res);
       callback(null, res);

@@ -19,7 +19,6 @@
                 @click="postNotSelf(scope.row)"
                 plain
               >发送通知</el-button>
-              <!-- <el-button type="danger" size="small" plain>设置黑名单</el-button> -->
             </template>
           </el-table-column>
         </el-table>
@@ -91,13 +90,13 @@ export default {
       getAllUserApi
         .getAllUser()
         .then(res => {
-          console.log(res.data);
-          for (const i of res.data) {
+          console.log(res.data.value);
+          for (const i of res.data.value) {
             if (i.email == "") {
               i.email = "暂无";
             }
           }
-          this.user = res.data;
+          this.user = res.data.value;
         })
         .catch(err => {
           console.log(err);

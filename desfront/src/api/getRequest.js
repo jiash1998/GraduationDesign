@@ -36,7 +36,7 @@ export default {
   //管理员接口
   //获取所有用户
   getAllUser() {
-    return interceptor(getString("/getAllUser", methodAll));
+    return interceptor(getString("/apis/getAllUser", methodAll));
   },
   //获取跟踪操作
   getAllOperate() {
@@ -52,11 +52,11 @@ export default {
   // },
   //获取用户反馈
   getAllFeedBack() {
-    return interceptor(getString("/getAllFeedBack", methodAll));
+    return interceptor(getString("/apis/getAllFeedBack", methodAll));
   },
   //获取处理过反馈
   getAllReply() {
-    return interceptor(getString("/getAllReply", methodAll));
+    return interceptor(getString("/apis/getAllReply", methodAll));
   },
 
   //商铺接口
