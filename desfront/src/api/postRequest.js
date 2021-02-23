@@ -68,7 +68,7 @@ export default {
   },
   //注册驾驶员
   addDriver(data) {
-    return interceptor(postString("/addDriver", methodsAll, data, headersAll));
+    return interceptor(postString("/apis/addDriver", methodsAll, data, headersAll));
   },
   //获取位置
   getLatandlogByDriver(data) {

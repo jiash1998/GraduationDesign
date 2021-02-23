@@ -43,6 +43,24 @@ router.post("/register", (req, res) => {
   });
 });
 
+//获取所有用户
+router.get("/getAllNotice", (req, res) => {
+  console.log("getAllNotice");
+  operateDB.getAllNotice((err, data) => {
+    if (err) {
+      return res.json({
+        status: "获取错误",
+        msg: err,
+      });
+    }
+    return res.json({
+      status: "200",
+      value: data,
+      msg: "获取成功",
+    });
+  });
+});
+
 //管理员模块
 //发送公告
 router.post("/insertNotice", (req, res) => {
@@ -112,6 +130,24 @@ router.get("/getAllReply", (req, res) => {
       status: "200",
       value: data,
       msg: "获取成功",
+    });
+  });
+});
+
+//注册驾驶员
+router.post("/addDriver", (req, res) => {
+  console.log(req.body);
+  operateDB.addDriver(req.body, (err, data) => {
+    if (err) {
+      return res.json({
+        status: "发送错误",
+        msg: err,
+      });
+    }
+    return res.json({
+      status: "200",
+      value: data,
+      msg: "保存成功",
     });
   });
 });

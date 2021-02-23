@@ -34,6 +34,18 @@ var SchemaUser = new Schema({
   },
 });
 
+//驾驶员表
+var SchemaDriver = new Schema({
+  username: {
+    type: String,
+    required: true,
+  },
+  routeFlag: {
+    type: String,
+    defalut: "",
+  },
+});
+
 //公告表
 var SchemaNotice = new Schema({
   title: {
@@ -46,6 +58,10 @@ var SchemaNotice = new Schema({
     default: "",
   },
   tip: {
+    type: String,
+    default: "0",
+  },
+  inputvalue: {
     type: String,
     default: "",
   },
@@ -146,6 +162,7 @@ var SchemaFeedback = new Schema({
 
 module.exports = {
   users: mongoose.model("users", SchemaUser),
+  drivers: mongoose.model("drivers", SchemaDriver),
   notices: mongoose.model("notices", SchemaNotice),
   customs: mongoose.model("customs", SchemaCustom),
   feedbacks: mongoose.model("feedbacks", SchemaFeedback),

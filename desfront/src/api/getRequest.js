@@ -29,9 +29,10 @@ var getStringExcel = (urlSelf, methodSelf) => {
   };
 };
 export default {
+  /** 公共 */
   //获取所有通告
   getNotice() {
-    return interceptor(getString("/getAllNotice", methodAll));
+    return interceptor(getString("/apis/getAllNotice", methodAll));
   },
   //管理员接口
   //获取所有用户

@@ -4,8 +4,8 @@
       <div class="notice_tabber">
         <el-menu default-active="0" @select="NoticeType" mode="horizontal">
           <el-menu-item index="0">全部公告</el-menu-item>
-          <el-menu-item index="1">紧急公告</el-menu-item>
           <el-menu-item index="2">商户公告</el-menu-item>
+          <el-menu-item index="1">紧急公告</el-menu-item>
           <el-menu-item index="3" v-if="noticeSelf">个人通知</el-menu-item>
         </el-menu>
       </div>
@@ -24,12 +24,6 @@
             </div>
             <div v-else>
               <!-- 没消息时展示 -->
-              <!-- <div class="conNull" v-if="!selfNull">
-                <div class="contain">
-                  <img src="../assets/img/info.png" />
-                  <p>暂无消息</p>
-                </div>
-              </div>-->
               <div v-if="!selfNull">
                 <public-info-null></public-info-null>
               </div>
@@ -134,12 +128,12 @@ export default {
         .getNotice()
         .then(res => {
           //排序
-          res.data.sort((a, b) => {
+          res.data.value.sort((a, b) => {
             return Date.parse(b.time) - Date.parse(a.time);
           });
-          this.noticeList = res.data;
-          this.allList = res.data;
-          for (const i of res.data) {
+          this.noticeList = res.data.value;
+          this.allList = res.data.value;
+          for (const i of res.data.value) {
             if (i.type == "紧急通知") {
               this.emergencyList.push(i);
             } else if (i.type == "商户通知") {

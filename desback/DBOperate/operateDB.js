@@ -33,6 +33,21 @@ exports.register = (data, callback) => {
     });
 };
 
+//获取所有公告1
+exports.getAllNotice = (callback) => {
+  console.log("getallnotices");
+  AllDB.notices
+    .find()
+    .then((pro) => {
+      console.log("获取成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("获取失败", err);
+      callback(err);
+    });
+};
+
 //商户
 //注册店铺1
 exports.addCustom = (data, callback) => {
@@ -79,7 +94,7 @@ exports.addFeedback = (data, callback) => {
     });
 };
 //管理员模块
-//发送公告
+//发送公告1
 exports.insertNotice = (data, callback) => {
   console.log("insertNotice:", data);
   AllDB.notices
@@ -138,6 +153,33 @@ exports.getAllReply = (callback) => {
       callback(err);
     });
 };
+
+//注册驾驶员1
+exports.addDriver = (data, callback) => {
+  console.log("addDriver:", data);
+  AllDB.users
+    .insertMany(data)
+    .then((pro) => {
+      console.log("users保存成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("保存失败", err);
+      callback(err);
+    });
+
+  AllDB.drivers
+    .insertMany(data)
+    .then((pro) => {
+      console.log("driver保存成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("保存失败", err);
+      callback(err);
+    });
+};
+
 //创建组织
 exports.createOrgan = (data, callback) => {
   AllDB.organs
