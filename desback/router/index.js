@@ -1,5 +1,7 @@
 var express = require("express");
 var router = express.Router();
+var multer = require("multer");
+const fs = require("fs");
 var operateDB = require("../DBOperate/operateDB");
 
 router.get("/", (req, res) => {
@@ -170,6 +172,35 @@ router.post("/addCustom", (req, res) => {
     });
   });
 });
+
+
+//图片上传接口
+router.post(
+  "/upload",
+  multer({
+    //设置文件存储路径
+    dest: "D:/GraduationPhoto/",
+  }).array("file", 1),
+  function (req, res, next) {
+    let files = req.files;
+    let file = files[0];
+    let fileInfo = {};
+    let path =
+      "D:/GraduationPhoto/" + Date.now().toString() + "_" + file.originalname;
+      console.log(path);
+    fs.renameSync("D:/GraduationPhoto/" + file.filename, path);
+    //获取文件基本信息
+    fileInfo.type = file.mimetype;
+    fileInfo.name = file.originalname;
+    fileInfo.size = file.size;
+    fileInfo.path = path;
+    return res.json({
+      code: 0,
+      msg: "OK",
+      data: fileInfo,
+    });
+  }
+);
 
 //获取名下所有店铺接口
 router.post("/getAllCustom", (req, res) => {

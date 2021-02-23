@@ -113,6 +113,10 @@ var SchemaCustom = new Schema({
     type: String,
     default: "",
   },
+  photo: {
+    type: String,
+    default: "",
+  },
   cycleTimes: {
     type: String,
     default: "",

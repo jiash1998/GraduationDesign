@@ -2,7 +2,7 @@
   <div id="son2_2Manager">
     <div class="body">
       <div class="left">
-        <router-link to="/merchartContral/Son2Manager/Son2_1ManageOuter" tag="div">
+        <router-link to="/merchartContral/merConManager/merConManagerOuter" tag="div">
           <div class="left_head">
             <p>
               <i class="el-icon-arrow-left"></i>返回店铺列表

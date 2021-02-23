@@ -47,7 +47,10 @@
             label-position="left"
           >
             <el-form-item label="店铺名称" prop="name">
-              <el-input v-model="custom.name" placeholder="请输入店铺名称"></el-input>
+              <el-input
+                v-model="custom.name"
+                placeholder="请输入店铺名称"
+              ></el-input>
             </el-form-item>
             <el-form-item label="经营类型" prop="type">
               <!-- <el-input v-model="custom.type" placeholder="输入店铺类型，如：奶茶店、网咖、烧烤店等"></el-input> -->
@@ -83,7 +86,10 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="店铺负责人" prop="header">
-              <el-input v-model="custom.header" placeholder="请输入负责人姓名"></el-input>
+              <el-input
+                v-model="custom.header"
+                placeholder="请输入负责人姓名"
+              ></el-input>
             </el-form-item>
             <el-form-item label="性别" prop="sex">
               <el-radio-group v-model="custom.sex">
@@ -92,18 +98,50 @@
               </el-radio-group>
             </el-form-item>
             <el-form-item label="联系方式(手机)" prop="phone">
-              <el-input v-model="custom.phone" placeholder="请输入手机号"></el-input>
+              <el-input
+                v-model="custom.phone"
+                placeholder="请输入手机号"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="店铺图片" prop="url">
+              <div id="upload">
+                <el-upload
+                  prop="photo"
+                  action="/apis/upload"
+                  :limit="1"
+                  :on-remove="uploadRemove"
+                  :on-success="uploadSuccess"
+                  :before-upload="uploadBefore"
+                  accept="image/*"
+                >
+                  <el-button size="mini" type="primary" plain=""
+                    >点击上传</el-button
+                  >
+                  <div slot="tip">
+                    只能上传图片，且不超过5000KB
+                  </div>
+                </el-upload>
+              </div>
             </el-form-item>
             <el-form-item label="社会信用代码" prop="socialCreditCode">
-              <el-input v-model="custom.socialCreditCode" placeholder="请输入店铺名称"></el-input>
+              <el-input
+                v-model="custom.socialCreditCode"
+                placeholder="请输入店铺名称"
+              ></el-input>
             </el-form-item>
             <el-form-item label>
-              <el-button type="success" v-model="custom.submit" @click="submitForm('custom')">提交</el-button>
+              <el-button
+                type="success"
+                v-model="custom.submit"
+                @click="submitForm('custom')"
+                >提交</el-button
+              >
               <el-button type="primary" plain>返回</el-button>
             </el-form-item>
           </el-form>
         </div>
       </div>
+      <!-- <img :src="require('D:/GraduationPhoto/1614089772483_宾馆.jpg')"/> -->
     </div>
     <!-- <public-food></public-food> -->
     <public-foot-mini></public-foot-mini>
@@ -118,7 +156,7 @@ import addCustomApi from "../../api/postRequest.js";
 export default {
   name: "custom",
   components: {
-    publicFootMini
+    publicFootMini,
   },
   data() {
     var validateName = (rule, value, callback) => {
@@ -186,7 +224,7 @@ export default {
         header: [{ validator: validateHeader, trigger: "change" }],
         sex: [{ validator: validateSex, trigger: "change" }],
         phone: [{ validator: validatePhone, trigger: "change" }],
-        socialCreditCode: [{ validator: validateCode, trigger: "change" }]
+        socialCreditCode: [{ validator: validateCode, trigger: "change" }],
       },
       custom: {
         name: "",
@@ -198,25 +236,46 @@ export default {
         user: "",
         sex: "",
         phone: "",
+        photo: "",
         socialCreditCode: "",
-        isCus: "未定制"
+        isCus: "未定制",
       },
       mapId: "BMap-" + parseInt(Date.now() + Math.random()),
       imgs: [],
       imgData: {
-        accept: "image/gif, image/jpeg, image/png, image/jpg"
+        accept: "image/gif, image/jpeg, image/png, image/jpg",
       },
       options: options,
       //记录所i在地区和详细地址
       address1: "",
       address2: "",
-      customUrl: ""
+      customUrl: "",
     };
   },
   mounted() {
     this.initMap();
   },
   methods: {
+    //图片上传
+    uploadRemove(file) {
+      return this.$confirm(`确定移除 ${file.name}？`);
+    },
+    uploadSuccess(res) {
+      console.log(res);
+      this.custom.photo = res.data.path;
+      this.$message({
+        message: "图片上传成功",
+        type: "success",
+        duration: 1800,
+      });
+    },
+    uploadBefore(file) {
+      let limitMax = 5000 * 1024;
+      if (file.size > limitMax) {
+        this.$messageTips("大小超出限制");
+        return false;
+      }
+    },
     //获取address的值
     handleChange1(value) {
       value = value || "安徽省滁州市南谯区";
@@ -232,19 +291,19 @@ export default {
     },
     submitForm(formName) {
       this.$router.push("/merchartContral/merConManager/merConManagerOuter");
-      this.$refs[formName].validate(val => {
+      this.$refs[formName].validate((val) => {
         if (val) {
           this.custom.address = this.address1;
           this.custom.user = this.$store.state.username;
           var data = this.custom;
           console.log(data);
           //提交后台
-          addCustomApi.merAddCustom(data).then(res => {
+          addCustomApi.merAddCustom(data).then((res) => {
             console.log(res.data);
             this.$message({
               message: "商铺录入成功,可继续定制",
               type: "success",
-              duration: 1800
+              duration: 1800,
             });
             this.$refs[formName].resetFields();
           });
@@ -252,7 +311,7 @@ export default {
           this.$message({
             message: "wait...",
             type: "warning",
-            duration: 2000
+            duration: 2000,
           });
           return false;
         }
@@ -281,21 +340,21 @@ export default {
                 this.$message({
                   message: "地址未解析成功",
                   type: "error",
-                  duration: 2000
+                  duration: 2000,
                 });
               }
             },
             "滁州市"
           );
         })
-        .catch(err => {
+        .catch((err) => {
           console.log("地图加载失败");
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 @import "../../assets/css/merchartCss/merConCustom.scss";
 </style>

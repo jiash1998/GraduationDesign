@@ -18,8 +18,8 @@
               :key="index"
             >
               <div class="storeImg">
-                <!-- <img :src="item.url" /> -->
-                 <img src="../../assets/img/chart.png" />
+                <img :src="require(item.photo)" />
+                 <!-- <img :src="item.photo"/> -->
               </div>
               <div class="storeCon">
                 <p id="p2">{{ item.name }}</p>
@@ -192,6 +192,9 @@ export default {
           let value = res.data.value
           console.log(res.data);
           for (const i of value) {
+            // i.photo = require(i.photo);
+            console.log(i.photo);
+            console.log(require(i.photo));
             //获取用户全部定制
             this.custom.push(i);
 
@@ -237,7 +240,7 @@ export default {
       //sessionStorage如何存放数组
       var customObj = JSON.stringify(this.custom[index]);
       sessionStorage.customObj = customObj;
-      this.$router.push("/merchartContral/Son2Manager/Son2_2ManageInner");
+      this.$router.push("/merchartContral/merConManager/merConManageInner");
       this.$router.go(0);
     },
     //时间获取
