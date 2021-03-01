@@ -262,7 +262,7 @@ export default {
     },
     uploadSuccess(res) {
       console.log(res);
-      this.custom.photo = res.data.path;
+      this.custom.photo = res.data.name;
       this.$message({
         message: "图片上传成功",
         type: "success",

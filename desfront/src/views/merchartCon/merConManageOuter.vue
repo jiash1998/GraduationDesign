@@ -18,8 +18,7 @@
               :key="index"
             >
               <div class="storeImg">
-                <img :src="require(item.photo)" />
-                 <!-- <img :src="item.photo"/> -->
+                <img :src="require('../../assets/img/'+item.photo)"/>
               </div>
               <div class="storeCon">
                 <p id="p2">{{ item.name }}</p>
@@ -152,6 +151,8 @@ export default {
   },
   data() {
     return {
+      //
+      url:'../../assets/img/',
       //定制表
       custom: [],
       //骨架屏
@@ -193,8 +194,6 @@ export default {
           console.log(res.data);
           for (const i of value) {
             // i.photo = require(i.photo);
-            console.log(i.photo);
-            console.log(require(i.photo));
             //获取用户全部定制
             this.custom.push(i);
 

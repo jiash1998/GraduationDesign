@@ -63,6 +63,42 @@ router.get("/getAllNotice", (req, res) => {
   });
 });
 
+//根据用户名获取个人资料
+router.post("/getUserByUsername", (req, res) => {
+  console.log("getUserByUsername", req.body);
+  operateDB.getUserByUsername(req.body, (err, data) => {
+    if (err) {
+      return res.json({
+        status: "获取失败",
+        msg: err,
+      });
+    }
+    return res.json({
+      status: "200",
+      value: data,
+      msg: "获取成功",
+    });
+  });
+});
+
+//修改个人资料
+router.post("/updateUserByName", (req, res) => {
+  console.log("updateUserByName", req.body);
+  operateDB.updateUserByName(req.body, (err, data) => {
+    if (err) {
+      return res.json({
+        status: "修改失败",
+        msg: err,
+      });
+    }
+    return res.json({
+      status: "200",
+      value: data,
+      msg: "修改成功",
+    });
+  });
+});
+
 //管理员模块
 //发送公告
 router.post("/insertNotice", (req, res) => {
@@ -179,21 +215,27 @@ router.post(
   "/upload",
   multer({
     //设置文件存储路径
-    dest: "D:/GraduationPhoto/",
+    dest: "D:/GraduationDesign/desfront/src/assets/img/",
   }).array("file", 1),
   function (req, res, next) {
     let files = req.files;
     let file = files[0];
     let fileInfo = {};
     let path =
-      "D:/GraduationPhoto/" + Date.now().toString() + "_" + file.originalname;
+      "D:/GraduationDesign/desfront/src/assets/img/" +
+      Date.now().toString() +
+      "_" +
+      file.originalname;
       console.log(path);
-    fs.renameSync("D:/GraduationPhoto/" + file.filename, path);
+    fs.renameSync(
+      "D:/GraduationDesign/desfront/src/assets/img/" + file.filename,
+      path
+    );
     //获取文件基本信息
     fileInfo.type = file.mimetype;
     fileInfo.name = file.originalname;
     fileInfo.size = file.size;
-    fileInfo.path = path;
+    fileInfo.path = file.originalname;
     return res.json({
       code: 0,
       msg: "OK",
@@ -234,6 +276,24 @@ router.post("/addFeedback", (req, res) => {
       status: "200",
       value: data,
       msg: "获取成功",
+    });
+  });
+});
+
+//根据社会信用代码删除店铺
+router.post("/delCustomBySocialCode", (req, res) => {
+  console.log("delCustomBySocialCode:", req.body);
+  operateDB.delCustomBySocialCode(req.body, (err, data) => {
+    if (err) {
+      return res.json({
+        status: "删除失败",
+        msg: err,
+      });
+    }
+    return res.json({
+      status: "200",
+      value: data,
+      msg: "删除成功",
     });
   });
 });

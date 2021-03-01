@@ -48,6 +48,36 @@ exports.getAllNotice = (callback) => {
     });
 };
 
+//根据用户名获取个人资料1
+exports.getUserByUsername = (data, callback) => {
+  console.log("getUserByUsername");
+  AllDB.users
+    .findOne({ username: data.username })
+    .then((pro) => {
+      console.log("获取成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("获取失败", err);
+      callback(err);
+    });
+};
+
+//修改个人资料
+exports.updateUserByName = (data, callback) => {
+  console.log("updateUserByName", data);
+  AllDB.users
+    .save({_id:data._id},{$set:{email:true}})
+    .then((pro) => {
+      console.log("修改成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("修改失败", err);
+      callback(err);
+    });
+};
+
 //商户
 //注册店铺1
 exports.addCustom = (data, callback) => {
@@ -93,6 +123,22 @@ exports.addFeedback = (data, callback) => {
       callback(err);
     });
 };
+
+//删除店铺模块1
+exports.delCustomBySocialCode = (data, callback) => {
+  console.log("delCustomBySocialCode:", data);
+  AllDB.customs
+    .remove({ socialCreditCode: data.code })
+    .then((res) => {
+      console.log(res);
+      callback(null, res);
+    })
+    .catch((err) => {
+      console.log(err);
+      callback(err);
+    });
+};
+
 //管理员模块
 //发送公告1
 exports.insertNotice = (data, callback) => {

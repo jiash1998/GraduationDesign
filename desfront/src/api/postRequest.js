@@ -43,13 +43,13 @@ export default {
   //提交session保存姓名，获取个人资料
   getUserByUsername(name) {
     return interceptor(
-      postString("/getUserByUsername", methodsAll, name, headersAll)
+      postString("/apis/getUserByUsername", methodsAll, name, headersAll)
     );
   },
   //修改个人资料
   updateUserByName(name) {
     return interceptor(
-      postString("/updateUserByName", methodsAll, name, headersAll)
+      postString("/apis/updateUserByName", methodsAll, name, headersAll)
     );
   },
 
@@ -161,7 +161,7 @@ export default {
   //删除店铺
   delCustomBySocialCode(data) {
     return interceptor(
-      postStringJson("/delCustomBySocialCode", methodsAll, data, headersJson)
+      postStringJson("/apis/delCustomBySocialCode", methodsAll, data, headersJson)
     );
   },
   //支付宝付款店铺

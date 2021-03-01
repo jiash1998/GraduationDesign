@@ -6,35 +6,42 @@
         <p>基础资料</p>
       </div>
       <div class="right">
-        <div class="info" :class="{displayCha:isCha}">
+        <div class="info" :class="{ displayCha: isCha }">
           <p>
             <span>用户名：</span>
-            {{userArr.username}}
+            {{ userArr.username }}
             <span
               class="editor"
-              :class="{displayCha:isCha}"
+              :class="{ displayCha: isCha }"
               @click="changeDis"
-            >编辑</span>
+              >编辑</span
+            >
           </p>
           <p>
             <span>类型：</span>
-            {{userArr.identity}}
+            {{ userArr.identity }}
           </p>
           <p>
             <span>密码：</span>
-            {{userArr.password}}
+            {{ userArr.password }}
           </p>
           <p>
             <span>邮箱：</span>
-            {{userArr.email}}
+            {{ userArr.email }}
           </p>
           <p>
             <span>手机号：</span>
-            {{userArr.phone}}
+            {{ userArr.phone }}
           </p>
         </div>
-        <div class="form" :class="{displayCha:!isCha}">
-          <el-form :model="user" ref="user" label-width="120px" label-position="left" size="small">
+        <div class="form" :class="{ displayCha: !isCha }">
+          <el-form
+            :model="user"
+            ref="user"
+            label-width="120px"
+            label-position="left"
+            size="small"
+          >
             <el-form-item label="用户名">
               <el-input v-model="user.username"></el-input>
             </el-form-item>
@@ -45,7 +52,11 @@
               </el-radio-group>
             </el-form-item>
             <el-form-item label="密码">
-              <el-input v-model="user.password" type="password" show-password></el-input>
+              <el-input
+                v-model="user.password"
+                type="password"
+                show-password
+              ></el-input>
             </el-form-item>
             <el-form-item label="邮箱">
               <el-input v-model="user.email"></el-input>
@@ -54,7 +65,9 @@
               <el-input v-model="user.phone"></el-input>
             </el-form-item>
             <el-form-item label>
-              <el-button type="primary" @click="changeUser(vm)" plain>保存</el-button>
+              <el-button type="primary" @click="changeUser" plain
+                >保存</el-button
+              >
               <el-button type="success" @click="changeDis">关闭</el-button>
             </el-form-item>
           </el-form>
@@ -74,7 +87,7 @@ import updateUserByNameApi from "../api/postRequest.js";
 export default {
   name: "account",
   components: {
-    publicFootMini
+    publicFootMini,
   },
   data() {
     return {
@@ -83,12 +96,12 @@ export default {
         password: "",
         email: "",
         phone: "",
-        identity: ""
+        identity: "",
       },
       vm: this,
       userArr: {},
       //状态改变
-      isCha: false
+      isCha: false,
     };
   },
   mounted() {
@@ -96,22 +109,44 @@ export default {
   },
   methods: {
     getInfo() {
-      var data = { username: sessionStorage.getItem("userName") };
+      var data = { username: sessionStorage.getItem("username") };
+      // console.log(data);
       getUserByUsernameApi
         .getUserByUsername(data)
-        .then(res => {
-          // console.log(res.data);
-          this.user = res.data;
-          this.userArr = res.data;
+        .then((res) => {
+          console.log(res.data);
+          this.user = res.data.value;
+          this.userArr = res.data.value;
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     },
     changeDis() {
       this.isCha = !this.isCha;
-    }
-  }
+    },
+    changeUser() {
+      console.log(this.user);
+      updateUserByNameApi
+        .updateUserByName(this.user)
+        .then((res) => {
+          console.log(res.data);
+          this.$message({
+            message: "保存成功",
+            type: "success",
+            duration: 1500,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          this.$message({
+            message: "保存失败",
+            type: "error",
+            duration: 1500,
+          });
+        });
+    },
+  },
 };
 </script>
 
