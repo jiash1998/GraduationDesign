@@ -63,11 +63,11 @@ exports.getUserByUsername = (data, callback) => {
     });
 };
 
-//修改个人资料
+//修改个人资料1ing
 exports.updateUserByName = (data, callback) => {
   console.log("updateUserByName", data);
   AllDB.users
-    .save({_id:data._id},{$set:{email:true}})
+    .save({ _id: data._id }, { $set: { email: true } })
     .then((pro) => {
       console.log("修改成功", pro);
       callback(null, pro);
@@ -102,6 +102,24 @@ exports.getAllCustom = (data, callback) => {
     .then((res) => {
       console.log(res.length);
       callback(null, res);
+    })
+    .catch((err) => {
+      console.log(err);
+      callback(err);
+    });
+};
+
+//根据用户名id获取个人通知1
+exports.getByPNoticeUsername = (data, callback) => {
+  console.log("getByPNoticeUsername:", data);
+  AllDB.users
+    .findOne({ username: data.username })
+    .then((res) => {
+      console.log("getByPNoticeUsername", res);
+      AllDB.noticeselfs.find({ userId: res._id }).then((res) => {
+        console.log(res);
+        callback(null, res);
+      });
     })
     .catch((err) => {
       console.log(err);
@@ -226,6 +244,27 @@ exports.addDriver = (data, callback) => {
     });
 };
 
+//给用户发送通知1
+exports.addPersonalNotice = (data, callback) => {
+  console.log("addPersonalNotice:", data);
+  var date = new Date();
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var day = date.getDate();
+  var time = year + "-" + month + "-" + day;
+  data.time = time;
+  console.log(data);
+  AllDB.noticeselfs
+    .insertMany(data)
+    .then((pro) => {
+      console.log("保存成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("保存失败", err);
+      callback(err);
+    });
+};
 //创建组织
 exports.createOrgan = (data, callback) => {
   AllDB.organs
@@ -247,33 +286,6 @@ exports.createOrgan = (data, callback) => {
     })
     .catch((err) => {
       console.log("保存失败", err);
-      callback(err);
-    });
-};
-
-//获取名下组织
-exports.getOrganByName = (data, callback) => {
-  AllDB.organs
-    .findOne({ organBoss: data.username })
-    .then((res) => {
-      console.log(res);
-      callback(null, res);
-    })
-    .catch((err) => {
-      console.log(err);
-      callback(err);
-    });
-};
-
-//获取员工假条
-exports.getLeaveInfo = (data, callback) => {
-  AllDB.leaves
-    .find({ organCode: data.organCode })
-    .then((res) => {
-      callback(null, res);
-    })
-    .catch((err) => {
-      console.log(err);
       callback(err);
     });
 };
@@ -315,54 +327,7 @@ exports.removeOragnUser = (data, callback) => {
     });
 };
 
-//获取员工打卡情况
-exports.getClockInfo = (data, callback) => {
-  AllDB.clocks
-    .find({ organCode: data.organCode })
-    .then((res) => {
-      console.log(res);
-      callback(null, res);
-    })
-    .catch((er) => {
-      console.log(err);
-      callback(err);
-    });
-};
 //用户模块
-//获取所有组织
-exports.getAllOrgan = (callback) => {
-  AllDB.organs
-    .find({})
-    .then((res) => {
-      //   console.log(res);
-      callback(null, res);
-    })
-    .catch((err) => {
-      console.log(err);
-      callback(err);
-    });
-};
-//获取个人信息
-exports.getInfoSelf = (data, callback) => {
-  console.log(data);
-  let obj = {};
-  AllDB.users
-    .findOne({ username: data.username })
-    .then((res) => {
-      obj = res;
-      if (res.organName != "none" && res.organCode != "none") {
-        AllDB.organs.findOne({ organCode: res.organCode }).then((res) => {
-          callback(null, { user: obj, organ: res });
-        });
-      } else {
-        callback(null, obj);
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-      callback(err);
-    });
-};
 //加入组织
 exports.addOrgan = (data, callback) => {
   AllDB.users
@@ -417,42 +382,4 @@ exports.clockin = (data, callback) => {
         callback(err);
       });
   }
-};
-
-//获取当日打卡信息
-exports.getClockToday = async (data, callback) => {
-  let res = await AllDB.clocks.find({
-    username: data.username,
-  });
-  callback(null, res);
-};
-
-//请假
-exports.leave = (data, callback) => {
-  console.log("请假:", data);
-
-  AllDB.leaves
-    .insertMany(data)
-    .then((pro) => {
-      console.log("保存成功", pro);
-      callback(null, pro);
-    })
-    .catch((err) => {
-      console.log("保存失败", err);
-      callback(err);
-    });
-};
-
-//获取自己的请假信息
-exports.getLeaves = (data, callback) => {
-  AllDB.leaves
-    .find({ username: data.username })
-    .then((pro) => {
-      console.log("保存成功", pro);
-      callback(null, pro);
-    })
-    .catch((err) => {
-      console.log("保存失败", err);
-      callback(err);
-    });
 };

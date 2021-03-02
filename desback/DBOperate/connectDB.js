@@ -139,6 +139,29 @@ var SchemaCustom = new Schema({
   },
 });
 
+//个人通知表
+var SchemaNoticeSelf = new Schema({
+  userId: {
+    type: String,
+    required: true,
+  },
+  title: {
+    type: String,
+    required: true,
+    default: "",
+  },
+  content: {
+    type: String,
+    required: true,
+    default: "",
+  },
+  time: {
+    type: String,
+    required: true,
+    default: "",
+  },
+});
+
 //反馈表
 var SchemaFeedback = new Schema({
   username: {
@@ -168,6 +191,7 @@ module.exports = {
   users: mongoose.model("users", SchemaUser),
   drivers: mongoose.model("drivers", SchemaDriver),
   notices: mongoose.model("notices", SchemaNotice),
+  noticeselfs: mongoose.model("noticeselfs", SchemaNoticeSelf),
   customs: mongoose.model("customs", SchemaCustom),
   feedbacks: mongoose.model("feedbacks", SchemaFeedback),
 };

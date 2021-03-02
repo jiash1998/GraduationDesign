@@ -6,7 +6,9 @@
           <el-menu-item index="0">全部公告</el-menu-item>
           <el-menu-item index="2">商户公告</el-menu-item>
           <el-menu-item index="1">紧急公告</el-menu-item>
-          <el-menu-item index="3" v-if="noticeSelf">个人通知</el-menu-item>
+          <!-- <el-menu-item index="3" v-if="noticeSelf">个人通知</el-menu-item>
+           -->
+          <el-menu-item index="3">个人通知</el-menu-item>
         </el-menu>
       </div>
       <div class="notice_content">
@@ -30,7 +32,7 @@
               <div class="content" v-for="(item,index) in noticeList" :key="index" v-else>
                 <p id="p1">{{item.title}}</p>
                 <p id="p2">{{item.content}}</p>
-                <el-tag type="primary">个人通知</el-tag>
+                <el-tag type="primary">{{item.time}}</el-tag>
               </div>
             </div>
           </div>
@@ -80,12 +82,12 @@ export default {
   mounted() {
     this.getInfo();
     if (
-      sessionStorage.getItem("userName") &&
+      sessionStorage.getItem("username") &&
       sessionStorage.getItem("identity") != "管理员"
     ) {
       this.noticeSelf = true;
     }
-    this.userName = sessionStorage.getItem("userName");
+    this.userName = sessionStorage.getItem("username");
     this.getSelfNotice();
   },
   methods: {
@@ -105,7 +107,6 @@ export default {
           break;
         case "3":
           this.noticeList = this.selfList;
-          localStorage.removeItem("isDot");
           break;
         // default:
         //   this.noticeList = this.allList;
@@ -162,8 +163,8 @@ export default {
       getByPNoticeUsernameApi
         .getByPNoticeUsername(data)
         .then(res => {
-          this.selfNull = this.infoIsNull(res.data, this.selfNull);
-          this.selfList = res.data;
+          this.selfNull = this.infoIsNull(res.data.value, this.selfNull);
+          this.selfList = res.data.value;
         })
         .catch(err => {
           console.log(err);

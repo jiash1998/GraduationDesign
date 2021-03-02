@@ -190,6 +190,24 @@ router.post("/addDriver", (req, res) => {
   });
 });
 
+//给用户发送通知
+router.post("/addPersonalNotice", (req, res) => {
+  console.log("addPersonalNotice", req.body);
+  operateDB.addPersonalNotice(req.body, (err, data) => {
+    if (err) {
+      return res.json({
+        status: "保存错误",
+        msg: err,
+      });
+    }
+    return res.json({
+      status: "200",
+      value: data,
+      msg: "保存成功",
+    });
+  });
+});
+
 //商戶模块
 //店铺注册接口
 router.post("/addCustom", (req, res) => {
@@ -209,6 +227,23 @@ router.post("/addCustom", (req, res) => {
   });
 });
 
+//根据用户名id获取个人通知
+router.post("/getByPNoticeUsername", (req, res) => {
+  console.log("getByPNoticeUsername", req.body);
+  operateDB.getByPNoticeUsername(req.body, (err, data) => {
+    if (err) {
+      return res.json({
+        status: "获取错误",
+        msg: err,
+      });
+    }
+    return res.json({
+      status: "200",
+      value: data,
+      msg: "获取成功",
+    });
+  });
+});
 
 //图片上传接口
 router.post(

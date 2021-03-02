@@ -63,7 +63,7 @@ export default {
   //根据用户 id 发生通知
   addPersonalNotice(data) {
     return interceptor(
-      postString("/addPersonalNotice", methodsAll, data, headersAll)
+      postString("/apis/addPersonalNotice", methodsAll, data, headersAll)
     );
   },
   //注册驾驶员
@@ -148,7 +148,7 @@ export default {
   //根据用户名获取通知
   getByPNoticeUsername(data) {
     return interceptor(
-      postString("/getByPNoticeUsername", methodsAll, data, headersAll)
+      postString("/apis/getByPNoticeUsername", methodsAll, data, headersAll)
     );
   },
   //根据通知 id 设为已读

@@ -104,8 +104,8 @@ export default {
     },
     postNotSelf(index) {
       this.dialogVisible = true;
-      // console.log(index);
-      this.notice.userId = index.userId;
+      console.log(index);
+      this.notice.userId = index._id;
     },
     //发送
     postNotice(form) {
@@ -113,11 +113,12 @@ export default {
       this.$refs[form].validate(val => {
         if (val) {
           var data = this.notice;
+          console.log(data);
           addPersonalNoticeApi
             .addPersonalNotice(data)
             .then(res => {
               console.log(res.data);
-              if (res.data === "ok") {
+              if (res.data.msg === "保存成功") {
                 this.$message({
                   message: "发送成功",
                   type: "success",
