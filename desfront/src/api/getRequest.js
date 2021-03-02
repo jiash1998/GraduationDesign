@@ -45,7 +45,7 @@ export default {
   },
   //获取店铺所有信息
   getAllCustom() {
-    return interceptor(getString("/getAllCustom", methodAll));
+    return interceptor(getString("/apis/getAllCustom", methodAll));
   },
   //获取于驾驶员通信
   // getAllDriverNotice(){

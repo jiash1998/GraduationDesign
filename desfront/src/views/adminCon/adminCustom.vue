@@ -91,12 +91,12 @@ export default {
     selStore: debounce(
       vm => {
         var data = vm.findStore;
-
+        console.log(data);
         getCustomByNameApi
           .getCustomByName(data)
           .then(res => {
-            // console.log(res.data);
-            vm.storeInfo = res.data;
+            console.log(res.data);
+            vm.storeInfo = res.data.value;
           })
           .catch(err => {
             console.log(err);
@@ -110,7 +110,7 @@ export default {
         .getAllCustom()
         .then(res => {
           console.log(res.data);
-          this.storeInfo = res.data;
+          this.storeInfo = res.data.value;
         })
         .catch(err => {
           console.log(err);

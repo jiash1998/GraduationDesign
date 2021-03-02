@@ -146,13 +146,6 @@
                   placeholder="请输入手机号"
                 ></el-input>
               </el-form-item>
-              <el-form-item label="营业执照">
-                <el-input
-                  v-model="editorCus.photo"
-                  type="file"
-                  disabled
-                ></el-input>
-              </el-form-item>
               <el-form-item label="社会信用代码" prop="socialCreditCode">
                 <el-input
                   v-model="editorCus.socialCreditCode"
@@ -272,7 +265,7 @@
                 <span>300 Kg</span>。
               </li>
               <li>
-                <router-link tag="a" to="/Son4ServiceDet"
+                <router-link tag="a" to="/merchartContral/merConServiceDet"
                   >了解详情↩</router-link
                 >
               </li>

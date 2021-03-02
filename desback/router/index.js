@@ -208,6 +208,43 @@ router.post("/addPersonalNotice", (req, res) => {
   });
 });
 
+//获取所有店铺信息
+router.get("/getAllCustom", (req, res) => {
+  console.log("getAllCustom");
+  operateDB.getAllCustom((err, data) => {
+    if (err) {
+      return res.json({
+        status: "获取错误",
+        msg: err,
+      });
+    }
+    return res.json({
+      status: "200",
+      value: data,
+      msg: "获取成功",
+    });
+  });
+});
+
+//根据店铺名搜索店铺
+router.post("/getCustomByName", (req, res) => {
+  console.log("getCustomByName", req.body);
+  operateDB.getCustomByName(req.body, (err, data) => {
+    if (err) {
+      return res.json({
+        status: "获取错误",
+        msg: err,
+      });
+    }
+    return res.json({
+      status: "200",
+      value: data,
+      msg: "获取成功",
+    });
+  });
+});
+
+
 //商戶模块
 //店铺注册接口
 router.post("/addCustom", (req, res) => {

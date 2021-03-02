@@ -73,7 +73,7 @@ export default {
             .getAllCustom()
             .then(res => {
               //获取全部定制相关信息，并以对象形式赋值
-              for (const i of res.data) {
+              for (const i of res.data.value) {
                 this.address.push({
                   name: i.name,
                   address: i.address + i.addressDetail,

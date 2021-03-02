@@ -99,7 +99,7 @@ export default {
   //根据店铺名搜索店铺
   getCustomByName(data) {
     return interceptor(
-      postString("/getCustomByName", methodsAll, data, headersAll)
+      postString("/apis/getCustomByName", methodsAll, data, headersAll)
     );
   },
   //垃圾量录入

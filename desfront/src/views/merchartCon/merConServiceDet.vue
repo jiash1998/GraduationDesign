@@ -34,7 +34,7 @@
           </el-table>
         </div>
         <div class="con4">
-          <router-link to="/merchartContral/Son2Manager/Son2_2ManageInner">
+          <router-link to="/merchartContral/merConManager/merConManageInner">
             <el-button type="primary" size="small" plain>返回</el-button>
           </router-link>
         </div>

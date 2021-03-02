@@ -96,6 +96,14 @@ const routes = [
         },
       },
       {
+        component: MerConServiceDet,
+        name: "merConServiceDet",
+        path: "/merchartContral/merConServiceDet",
+        meta: {
+          requireAuth: true,
+        },
+      },
+      {
         component: MerConManager,
         name: "merConManager",
         path: "/merchartContral/merConManager",

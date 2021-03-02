@@ -218,6 +218,36 @@ exports.getAllReply = (callback) => {
     });
 };
 
+//获取所有店铺信息1
+exports.getAllCustom = (callback) => {
+  console.log("getAllCustom");
+  AllDB.customs
+    .find()
+    .then((pro) => {
+      console.log("获取成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("获取失败", err);
+      callback(err);
+    });
+};
+
+//根据店铺名搜索店铺1
+exports.getCustomByName = (data, callback) => {
+  console.log("getCustomByName",data);
+  AllDB.customs
+    .find({ name:data.name})
+    .then((pro) => {
+      console.log("获取成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("获取失败", err);
+      callback(err);
+    });
+};
+
 //注册驾驶员1
 exports.addDriver = (data, callback) => {
   console.log("addDriver:", data);

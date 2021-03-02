@@ -126,7 +126,7 @@
             <el-form-item label="社会信用代码" prop="socialCreditCode">
               <el-input
                 v-model="custom.socialCreditCode"
-                placeholder="请输入店铺名称"
+                placeholder="请输入营业执照标注的社会信用代码"
               ></el-input>
             </el-form-item>
             <el-form-item label>
