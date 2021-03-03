@@ -244,11 +244,10 @@ router.post("/getCustomByName", (req, res) => {
   });
 });
 
-
 //商戶模块
 //店铺注册接口
 router.post("/addCustom", (req, res) => {
-  console.log("addCustom",req.body);
+  console.log("addCustom", req.body);
   operateDB.addCustom(req.body, (err, data) => {
     if (err) {
       return res.json({
@@ -298,7 +297,7 @@ router.post(
       Date.now().toString() +
       "_" +
       file.originalname;
-      console.log(path);
+    console.log(path);
     fs.renameSync(
       "D:/GraduationDesign/desfront/src/assets/img/" + file.filename,
       path
@@ -317,9 +316,9 @@ router.post(
 );
 
 //获取名下所有店铺接口
-router.post("/getAllCustom", (req, res) => {
-  console.log("getAllCustom:", req.body);
-  operateDB.getAllCustom(req.body, (err, data) => {
+router.post("/getAllCustomSelf", (req, res) => {
+  console.log("getAllCustomSelf:", req.body);
+  operateDB.getAllCustomSelf(req.body, (err, data) => {
     if (err) {
       return res.json({
         status: "发送错误",

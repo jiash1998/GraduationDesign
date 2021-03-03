@@ -140,9 +140,10 @@ export default {
       postString("/apis/addFeedback", methodsAll, data, headersAll)
     );
   },
-  getAllCustom(data) {
+  //获取名下店铺
+  getAllCustomSelf(data) {
     return interceptor(
-      postString("/apis/getAllCustom", methodsAll, data, headersAll)
+      postString("/apis/getAllCustomSelf", methodsAll, data, headersAll)
     );
   },
   //根据用户名获取通知
@@ -161,7 +162,12 @@ export default {
   //删除店铺
   delCustomBySocialCode(data) {
     return interceptor(
-      postStringJson("/apis/delCustomBySocialCode", methodsAll, data, headersJson)
+      postStringJson(
+        "/apis/delCustomBySocialCode",
+        methodsAll,
+        data,
+        headersJson
+      )
     );
   },
   //支付宝付款店铺

@@ -95,8 +95,8 @@ exports.addCustom = (data, callback) => {
 };
 
 //获取名下店铺1
-exports.getAllCustom = (data, callback) => {
-  console.log("getAllCustom:", data);
+exports.getAllCustomSelf = (data, callback) => {
+  console.log("getAllCustomSelf:", data);
   AllDB.customs
     .find({ user: data.username })
     .then((res) => {
@@ -221,23 +221,19 @@ exports.getAllReply = (callback) => {
 //获取所有店铺信息1
 exports.getAllCustom = (callback) => {
   console.log("getAllCustom");
-  AllDB.customs
-    .find()
-    .then((pro) => {
-      console.log("获取成功", pro);
-      callback(null, pro);
-    })
-    .catch((err) => {
-      console.log("获取失败", err);
-      callback(err);
-    });
+  AllDB.customs.find().then(pro=>{
+    console.log("获取成功", pro);
+    callback(null, pro);
+  }).catch(err=>{
+    callback(err);
+  })
 };
 
 //根据店铺名搜索店铺1
 exports.getCustomByName = (data, callback) => {
   console.log("getCustomByName",data);
   AllDB.customs
-    .find({ name:data.name})
+    .find({name:data.name})
     .then((pro) => {
       console.log("获取成功", pro);
       callback(null, pro);

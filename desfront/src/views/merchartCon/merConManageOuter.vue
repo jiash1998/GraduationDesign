@@ -140,7 +140,7 @@
 
 <script>
 import publicFootMini from "../../components/publicFootMini.vue";
-import getAllCustomApi from "../../api/postRequest.js";
+import getAllCustomSelfApi from "../../api/postRequest.js";
 import SkeletonScreen from "../../components/skeletonScreen.vue";
 
 export default {
@@ -187,8 +187,8 @@ export default {
     async getData() {
       let name ={"username": sessionStorage.getItem("username")};
       console.log("name", name);
-      await getAllCustomApi
-        .getAllCustom(name)
+      await getAllCustomSelfApi
+        .getAllCustomSelf(name)
         .then((res) => {
           let value = res.data.value
           console.log(res.data);
