@@ -162,6 +162,55 @@ var SchemaNoticeSelf = new Schema({
   },
 });
 
+//驾驶员通知表
+var SchemaNoticeDriver = new Schema({
+  sender: {
+    type: String,
+    required: true,
+  },
+  receiver: {
+    type: String,
+    required: true,
+  },
+  title: {
+    type: String,
+    required: true,
+    default: "",
+  },
+  content: {
+    type: String,
+    required: true,
+    default: "",
+  },
+  time: {
+    type: String,
+    required: true,
+    default: "",
+  },
+});
+
+//GPS表
+var SchemaLatAndLon = new Schema({
+  driver: {
+    type: String,
+    required: true,
+  },
+  lon: {
+    type: String,
+    required: true,
+  },
+  lat: {
+    type: String,
+    required: true,
+    default: "",
+  },
+  time: {
+    type: String,
+    required: true,
+    default: "",
+  },
+});
+
 //反馈表
 var SchemaFeedback = new Schema({
   username: {
@@ -192,6 +241,8 @@ module.exports = {
   drivers: mongoose.model("drivers", SchemaDriver),
   notices: mongoose.model("notices", SchemaNotice),
   noticeselfs: mongoose.model("noticeselfs", SchemaNoticeSelf),
+  noticedrivers: mongoose.model("noticedrivers", SchemaNoticeDriver),
+  latandlons: mongoose.model("latandlons", SchemaLatAndLon),
   customs: mongoose.model("customs", SchemaCustom),
   feedbacks: mongoose.model("feedbacks", SchemaFeedback),
 };

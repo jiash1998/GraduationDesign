@@ -81,19 +81,19 @@ export default {
   //根据工号发送通知
   sendDriverNoticeToDriver(data) {
     return interceptor(
-      postString("/sendDriverNoticeToDriver", methodsAll, data, headersAll)
+      postString("/apis/sendDriverNoticeToDriver", methodsAll, data, headersAll)
     );
   },
   //根据工号获取一天内驾驶员收到通知
   getDriverNoticeByReceiveToday(data) {
     return interceptor(
-      postString("/getDriverNoticeByReceiveToday", methodsAll, data, headersAll)
+      postString("/apis/getDriverNoticeByReceiveToday", methodsAll, data, headersAll)
     );
   },
   //根据工号获取一天内驾驶员发送通知
   getDriverNoticeBySendToday(data) {
     return interceptor(
-      postString("/getDriverNoticeBySendToday", methodsAll, data, headersAll)
+      postString("/apis/getDriverNoticeBySendToday", methodsAll, data, headersAll)
     );
   },
   //根据店铺名搜索店铺

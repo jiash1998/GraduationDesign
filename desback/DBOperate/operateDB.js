@@ -221,19 +221,22 @@ exports.getAllReply = (callback) => {
 //获取所有店铺信息1
 exports.getAllCustom = (callback) => {
   console.log("getAllCustom");
-  AllDB.customs.find().then(pro=>{
-    console.log("获取成功", pro);
-    callback(null, pro);
-  }).catch(err=>{
-    callback(err);
-  })
+  AllDB.customs
+    .find()
+    .then((pro) => {
+      console.log("获取成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      callback(err);
+    });
 };
 
 //根据店铺名搜索店铺1
 exports.getCustomByName = (data, callback) => {
-  console.log("getCustomByName",data);
+  console.log("getCustomByName", data);
   AllDB.customs
-    .find({name:data.name})
+    .find({ name: data.name })
     .then((pro) => {
       console.log("获取成功", pro);
       callback(null, pro);
@@ -270,6 +273,58 @@ exports.addDriver = (data, callback) => {
     });
 };
 
+//给驾驶员发送通知1
+exports.sendDriverNoticeToDriver = (data, callback) => {
+  console.log("sendDriverNoticeToDriver:", data);
+  var date = new Date();
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var day = date.getDate();
+  var time = year + "-" + month + "-" + day;
+  data.time = time;
+  console.log(data);
+  AllDB.noticedrivers
+    .insertMany(data)
+    .then((pro) => {
+      console.log("保存成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("保存失败", err);
+      callback(err);
+    });
+};
+
+//根据工号获取一天内驾驶员收到通知1
+exports.getDriverNoticeByReceiveToday = (data, callback) => {
+  console.log("getDriverNoticeByReceiveToday", data);
+  AllDB.noticedrivers
+    .find({ receiver: data.receiver })
+    .then((pro) => {
+      console.log("获取成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("获取失败", err);
+      callback(err);
+    });
+};
+
+//根据工号获取一天内驾驶员发送通知1
+exports.getDriverNoticeBySendToday = (data, callback) => {
+  console.log("getDriverNoticeBySendToday", data);
+  AllDB.noticedrivers
+    .find({ sender: data.sender })
+    .then((pro) => {
+      console.log("获取成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("获取失败", err);
+      callback(err);
+    });
+};
+
 //给用户发送通知1
 exports.addPersonalNotice = (data, callback) => {
   console.log("addPersonalNotice:", data);
@@ -291,6 +346,52 @@ exports.addPersonalNotice = (data, callback) => {
       callback(err);
     });
 };
+
+//驾驶员模块
+//发送通知给管理员1
+exports.sendDriverNoticeToAdmin = (data, callback) => {
+  console.log("sendDriverNoticeToAdmin", data);
+  var date = new Date();
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var day = date.getDate();
+  var time = year + "-" + month + "-" + day;
+  data.time = time;
+  AllDB.noticedrivers
+    .insertMany(data)
+    .then((pro) => {
+      console.log("发送成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("发送失败", err);
+      callback(err);
+    });
+};
+
+//提交GPS
+exports.batchAddLatandlog = (data, callback) => {
+  console.log("batchAddLatandlog", data);
+  var date = new Date();
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var day = date.getDate();
+  var hour = date.getHours();
+  var minute = date.getMinutes();
+  var time = year + "-" + month + "-" + day + "-" + hour +":"+minute;
+  data.time = time;
+  AllDB.latandlons
+    .insertMany(data)
+    .then((pro) => {
+      console.log("发送成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("发送失败", err);
+      callback(err);
+    });
+};
+
 //创建组织
 exports.createOrgan = (data, callback) => {
   AllDB.organs
@@ -369,43 +470,4 @@ exports.addOrgan = (data, callback) => {
       console.log(err);
       callback(err);
     });
-};
-
-//打卡
-exports.clockin = (data, callback) => {
-  console.log("data:", data);
-
-  if (!data.todaEndDate && data.isEnd == "false") {
-    AllDB.clocks
-      .insertMany(data)
-      .then((pro) => {
-        console.log("保存成功1", pro);
-        callback(null, pro);
-      })
-      .catch((err) => {
-        console.log("保存失败1", err);
-        callback(err);
-      });
-  }
-  if (data.todayEndDate) {
-    AllDB.clocks
-      .update(
-        { username: data.username, todaStartDate: data.todaStartDate },
-        {
-          $set: {
-            todayEndDate: data.todayEndDate,
-            todayEndTime: data.todayEndTime,
-            isEnd: "true",
-          },
-        }
-      )
-      .then((pro) => {
-        console.log("更新成功", pro);
-        callback(null, pro);
-      })
-      .catch((err) => {
-        console.log("更新失败", err);
-        callback(err);
-      });
-  }
 };

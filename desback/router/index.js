@@ -190,6 +190,60 @@ router.post("/addDriver", (req, res) => {
   });
 });
 
+//给驾驶员发送通知
+router.post("/sendDriverNoticeToDriver", (req, res) => {
+  console.log(req.body);
+  operateDB.sendDriverNoticeToDriver(req.body, (err, data) => {
+    if (err) {
+      return res.json({
+        status: "发送错误",
+        msg: err,
+      });
+    }
+    return res.json({
+      status: "200",
+      value: data,
+      msg: "发送成功",
+    });
+  });
+});
+
+ //根据工号获取一天内驾驶员收到通知
+router.post("/getDriverNoticeByReceiveToday", (req, res) => {
+  console.log(req.body);
+  operateDB.getDriverNoticeByReceiveToday(req.body, (err, data) => {
+    if (err) {
+      return res.json({
+        status: "获取错误",
+        msg: err,
+      });
+    }
+    return res.json({
+      status: "200",
+      value: data,
+      msg: "获取成功",
+    });
+  });
+});
+
+ //根据工号获取一天内驾驶员发送通知
+router.post("/getDriverNoticeBySendToday", (req, res) => {
+  console.log(req.body);
+  operateDB.getDriverNoticeBySendToday(req.body, (err, data) => {
+    if (err) {
+      return res.json({
+        status: "获取错误",
+        msg: err,
+      });
+    }
+    return res.json({
+      status: "200",
+      value: data,
+      msg: "获取成功",
+    });
+  });
+});
+
 //给用户发送通知
 router.post("/addPersonalNotice", (req, res) => {
   console.log("addPersonalNotice", req.body);
@@ -240,6 +294,43 @@ router.post("/getCustomByName", (req, res) => {
       status: "200",
       value: data,
       msg: "获取成功",
+    });
+  });
+});
+
+//驾驶员模块
+//发送通知给管理员
+router.post("/sendDriverNoticeToAdmin", (req, res) => {
+  console.log("sendDriverNoticeToAdmin",req.body);
+  operateDB.sendDriverNoticeToAdmin(req.body, (err, data) => {
+    if (err) {
+      return res.json({
+        status: "发送错误",
+        msg: err,
+      });
+    }
+    return res.json({
+      status: "200",
+      value: data,
+      msg: "发送成功",
+    });
+  });
+});
+
+//提交GPS
+router.post("/batchAddLatandlog", (req, res) => {
+  console.log("batchAddLatandlog", req.body);
+  operateDB.batchAddLatandlog(req.body, (err, data) => {
+    if (err) {
+      return res.json({
+        status: "发送错误",
+        msg: err,
+      });
+    }
+    return res.json({
+      status: "200",
+      value: data,
+      msg: "发送成功",
     });
   });
 });

@@ -13,23 +13,44 @@
           :rules="rules1"
         >
           <el-form-item label="回收员工号" prop="username">
-            <el-input v-model="driver.username" placeholder="输入工号查询位置/通知"></el-input>
+            <el-input
+              v-model="driver.username"
+              placeholder="输入工号查询位置/通知"
+            ></el-input>
           </el-form-item>
           <el-form-item label>
-            <el-button type="primary" plain @click="getLocation(vm)">查询</el-button>
-            <el-button type="success" @click="openDialog('driver')">发消息</el-button>
+            <el-button type="primary" plain @click="getLocation(vm)"
+              >查询</el-button
+            >
+            <el-button type="success" @click="openDialog('driver')"
+              >发消息</el-button
+            >
             <el-button type="success" native-type="reset">清空</el-button>
             <!-- //弹框 -->
             <el-dialog title="发送通知" :visible.sync="showDialog">
-              <el-form label-position="left" label-width="40px" :model="notice" size="small">
+              <el-form
+                label-position="left"
+                label-width="40px"
+                :model="notice"
+                size="small"
+              >
                 <el-form-item label="标题">
-                  <el-input v-model="notice.title" placeholder="输入通知标题"></el-input>
+                  <el-input
+                    v-model="notice.title"
+                    placeholder="输入通知标题"
+                  ></el-input>
                 </el-form-item>
                 <el-form-item label="内容">
-                  <el-input type="textarea" v-model="notice.content" placeholder="输入通知内容"></el-input>
+                  <el-input
+                    type="textarea"
+                    v-model="notice.content"
+                    placeholder="输入通知内容"
+                  ></el-input>
                 </el-form-item>
                 <el-form-item label>
-                  <el-button type="primary" plain @click="postNotice(vm)">发送</el-button>
+                  <el-button type="primary" plain @click="postNotice(vm)"
+                    >发送</el-button
+                  >
                 </el-form-item>
               </el-form>
             </el-dialog>
@@ -41,7 +62,10 @@
               <el-table-column label="发送方" prop="sender"></el-table-column>
               <el-table-column label="接收方" prop="receiver"></el-table-column>
               <el-table-column label="发送标题" prop="title"></el-table-column>
-              <el-table-column label="发送内容" prop="content"></el-table-column>
+              <el-table-column
+                label="发送内容"
+                prop="content"
+              ></el-table-column>
               <el-table-column label="发送时间" prop="time"></el-table-column>
             </el-table>
           </el-card>
@@ -76,23 +100,25 @@ export default {
       marker: {},
       vm: this,
       driver: {
-        username: ""
+        username: "",
       },
       showDialog: false,
       //发送通知给驾驶员
       notice: {
         title: "",
         content: "",
-        receiver: ""
+        sender:"",
+        receiver: "",
+        time: "",
       },
       //rules
       rules1: {
-        username: [{ validator: validateUsername, trigger: "change" }]
+        username: [{ validator: validateUsername, trigger: "change" }],
       },
       //渲染数组通知
       NoticeData: [],
       //存放经纬度
-      location: []
+      location: [],
     };
   },
   mounted() {
@@ -101,7 +127,7 @@ export default {
   methods: {
     //给驾驶员发送通知
     openDialog(formName) {
-      this.$refs[formName].validate(val => {
+      this.$refs[formName].validate((val) => {
         if (val) {
           this.showDialog = true;
           this.notice.receiver = this.driver.username;
@@ -111,28 +137,30 @@ export default {
       });
     },
     postNotice: debounce(
-      vm => {
+      (vm) => {
+        vm.notice.sender = sessionStorage.getItem("identity");
         var data = vm.notice;
+        console.log(data);
         sendDriverNoticeToDriverApi
           .sendDriverNoticeToDriver(data)
-          .then(res => {
+          .then((res) => {
             console.log(res.data);
-            if (res.data == "ok") {
+            if (res.data.msg == "发送成功") {
               vm.showDialog = false;
               vm.$message({
                 message: "发送成功",
                 type: "success",
-                duration: 1500
+                duration: 1500,
               });
             } else {
               vm.$message({
                 message: "发送失败",
                 type: "error",
-                duration: 1800
+                duration: 1800,
               });
             }
           })
-          .catch(err => {
+          .catch((err) => {
             console.log(err);
           });
       },
@@ -141,45 +169,50 @@ export default {
     ),
     //获取位置和通知
     getLocation: debounce(
-      vm => {
-        vm.$refs["driver"].validate(val => {
+      (vm) => {
+        vm.$refs["driver"].validate((val) => {
           if (val) {
             vm.NoticeData = [];
             //拿驾驶员接收的通知 位置
             var data = { driver: vm.driver.username };
-            var data1 = { receiver: vm.driver.username };
+            var data1 = { receiver: vm.driver.username};
             var data2 = { sender: vm.driver.username };
 
+            //获取驾驶员接收通知
             getDriverNoticeByReceiveTodayApi
               .getDriverNoticeByReceiveToday(data1)
-              .then(res => {
-                for (const i of res.data) {
+              .then((res) => {
+                for (const i of res.data.value) {
                   vm.NoticeData.push(i);
                 }
                 // this.NoticeData.push(res.data);
               })
-              .catch(err => {
+              .catch((err) => {
                 console.log(err);
               });
+
+            //获取驾驶员发送通知
             getDriverNoticeBySendTodayApi
               .getDriverNoticeBySendToday(data2)
-              .then(res => {
-                for (const i of res.data) {
+              .then((res) => {
+                for (const i of res.data.value) {
                   vm.NoticeData.push(i);
                 }
                 // this.NoticeData.push(res.data);
               })
-              .catch(err => {
+              .catch((err) => {
                 console.log(err);
               });
+
+            //获取位置
             getLatandlogByDriverApi
               .getLatandlogByDriver(data)
-              .then(res => {
+              .then((res) => {
                 if (res.data.msg == "查询数据为空") {
                   vm.$message({
                     message: "暂无位置信息",
                     type: "error",
-                    duration: 2000
+                    duration: 2000,
                   });
                 } else {
                   for (const i of res.data.latandlogList) {
@@ -188,7 +221,7 @@ export default {
                   vm.initMap();
                 }
               })
-              .catch(err => {
+              .catch((err) => {
                 console.log(err);
               });
           } else {
@@ -215,7 +248,7 @@ export default {
               new BMap.Point(118.323868, 32.271496),
               new BMap.Point(118.320957, 32.260017),
               new BMap.Point(118.311795, 32.260047),
-              new BMap.Point(118.315819, 32.272626)
+              new BMap.Point(118.315819, 32.272626),
             ],
             { strokeColor: "blue", strokeWeight: 2, strokeOpacity: 0.5 }
           );
@@ -227,7 +260,7 @@ export default {
               new BMap.Point(118.317616, 32.297016),
               new BMap.Point(118.313987, 32.307758),
               new BMap.Point(118.319197, 32.309376),
-              new BMap.Point(118.322323, 32.298969)
+              new BMap.Point(118.322323, 32.298969),
             ],
             { strokeColor: "blue", strokeWeight: 2, strokeOpacity: 0.5 }
           );
@@ -242,11 +275,11 @@ export default {
             console.log("没位置");
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.log("地图加载失败");
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
