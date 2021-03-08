@@ -348,6 +348,21 @@ exports.addPersonalNotice = (data, callback) => {
 };
 
 //驾驶员模块
+//获取垃圾1
+exports.getGarbage = (data, callback) => {
+  console.log("getGarbage1", data.garbageName);
+  AllDB.garbagetypes
+    .find({ classify_name: "有害垃圾" })
+    .then((pro) => {
+      console.log("获取成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("获取失败", err);
+      callback(err);
+    });
+};
+
 //发送通知给管理员1
 exports.sendDriverNoticeToAdmin = (data, callback) => {
   console.log("sendDriverNoticeToAdmin", data);
@@ -369,7 +384,7 @@ exports.sendDriverNoticeToAdmin = (data, callback) => {
     });
 };
 
-//提交GPS
+//提交GPS1
 exports.batchAddLatandlog = (data, callback) => {
   console.log("batchAddLatandlog", data);
   var date = new Date();
@@ -391,6 +406,7 @@ exports.batchAddLatandlog = (data, callback) => {
       callback(err);
     });
 };
+
 
 //创建组织
 exports.createOrgan = (data, callback) => {

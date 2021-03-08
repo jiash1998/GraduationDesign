@@ -13,6 +13,11 @@
   .body {
     flex: 1;
     
+    .el-card{
+      width: 80%;
+      margin: 20px 10% 50px;
+    }
+
     h4{
       margin-left:20%;
     }

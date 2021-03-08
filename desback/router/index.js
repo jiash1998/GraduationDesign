@@ -299,6 +299,23 @@ router.post("/getCustomByName", (req, res) => {
 });
 
 //驾驶员模块
+//垃圾查詢
+router.post("/getGarbage", (req, res) => {
+  console.log("getGarbage", req.body);
+  operateDB.getGarbage(req.body, (err, data) => {
+    if (err) {
+      return res.json({
+        status: "获取错误",
+        msg: err,
+      });
+    }
+    return res.json({
+      status: "200",
+      value: data,
+      msg: "获取成功",
+    });
+  });
+});
 //发送通知给管理员
 router.post("/sendDriverNoticeToAdmin", (req, res) => {
   console.log("sendDriverNoticeToAdmin",req.body);

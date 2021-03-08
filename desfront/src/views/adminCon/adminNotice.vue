@@ -1,7 +1,8 @@
 <template>
   <div id="son6Notice">
     <div class="body">
-      <h4>公告</h4>
+      <el-card shadow="hover">
+        <h4>公告</h4>
       <el-form :model="notice" ref="notice" :rules="rules">
         <el-form-item label="公告标题" prop="title">
           <el-input v-model="notice.title" placeholder="请输入公告标题"></el-input>
@@ -43,6 +44,7 @@
           <el-button type="primary" size="small" plain>返回</el-button>
         </el-form-item>
       </el-form>
+      </el-card>
     </div>
   </div>
 </template>
