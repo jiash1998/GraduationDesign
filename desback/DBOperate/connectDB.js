@@ -236,6 +236,36 @@ var SchemaFeedback = new Schema({
   },
 });
 
+//垃圾表
+var SchemaGarbageSec = new Schema({
+  garbage_id: {
+    type: String,
+  },
+  garbage_name: {
+    type: String,
+    default: "",
+  },
+  classify_id: {
+    type: String,
+    default: "",
+  },
+});
+
+//垃圾分类表
+var SchemaGarbageType = new Schema({
+  classify_id: {
+    type: String,
+    default: "",
+  },
+  classify_name: {
+    type: String,
+  },
+  explains: {
+    type: String,
+    default: "",
+  },
+});
+
 module.exports = {
   users: mongoose.model("users", SchemaUser),
   drivers: mongoose.model("drivers", SchemaDriver),
@@ -245,4 +275,6 @@ module.exports = {
   latandlons: mongoose.model("latandlons", SchemaLatAndLon),
   customs: mongoose.model("customs", SchemaCustom),
   feedbacks: mongoose.model("feedbacks", SchemaFeedback),
+  garbagesecs: mongoose.model("garbagesecs", SchemaGarbageSec),
+  garbagetypes: mongoose.model("garbagetypes", SchemaGarbageType),
 };

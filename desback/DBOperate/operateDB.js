@@ -350,9 +350,14 @@ exports.addPersonalNotice = (data, callback) => {
 //驾驶员模块
 //获取垃圾1
 exports.getGarbage = (data, callback) => {
-  console.log("getGarbage1", data.garbageName);
-  AllDB.garbagetypes
-    .find({ classify_name: "有害垃圾" })
+  console.log("getGarbage1", data);
+  var reg = /[\u4E00-\u9FA5]/g;
+  console.log(reg.test(data.garbageName));
+  if(reg.test(data.garbageName)){
+    
+  }
+  AllDB.garbagesecs
+    .find({ garbage_name: { $regex: data.garbageName } })
     .then((pro) => {
       console.log("获取成功", pro);
       callback(null, pro);
@@ -393,7 +398,7 @@ exports.batchAddLatandlog = (data, callback) => {
   var day = date.getDate();
   var hour = date.getHours();
   var minute = date.getMinutes();
-  var time = year + "-" + month + "-" + day + "-" + hour +":"+minute;
+  var time = year + "-" + month + "-" + day + "-" + hour + ":" + minute;
   data.time = time;
   AllDB.latandlons
     .insertMany(data)
@@ -406,7 +411,6 @@ exports.batchAddLatandlog = (data, callback) => {
       callback(err);
     });
 };
-
 
 //创建组织
 exports.createOrgan = (data, callback) => {
