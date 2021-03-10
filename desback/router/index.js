@@ -190,10 +190,10 @@ router.post("/addDriver", (req, res) => {
   });
 });
 
-//给驾驶员发送通知
-router.post("/sendDriverNoticeToDriver", (req, res) => {
+//获取驾驶员位置
+router.post("/addDriver", (req, res) => {
   console.log(req.body);
-  operateDB.sendDriverNoticeToDriver(req.body, (err, data) => {
+  operateDB.addDriver(req.body, (err, data) => {
     if (err) {
       return res.json({
         status: "发送错误",
@@ -203,7 +203,25 @@ router.post("/sendDriverNoticeToDriver", (req, res) => {
     return res.json({
       status: "200",
       value: data,
-      msg: "发送成功",
+      msg: "保存成功",
+    });
+  });
+});
+
+//给驾驶员发送通知
+router.post("/getLatandlogByDriver", (req, res) => {
+  console.log(req.body);
+  operateDB.getLatandlogByDriver(req.body, (err, data) => {
+    if (err) {
+      return res.json({
+        status: "获取错误",
+        msg: err,
+      });
+    }
+    return res.json({
+      status: "200",
+      value: data,
+      msg: "获取成功",
     });
   });
 });

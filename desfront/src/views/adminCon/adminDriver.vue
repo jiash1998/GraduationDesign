@@ -107,7 +107,7 @@ export default {
       notice: {
         title: "",
         content: "",
-        sender:"",
+        sender: "",
         receiver: "",
         time: "",
       },
@@ -119,9 +119,17 @@ export default {
       NoticeData: [],
       //存放经纬度
       location: [],
+      //存放当日时间
+      today: "",
     };
   },
   mounted() {
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    this.today = year + "-" + month + "-" + day;
+    console.log(this.today == "2021-3-10");
     this.initMap();
   },
   methods: {
@@ -175,7 +183,7 @@ export default {
             vm.NoticeData = [];
             //拿驾驶员接收的通知 位置
             var data = { driver: vm.driver.username };
-            var data1 = { receiver: vm.driver.username};
+            var data1 = { receiver: vm.driver.username };
             var data2 = { sender: vm.driver.username };
 
             //获取驾驶员接收通知
@@ -183,7 +191,9 @@ export default {
               .getDriverNoticeByReceiveToday(data1)
               .then((res) => {
                 for (const i of res.data.value) {
-                  vm.NoticeData.push(i);
+                  if (i.time == vm.today) {
+                    vm.NoticeData.push(i);
+                  }
                 }
                 // this.NoticeData.push(res.data);
               })
@@ -196,7 +206,9 @@ export default {
               .getDriverNoticeBySendToday(data2)
               .then((res) => {
                 for (const i of res.data.value) {
-                  vm.NoticeData.push(i);
+                  if (i.time == vm.today) {
+                    vm.NoticeData.push(i);
+                  }
                 }
                 // this.NoticeData.push(res.data);
               })
@@ -208,15 +220,19 @@ export default {
             getLatandlogByDriverApi
               .getLatandlogByDriver(data)
               .then((res) => {
-                if (res.data.msg == "查询数据为空") {
+                console.log("位置", res.data);
+                if (res.data.msg !== "获取成功") {
                   vm.$message({
                     message: "暂无位置信息",
                     type: "error",
                     duration: 2000,
                   });
                 } else {
-                  for (const i of res.data.latandlogList) {
-                    vm.location.push({ lng: i.lon, lat: i.lat });
+                  console.log(vm.today);
+                  for (const i of res.data.value) {
+                    if (i.time == vm.today) {
+                      vm.location.push({ lng: i.lon, lat: i.lat });
+                    }
                   }
                   vm.initMap();
                 }

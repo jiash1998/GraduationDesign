@@ -40,13 +40,13 @@ export default {
     );
   },
 
-  //提交session保存姓名，获取个人资料
+  //提交session保存姓名，获取个人资料1
   getUserByUsername(name) {
     return interceptor(
       postString("/apis/getUserByUsername", methodsAll, name, headersAll)
     );
   },
-  //修改个人资料
+  //修改个人资料1
   updateUserByName(name) {
     return interceptor(
       postString("/apis/updateUserByName", methodsAll, name, headersAll)
@@ -54,49 +54,49 @@ export default {
   },
 
   /**管理员**/
-  //发布公告
+  //发布公告1
   insertNotice(data) {
     return interceptor(
       postString("/apis/insertNotice", methodsAll, data, headersAll)
     );
   },
-  //根据用户 id 发生通知
+  //根据用户 id 发生通知1
   addPersonalNotice(data) {
     return interceptor(
       postString("/apis/addPersonalNotice", methodsAll, data, headersAll)
     );
   },
-  //注册驾驶员
+  //注册驾驶员1
   addDriver(data) {
     return interceptor(
       postString("/apis/addDriver", methodsAll, data, headersAll)
     );
   },
-  //获取位置
+  //获取位置1
   getLatandlogByDriver(data) {
     return interceptor(
-      postString("/getLatandlogByDriver", methodsAll, data, headersAll)
+      postString("/apis/getLatandlogByDriver", methodsAll, data, headersAll)
     );
   },
-  //根据工号发送通知
+  //根据工号发送通知1
   sendDriverNoticeToDriver(data) {
     return interceptor(
       postString("/apis/sendDriverNoticeToDriver", methodsAll, data, headersAll)
     );
   },
-  //根据工号获取一天内驾驶员收到通知
+  //根据工号获取一天内驾驶员收到通知1
   getDriverNoticeByReceiveToday(data) {
     return interceptor(
       postString("/apis/getDriverNoticeByReceiveToday", methodsAll, data, headersAll)
     );
   },
-  //根据工号获取一天内驾驶员发送通知
+  //根据工号获取一天内驾驶员发送通知1
   getDriverNoticeBySendToday(data) {
     return interceptor(
       postString("/apis/getDriverNoticeBySendToday", methodsAll, data, headersAll)
     );
   },
-  //根据店铺名搜索店铺
+  //根据店铺名搜索店铺1
   getCustomByName(data) {
     return interceptor(
       postString("/apis/getCustomByName", methodsAll, data, headersAll)
@@ -134,19 +134,19 @@ export default {
       postString("/apis/addCustom", methodsAll, data, headersAll)
     );
   },
-  //商户反馈
+  //商户反馈1
   addFeedback(data) {
     return interceptor(
       postString("/apis/addFeedback", methodsAll, data, headersAll)
     );
   },
-  //获取名下店铺
+  //获取名下店铺1
   getAllCustomSelf(data) {
     return interceptor(
       postString("/apis/getAllCustomSelf", methodsAll, data, headersAll)
     );
   },
-  //根据用户名获取通知
+  //根据用户名获取通知1
   getByPNoticeUsername(data) {
     return interceptor(
       postString("/apis/getByPNoticeUsername", methodsAll, data, headersAll)
@@ -159,7 +159,7 @@ export default {
     );
   },
 
-  //删除店铺
+  //删除店铺1
   delCustomBySocialCode(data) {
     return interceptor(
       postStringJson(

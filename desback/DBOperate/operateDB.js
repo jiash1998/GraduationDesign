@@ -236,7 +236,7 @@ exports.getAllCustom = (callback) => {
 exports.getCustomByName = (data, callback) => {
   console.log("getCustomByName", data);
   AllDB.customs
-    .find({ name: data.name })
+    .find({ name: { $regex: data.name } })
     .then((pro) => {
       console.log("获取成功", pro);
       callback(null, pro);
@@ -269,6 +269,21 @@ exports.addDriver = (data, callback) => {
     })
     .catch((err) => {
       console.log("保存失败", err);
+      callback(err);
+    });
+};
+
+//获取驾驶员位置1
+exports.getLatandlogByDriver = (data, callback) => {
+  console.log("getLatandlogByDriver:", data);
+  AllDB.latandlons
+    .find({ driver: data.driver })
+    .then((pro) => {
+      console.log("位置获取成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("位置获取失败", err);
       callback(err);
     });
 };
@@ -353,8 +368,7 @@ exports.getGarbage = (data, callback) => {
   console.log("getGarbage1", data);
   var reg = /[\u4E00-\u9FA5]/g;
   console.log(reg.test(data.garbageName));
-  if(reg.test(data.garbageName)){
-    
+  if (reg.test(data.garbageName)) {
   }
   AllDB.garbagesecs
     .find({ garbage_name: { $regex: data.garbageName } })
@@ -396,9 +410,10 @@ exports.batchAddLatandlog = (data, callback) => {
   var year = date.getFullYear();
   var month = date.getMonth() + 1;
   var day = date.getDate();
-  var hour = date.getHours();
-  var minute = date.getMinutes();
-  var time = year + "-" + month + "-" + day + "-" + hour + ":" + minute;
+  // var hour = date.getHours();
+  // var minute = date.getMinutes();
+  // var time = year + "-" + month + "-" + day + "-" + hour + ":" + minute;
+  var time = year + "-" + month + "-" + day;
   data.time = time;
   AllDB.latandlons
     .insertMany(data)
