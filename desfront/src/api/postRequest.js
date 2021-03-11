@@ -172,7 +172,7 @@ export default {
   },
   //支付宝付款店铺
   payAli(data) {
-    return interceptor(postString("/payAli", methodsAll, data, headersAll));
+    return interceptor(postString("/apis/payAli", methodsAll, data, headersAll));
   },
   //支付宝付款超出
   payForExcess(data) {

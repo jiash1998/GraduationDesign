@@ -13,7 +13,7 @@
         <div class="left_body">
           <div class="store">
             <div class="imgDiv">
-              <img :src="require('../../assets/img/'+storeInfo.photo)" />
+              <img :src="require('../../assets/img/' + storeInfo.photo)" />
             </div>
             <div class="storeName">
               {{ storeInfo.name }}
@@ -79,7 +79,7 @@
             </p>
             <p id="imgSpan">
               店铺图片：
-              <img :src="require('../../assets/img/'+storeInfo.photo)" />
+              <img :src="require('../../assets/img/' + storeInfo.photo)" />
             </p>
             <p>
               店铺负责人：
@@ -511,46 +511,55 @@ export default {
             data.cycleTimes,
             data.sustainMonth
           );
-          console.log(data);
+          console.log("提交订单", data);
 
           payAliApi
             .payAli(data)
             .then((res) => {
-              console.log(res.data);
-              this.steps += 1;
-              this.$message({
-                message: "提交成功",
-                type: "success",
-                duration: 1500,
-              });
-              //修改按钮状态
-              // localStorage.setItem("payInfo", res.data);
-              this.editorCus.callback = res.data;
-              console.log(this.editorCus);
-              // //resolve和routerLink/to 一样
-              let routerData = this.$router.resolve({
-                path: "/Pay",
-                query: { htmls: res.data },
-              });
-              this.htmls = res.data;
-              // // //打开新页面(地址，空白的)
-              window.open(routerData.href, "_ blank");
-              // // //创造一个节点，并写入返回的html代码
-              const div = document.createElement("div");
-              div.innerHTML = this.htmls;
-              document.body.appendChild(div);
-              document.forms[0].submit();
+              console.log(res);
             })
             .catch((err) => {
               console.log(err);
             });
-        } else {
-          this.$message({
-            message: "请完整填写定制方案",
-            type: "error",
-            duration: 1500,
-          });
-          return false;
+
+          //   payAliApi
+          //     .payAli(data)
+          //     .then((res) => {
+          //       console.log(res.data);
+          //       this.steps += 1;
+          //       this.$message({
+          //         message: "提交成功",
+          //         type: "success",
+          //         duration: 1500,
+          //       });
+          //       //修改按钮状态
+          //       // localStorage.setItem("payInfo", res.data);
+          //       this.editorCus.callback = res.data;
+          //       console.log(this.editorCus);
+          //       // //resolve和routerLink/to 一样
+          //       let routerData = this.$router.resolve({
+          //         path: "/Pay",
+          //         query: { htmls: res.data },
+          //       });
+          //       this.htmls = res.data;
+          //       // // //打开新页面(地址，空白的)
+          //       window.open(routerData.href, "_ blank");
+          //       // // //创造一个节点，并写入返回的html代码
+          //       const div = document.createElement("div");
+          //       div.innerHTML = this.htmls;
+          //       document.body.appendChild(div);
+          //       document.forms[0].submit();
+          //     })
+          //     .catch((err) => {
+          //       console.log(err);
+          //     });
+          // } else {
+          //   this.$message({
+          //     message: "请完整填写定制方案",
+          //     type: "error",
+          //     duration: 1500,
+          //   });
+          //   return false;
         }
       });
     },

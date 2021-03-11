@@ -8,6 +8,33 @@ router.get("/", (req, res) => {
   res.send("Hello");
 });
 
+//支付
+router.post("/alipay", (req, res) => {
+  import AlipayFormData from 'alipay-sdk/lib/form';
+
+const formData = new AlipayFormData();
+// 调用 setMethod 并传入 get，会返回可以跳转到支付页面的 url
+formData.setMethod('get');
+
+formData.addField("returnUrl", "https://localhost:8081/test");
+// formData.addField('notifyUrl', 'http://www.com/notify');
+formData.addField('bizContent', {
+  outTradeNo: 'out_trade_no',
+  productCode: 'FAST_INSTANT_TRADE_PAY',
+  totalAmount: '0.01',
+  subject: '商品',
+  body: '商品详情',
+});
+
+const result = await alipaySdk.exec(
+  'alipay.trade.page.pay',
+  {},
+  { formData: formData },
+);
+
+  return result;
+});
+
 //公共模块
 //登录接口
 router.post("/sign", (req, res) => {
@@ -226,7 +253,7 @@ router.post("/getLatandlogByDriver", (req, res) => {
   });
 });
 
- //根据工号获取一天内驾驶员收到通知
+//根据工号获取一天内驾驶员收到通知
 router.post("/getDriverNoticeByReceiveToday", (req, res) => {
   console.log(req.body);
   operateDB.getDriverNoticeByReceiveToday(req.body, (err, data) => {
@@ -244,7 +271,7 @@ router.post("/getDriverNoticeByReceiveToday", (req, res) => {
   });
 });
 
- //根据工号获取一天内驾驶员发送通知
+//根据工号获取一天内驾驶员发送通知
 router.post("/getDriverNoticeBySendToday", (req, res) => {
   console.log(req.body);
   operateDB.getDriverNoticeBySendToday(req.body, (err, data) => {
@@ -336,7 +363,7 @@ router.post("/getGarbage", (req, res) => {
 });
 //发送通知给管理员
 router.post("/sendDriverNoticeToAdmin", (req, res) => {
-  console.log("sendDriverNoticeToAdmin",req.body);
+  console.log("sendDriverNoticeToAdmin", req.body);
   operateDB.sendDriverNoticeToAdmin(req.body, (err, data) => {
     if (err) {
       return res.json({
