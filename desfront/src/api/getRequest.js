@@ -61,6 +61,10 @@ export default {
   },
 
   //商铺接口
+  //支付宝付款店铺
+  payAli() {
+    return interceptor(getString("/apis/payAliTest", methodAll));
+  },
   //获取店铺垃圾
   getAllStoreGarbage() {
     return interceptor(getString("/production/getAll", methodAll));

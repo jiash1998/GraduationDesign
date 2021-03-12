@@ -280,9 +280,11 @@
 
 <script>
 import publicFootMini from "../../components/publicFootMini.vue";
-import payAliApi from "../../api/postRequest.js";
+// import payAliApi from "../../api/postRequest.js";
 import updateCustomByIdApi from "../../api/postRequest.js";
 import delCustomBySocialCodeApi from "../../api/postRequest.js";
+
+import alipayTestApi from "../../api/getRequest.js";
 import * as calcu from "../../util/priceCalcu.js";
 
 export default {
@@ -513,10 +515,22 @@ export default {
           );
           console.log("提交订单", data);
 
-          payAliApi
-            .payAli(data)
+          alipayTestApi
+            .payAli()
             .then((res) => {
-              console.log(res);
+              console.log(res.data);
+              let routerData = this.$router.resolve({
+                path: "/Pay",
+                query: { htmls: res.data.result },
+              });
+              this.htmls = res.data.result;
+              // // //打开新页面(地址，空白的)
+              window.open(routerData.href, "_ blank");
+              // // //创造一个节点，并写入返回的html代码
+              const div = document.createElement("div");
+              div.innerHTML = this.htmls;
+              document.body.appendChild(div);
+              document.forms[0].submit();
             })
             .catch((err) => {
               console.log(err);
