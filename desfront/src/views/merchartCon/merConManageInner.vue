@@ -519,18 +519,20 @@ export default {
             .payAli()
             .then((res) => {
               console.log(res.data);
-              let routerData = this.$router.resolve({
-                path: "/Pay",
-                query: { htmls: res.data.result },
-              });
-              this.htmls = res.data.result;
+              // let routerData = this.$router.resolve({
+              //   path: "/Pay",
+              //   query: { htmls: res.data.result },
+              // });
+              // this.htmls = res.data.result;
               // // //打开新页面(地址，空白的)
-              window.open(routerData.href, "_ blank");
+              window.open(res.data.result, "_ blank");
+
+              // window.open(routerData.href, "_ blank");
               // // //创造一个节点，并写入返回的html代码
-              const div = document.createElement("div");
-              div.innerHTML = this.htmls;
-              document.body.appendChild(div);
-              document.forms[0].submit();
+              // const div = document.createElement("div");
+              // div.innerHTML = this.htmls;
+              // document.body.appendChild(div);
+              // document.forms[0].submit();
             })
             .catch((err) => {
               console.log(err);
