@@ -87,13 +87,23 @@ export default {
   //根据工号获取一天内驾驶员收到通知1
   getDriverNoticeByReceiveToday(data) {
     return interceptor(
-      postString("/apis/getDriverNoticeByReceiveToday", methodsAll, data, headersAll)
+      postString(
+        "/apis/getDriverNoticeByReceiveToday",
+        methodsAll,
+        data,
+        headersAll
+      )
     );
   },
   //根据工号获取一天内驾驶员发送通知1
   getDriverNoticeBySendToday(data) {
     return interceptor(
-      postString("/apis/getDriverNoticeBySendToday", methodsAll, data, headersAll)
+      postString(
+        "/apis/getDriverNoticeBySendToday",
+        methodsAll,
+        data,
+        headersAll
+      )
     );
   },
   //根据店铺名搜索店铺1
@@ -172,7 +182,15 @@ export default {
   },
   //支付宝付款店铺
   payAli(data) {
-    return interceptor(postString("/apis/payAli", methodsAll, data, headersAll));
+    return interceptor(
+      postString("/apis/payAli", methodsAll, data, headersAll)
+    );
+  },
+  //支付宝订单查询
+  payAliQuery(data) {
+    return interceptor(
+      postString("/apis/payAliQuery", methodsAll, data, headersAll)
+    );
   },
   //支付宝付款超出
   payForExcess(data) {

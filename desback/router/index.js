@@ -16,46 +16,47 @@ const AlipayFormData = require("alipay-sdk/lib/form").default;
 // const { default: AliPayForm } = require("alipay-sdk/lib/form");
 
 //支付
-// router.get("/payAliTest", async (req, res) => {
-//   const alipaySdk = new AlipaySdk({
-//     appId: "2021000117621383", // 开放平台上创建应用时生成的 appId
-//     signType: "RSA2", // 签名算法,默认 RSA2
-//     gateway: "https://openapi.alipaydev.com/gateway.do", // 支付宝网关地址 ，沙箱环境下使用时需要修改
-//     timeout: 5000,
-//     alipayPublicKey:
-//       "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAh2x1ppHmer4WTi/Hr0HUIyfT6Z12nJ4vxC8cBIqqnTMeqIQKx73qjKjA++10EVNN6lNdBzYVtDiJyWmjL/JxIGb0e30+C0nMUTT7gYNEiY9lSuCbEBzvmf3P1iQsXVDVMvs3msbqUkNCk/Ni0UsKEkH/Fj8tQd+f6xqqimN/t5ULTn58Q/zBJ5uS9bqaKWlRIg52ROrvbOElvXIoCu1J8sfyVRGuHh7d2f9VHB7ZmOCs/i7D6j3Un09hp5nJ5DyPsC6yU+W7NtlCIoqE8e1nALGtctLiDJXaffj6JP66h4YkBI+F08OxIE8hv89YUdZAS3+8RdgVSfCE4cWCszC7GQIDAQAB",
-//     // 支付宝公钥，需要对结果验签时候必填
-//     privateKey:
-//       "MIIEpAIBAAKCAQEAxoQNPEDGiyrbQSyXnXTQSZEHzFqnXfkv5HetYisJ6MC0CRykyh6QtarYR4pgMUO2msDxajIQzu5x64zCsyXo312gIme8nEOr0gjZ9I5OjgD8vkIrGmRZq8SHEom4ecgtCBs/0QkoITivj0Oibk6D4TdHEElUZg53ruAGeAvm1ImLIbAbzktAjMANUoER7CLJICk2AH+NL3wxPNlzzzY8kXkNYbaNjOQUnTwi6RXbWUuaObLR2AWni3jcOly5a90FADip+vGddJgQbQURQXXKAwRx0j6EdU0PgDqJWiGcy56vbNlOu9H+qPSbQLJq4QjJBCJ5JzeucqQclHRjwy6IxQIDAQABAoIBAB88V/jLGHJ9Y9J1ecXEw6FPuLJm8T7QHsEMM7PmocCF0c49O5CyDoMHRtC67TfTN8BR66qSBiMJUdOGanxV0raSvMetGvhbjYWW7vSUD7g4X4xwTOfyMkncuoQoN2ayIKPN5dS2ZCIWEUmxkrVYlVeyovPlFeqZDCvwBBSPitqWImnIpILzfckG6PceRSN1puw2WUoVDfnZqwNTYKS3JUPXOQe3+qXNuf5Yo+5rhFrdvM2Z2/T716QtuwG9f8OJwDw5WUrq3S71g04w8MhzFLNKOJL0QAf0UW1Xv9dPSbt1+kLzgDTt/AoJsjfJP3aVx8YOq7nqUHok+kzXMDxHUAECgYEA/T6GMZAWBOhFPQ7788ecIaX9FhKuix+brvc9exj2gC3OjU9Ya5heCzbmI5bgvVxy85/RDkma7r0z3WXiYmCYykVlHBx6sQpwFWs2REXmDeHXyhApZLUH52vr0XKz7TD1XcNkfRkb/1CDsA9q8tnw7gTkrMZ+od7604ykh5JZaEUCgYEAyK0RVJr0qyVBw8z4/x4Z9XtuhTTCT1iTIaBpOqVfdpr3ClN8ECLJ9tQZKwmIQ12DqBtnlYJOmp4S97GC17afsSXVmhOWTOQIJdBAB7wcar4ZGKKVWQsJJNxFpwvLZqX9L6174+V8k7OoBl1IewLK1ohRBMRFmd8xnZcqsc1X5oECgYEAuL2g5Y0oEwJiaC2DLY6jXoSZgT21qPYw+02PwzotsMo50Spd5Xfsux+ceb/6SQmlLgabWmHlrV3G9S77HCs9quk+3mgENRzZMTbaCqo3Lk9fvR9XIwlRL8ix6kRT76d0h6cfqobjvrg8qPZGXc0RjoFxVH0lKe7haexCpkfkA0UCgYBEAruj49xWAIt4U4hz1fzQQKPlS0srXwaGV/ox4Qgohz6AZmjegxvVpm5dMp7WzeOn3pnNhtsi9b3R6nxApWkbvYnV7Rt8NbA5OInq1SsAVirlOXzKL75KmsiUY5/syway2OXrB8SfvjyM46KD5h9ec9aZefdovcbv9OKIXeKTgQKBgQCK7XrU6SYd1aCvs/9M7OCr+roJTIR851PDAkr17RqDQ92TjeeeZX/4EB77G/yxFXmxYkWMPhdb3gIbvI9I6llDzIGluA6MG5jGglPYa0Lm1Sss0T4Nq6yooLechr7rBFaCcJUEjRMv4V5/Lca0EjFNKh0ee+ZLFHtfNUTWE7LBWw==",
-//     // 应用私钥字符串
-//   });
+router.post("/payAli", async (req, res) => {
+  const alipaySdk = new AlipaySdk({
+    appId: "2021000117621383", // 开放平台上创建应用时生成的 appId
+    signType: "RSA2", // 签名算法,默认 RSA2
+    gateway: "https://openapi.alipaydev.com/gateway.do", // 支付宝网关地址 ，沙箱环境下使用时需要修改
+    timeout: 5000,
+    alipayPublicKey:
+      "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAh2x1ppHmer4WTi/Hr0HUIyfT6Z12nJ4vxC8cBIqqnTMeqIQKx73qjKjA++10EVNN6lNdBzYVtDiJyWmjL/JxIGb0e30+C0nMUTT7gYNEiY9lSuCbEBzvmf3P1iQsXVDVMvs3msbqUkNCk/Ni0UsKEkH/Fj8tQd+f6xqqimN/t5ULTn58Q/zBJ5uS9bqaKWlRIg52ROrvbOElvXIoCu1J8sfyVRGuHh7d2f9VHB7ZmOCs/i7D6j3Un09hp5nJ5DyPsC6yU+W7NtlCIoqE8e1nALGtctLiDJXaffj6JP66h4YkBI+F08OxIE8hv89YUdZAS3+8RdgVSfCE4cWCszC7GQIDAQAB",
+    // 支付宝公钥，需要对结果验签时候必填
+    privateKey:
+      "MIIEpAIBAAKCAQEAxoQNPEDGiyrbQSyXnXTQSZEHzFqnXfkv5HetYisJ6MC0CRykyh6QtarYR4pgMUO2msDxajIQzu5x64zCsyXo312gIme8nEOr0gjZ9I5OjgD8vkIrGmRZq8SHEom4ecgtCBs/0QkoITivj0Oibk6D4TdHEElUZg53ruAGeAvm1ImLIbAbzktAjMANUoER7CLJICk2AH+NL3wxPNlzzzY8kXkNYbaNjOQUnTwi6RXbWUuaObLR2AWni3jcOly5a90FADip+vGddJgQbQURQXXKAwRx0j6EdU0PgDqJWiGcy56vbNlOu9H+qPSbQLJq4QjJBCJ5JzeucqQclHRjwy6IxQIDAQABAoIBAB88V/jLGHJ9Y9J1ecXEw6FPuLJm8T7QHsEMM7PmocCF0c49O5CyDoMHRtC67TfTN8BR66qSBiMJUdOGanxV0raSvMetGvhbjYWW7vSUD7g4X4xwTOfyMkncuoQoN2ayIKPN5dS2ZCIWEUmxkrVYlVeyovPlFeqZDCvwBBSPitqWImnIpILzfckG6PceRSN1puw2WUoVDfnZqwNTYKS3JUPXOQe3+qXNuf5Yo+5rhFrdvM2Z2/T716QtuwG9f8OJwDw5WUrq3S71g04w8MhzFLNKOJL0QAf0UW1Xv9dPSbt1+kLzgDTt/AoJsjfJP3aVx8YOq7nqUHok+kzXMDxHUAECgYEA/T6GMZAWBOhFPQ7788ecIaX9FhKuix+brvc9exj2gC3OjU9Ya5heCzbmI5bgvVxy85/RDkma7r0z3WXiYmCYykVlHBx6sQpwFWs2REXmDeHXyhApZLUH52vr0XKz7TD1XcNkfRkb/1CDsA9q8tnw7gTkrMZ+od7604ykh5JZaEUCgYEAyK0RVJr0qyVBw8z4/x4Z9XtuhTTCT1iTIaBpOqVfdpr3ClN8ECLJ9tQZKwmIQ12DqBtnlYJOmp4S97GC17afsSXVmhOWTOQIJdBAB7wcar4ZGKKVWQsJJNxFpwvLZqX9L6174+V8k7OoBl1IewLK1ohRBMRFmd8xnZcqsc1X5oECgYEAuL2g5Y0oEwJiaC2DLY6jXoSZgT21qPYw+02PwzotsMo50Spd5Xfsux+ceb/6SQmlLgabWmHlrV3G9S77HCs9quk+3mgENRzZMTbaCqo3Lk9fvR9XIwlRL8ix6kRT76d0h6cfqobjvrg8qPZGXc0RjoFxVH0lKe7haexCpkfkA0UCgYBEAruj49xWAIt4U4hz1fzQQKPlS0srXwaGV/ox4Qgohz6AZmjegxvVpm5dMp7WzeOn3pnNhtsi9b3R6nxApWkbvYnV7Rt8NbA5OInq1SsAVirlOXzKL75KmsiUY5/syway2OXrB8SfvjyM46KD5h9ec9aZefdovcbv9OKIXeKTgQKBgQCK7XrU6SYd1aCvs/9M7OCr+roJTIR851PDAkr17RqDQ92TjeeeZX/4EB77G/yxFXmxYkWMPhdb3gIbvI9I6llDzIGluA6MG5jGglPYa0Lm1Sss0T4Nq6yooLechr7rBFaCcJUEjRMv4V5/Lca0EjFNKh0ee+ZLFHtfNUTWE7LBWw==",
+    // 应用私钥字符串
+  });
 
-//   const formData = new AlipayFormData();
-//   formData.setMethod("get");
-//   formData.addField("appId", "2021000117621383");
-//   formData.addField("charset", "utf-8");
-//   formData.addField("signType", "RSA2");
-//   formData.addField("returnUrl", "http://localhost:8081/PaySuccess");
+  const formData = new AlipayFormData();
+  formData.setMethod("post");
+  formData.addField("appId", "2021000117621383");
+  formData.addField("charset", "utf-8");
+  formData.addField("signType", "RSA2");
+  formData.addField("returnUrl", "http://localhost:8081/PaySuccess");
 
-//   formData.addField("bizContent", {
-//     outTradeNo: "75693801273212",
-//     productCode: "FAST_INSTANT_TRADE_PAY",
-//     totalAmount: "0.01",
-//     subject: "商品",
-//     body: "商品详情",
-//   });
+  console.log(req.body);
+  formData.addField("bizContent", {
+    outTradeNo: req.body.id,
+    productCode: "FAST_INSTANT_TRADE_PAY",
+    totalAmount: req.body.money,
+    subject: "商品",
+    body: "商品详情",
+  });
 
-//   var result = await alipaySdk.exec(
-//     "alipay.trade.page.pay",
-//     {},
-//     { formData: formData }
-//   );
-//   console.log(result);
-//   return res.json({ status: 200, info: "查询成功", result });
-// });
+  var result = await alipaySdk.exec(
+    "alipay.trade.page.pay",
+    {},
+    { formData: formData }
+  );
+  console.log(result);
+  return res.json({ status: 200, info: "查询成功", result });
+});
 
-//支付
-router.get("/payAliTest", async (req, res) => {
+//支付结果
+router.post("/payAliQuery", async (req, res) => {
   const alipaySdk = new AlipaySdk({
     appId: "2021000117621383", // 开放平台上创建应用时生成的 appId
     signType: "RSA2", // 签名算法,默认 RSA2
@@ -77,7 +78,7 @@ router.get("/payAliTest", async (req, res) => {
   // formData.addField("returnUrl", "http://localhost:8081/PaySuccess");
 
   formData.addField("bizContent", {
-    outTradeNo: "75693801273212",
+    outTradeNo: req.body.id,
   });
 
   var result = await alipaySdk.exec(
@@ -86,8 +87,12 @@ router.get("/payAliTest", async (req, res) => {
     { formData: formData }
   );
   console.log(result);
-  // console.log(JSON.parse(result));
-  return res.json({ status: 200, info: "查询成功", result });
+  request(result, (err, response, body) => {
+    let obj = JSON.parse(body);
+    console.log(JSON.parse(body));
+    return res.json({ status: 200, info: "查询成功", result:obj });
+  });
+  
 });
 
 //公共模块

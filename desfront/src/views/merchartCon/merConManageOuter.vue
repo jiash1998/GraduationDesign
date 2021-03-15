@@ -238,6 +238,8 @@ export default {
       console.log(this.custom[index]);
       //sessionStorage如何存放数组
       var customObj = JSON.stringify(this.custom[index]);
+      console.log(customObj);
+      console.log(JSON.parse(sessionStorage.customObj));
       sessionStorage.customObj = customObj;
       this.$router.push("/merchartContral/merConManager/merConManageInner");
       this.$router.go(0);

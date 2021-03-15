@@ -1,8 +1,7 @@
 <template>
   <div id="son2Test">
-    <el-form :model="uploadDataForm">
+    <!-- <el-form :model="uploadDataForm">
       <el-form-item label="">
-        <!-- action="/api/album/upload" -->
         <el-upload
           prop="photo"
           action="/apis/upload"
@@ -16,12 +15,14 @@
           </div>
         </el-upload>
       </el-form-item>
-    </el-form>
+    </el-form> -->
+    <el-button type="" plain @click="query">query</el-button>
   </div>
 </template>
 
 <script>
 // import getAllCustomApi from "../../api/postRequest.js";
+import aliPayApi from "../api/postRequest.js";
 
 export default {
   name: "son2Test",
@@ -46,6 +47,17 @@ export default {
         return false;
       }
     },
+    query() {
+      let data = {id:"aliPayApi"};
+      aliPayApi
+        .payAliQuery(data)
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
 };
 </script>
@@ -53,5 +65,9 @@ export default {
 <style lang="scss">
 #son2Test {
   margin-top: 100px;
+}
+
+.el-button{
+   margin-top: 100px;
 }
 </style>
