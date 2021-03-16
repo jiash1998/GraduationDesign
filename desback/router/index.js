@@ -5,6 +5,10 @@ const fs = require("fs");
 const path = require("path");
 const request = require("request");
 var operateDB = require("../DBOperate/operateDB");
+var AllDB = require("../DBOperate/connectDB");
+
+//店铺全局对象
+let customObj = {};
 
 router.get("/", (req, res) => {
   res.send("Hello");
@@ -31,12 +35,13 @@ router.post("/payAli", async (req, res) => {
   });
 
   const formData = new AlipayFormData();
-  formData.setMethod("post");
+  formData.setMethod("get");
   formData.addField("appId", "2021000117621383");
   formData.addField("charset", "utf-8");
   formData.addField("signType", "RSA2");
   formData.addField("returnUrl", "http://localhost:8081/PaySuccess");
 
+  //VCDB09227189ZXCN20
   console.log(req.body);
   formData.addField("bizContent", {
     outTradeNo: req.body.id,
@@ -52,6 +57,10 @@ router.post("/payAli", async (req, res) => {
     { formData: formData }
   );
   console.log(result);
+  if (result) {
+    customObj = req.body;
+    console.log("customobj", customObj);
+  }
   return res.json({ status: 200, info: "查询成功", result });
 });
 
@@ -76,6 +85,7 @@ router.post("/payAliQuery", async (req, res) => {
   formData.addField("charset", "utf-8");
   formData.addField("signType", "RSA2");
   // formData.addField("returnUrl", "http://localhost:8081/PaySuccess");
+  console.log("req.body.id", req.body.id);
 
   formData.addField("bizContent", {
     outTradeNo: req.body.id,
@@ -86,13 +96,39 @@ router.post("/payAliQuery", async (req, res) => {
     {},
     { formData: formData }
   );
-  console.log(result);
+
   request(result, (err, response, body) => {
     let obj = JSON.parse(body);
-    console.log(JSON.parse(body));
-    return res.json({ status: 200, info: "查询成功", result:obj });
+    console.log("obj",JSON.parse(body));
+    //拼接写入
+    customObj.trade_no = obj.trade_no;
+    console.log("customobj",customObj);
+    // let
+    return res.json({ status: 200, info: "查询成功", result: obj });
   });
-  
+});
+
+//支付写入
+router.post("/customInsertState", (req, res) => {
+  console.log(req.body);
+  AllDB.customs
+    .update({ socialCreditCode: req.body.id }, { $set: { isCus: "已定制" } })
+    .then((pro) => {
+      console.log("保存成功", pro);
+      return res.json({
+        status: 200,
+        value: pro,
+        msg: "查询成功",
+      });
+    })
+    .catch((err) => {
+      console.log("保存失败", err);
+      return res.json({
+        status: 200,
+        value: err,
+        msg: "查询失败",
+      });
+    });
 });
 
 //公共模块
@@ -505,11 +541,8 @@ router.post(
     let files = req.files;
     let file = files[0];
     let fileInfo = {};
-    let path =
-      "D:/GraduationDesign/desfront/src/assets/img/" +
-      Date.now().toString() +
-      "_" +
-      file.originalname;
+    let rename = Date.now().toString() + "_" + file.originalname;
+    let path = "D:/GraduationDesign/desfront/src/assets/img/" + rename;
     console.log(path);
     fs.renameSync(
       "D:/GraduationDesign/desfront/src/assets/img/" + file.filename,
@@ -517,7 +550,7 @@ router.post(
     );
     //获取文件基本信息
     fileInfo.type = file.mimetype;
-    fileInfo.name = file.originalname;
+    fileInfo.name = rename;
     fileInfo.size = file.size;
     fileInfo.path = file.originalname;
     return res.json({

@@ -9,7 +9,6 @@ import Notice from "../views/notice.vue";
 import Account from "../views/account.vue";
 import Test from "../views/test.vue";
 import PaySuccess from "../views/paySuccess";
-import Pay from "../views/pay";
 
 //merchart
 import MerchartContral from "../views/merchartCon/merchartContral.vue";
@@ -63,11 +62,6 @@ const routes = [
     component: PaySuccess,
     name: "PaySuccess",
     path: "/PaySuccess",
-  },
-  {
-    component: Pay,
-    name: "Pay",
-    path: "/Pay",
   },
   {
     component: Signin,

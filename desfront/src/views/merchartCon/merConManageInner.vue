@@ -505,7 +505,11 @@ export default {
       this.$refs[formname].validate((val) => {
         if (val) {
           //将附属信息加进去
-          this.garbageCycle.id = JSON.parse(sessionStorage.customObj).socialCreditCode;
+          this.garbageCycle.id = JSON.parse(
+            sessionStorage.customObj
+          ).socialCreditCode;
+          // console.log(sessionStorage.getItem("userName"));
+          // this.garbageCycle.username = sessionStorage.getItem("userName");
           let data = this.garbageCycle;
           data.money = calcu.setStorePrice(
             this.storeInfo.type,
@@ -519,62 +523,40 @@ export default {
             .payAli(data)
             .then((res) => {
               console.log(res.data);
-              let routerData = this.$router.resolve({
-                path: "/Pay",
-                query: { htmls: res.data.result },
-              });
-              this.htmls = res.data.result;
-              // // //打开新页面(地址，空白的)
-              // window.open(res.data.result, "_ blank");
-              window.open(routerData.href, "_ blank");
-              // // //创造一个节点，并写入返回的html代码
-              const div = document.createElement("div");
-              div.innerHTML = this.htmls;
-              document.body.appendChild(div);
-              document.forms[0].submit();
+              window.open(res.data.result, "_ blank");
+             
+             
             })
             .catch((err) => {
               console.log(err);
             });
 
-          //   payAliApi
-          //     .payAli(data)
-          //     .then((res) => {
-          //       console.log(res.data);
-          //       this.steps += 1;
-          //       this.$message({
-          //         message: "提交成功",
-          //         type: "success",
-          //         duration: 1500,
-          //       });
-          //       //修改按钮状态
-          //       // localStorage.setItem("payInfo", res.data);
-          //       this.editorCus.callback = res.data;
-          //       console.log(this.editorCus);
-          //       // //resolve和routerLink/to 一样
-          //       let routerData = this.$router.resolve({
-          //         path: "/Pay",
-          //         query: { htmls: res.data },
-          //       });
-          //       this.htmls = res.data;
-          //       // // //打开新页面(地址，空白的)
-          //       window.open(routerData.href, "_ blank");
-          //       // // //创造一个节点，并写入返回的html代码
-          //       const div = document.createElement("div");
-          //       div.innerHTML = this.htmls;
-          //       document.body.appendChild(div);
-          //       document.forms[0].submit();
-          //     })
-          //     .catch((err) => {
-          //       console.log(err);
+          // payAliApi
+          //   .payAli(data)
+          //   .then((res) => {
+          //     console.log(res.data);
+          //     this.steps += 1;
+          //     this.$message({
+          //       message: "提交成功",
+          //       type: "success",
+          //       duration: 1500,
           //     });
-          // } else {
-          //   this.$message({
-          //     message: "请完整填写定制方案",
-          //     type: "error",
-          //     duration: 1500,
+          //     //修改按钮状态
+          //     // localStorage.setItem("payInfo", res.data);
+          //     // this.editorCus.callback = res.data;
+          //     // console.log(this.editorCus);
+          //     window.open(res.data.result, "_ blank");
+          //   })
+          //   .catch((err) => {
+          //     console.log(err);
           //   });
-          //   return false;
+        } else {
+          this.$message({
+            message: "请完整填写定制方案",
+            type: "error",
+            duration: 1500,
+          });
+          return false;
         }
       });
     },

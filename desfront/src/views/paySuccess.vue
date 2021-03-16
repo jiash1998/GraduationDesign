@@ -6,7 +6,10 @@
         <p>尊敬的用户，您已经支付成功。</p>
         <p>可点击按钮返回定制页面。</p>
         <div>
-          <router-link tag="div" to="/merchartContral/merConManager/merConManageInner">
+          <router-link
+            tag="div"
+            to="/merchartContral/merConManager/merConManagerOuter"
+          >
             <el-button type="primary" plain size="small">返回</el-button>
           </router-link>
         </div>
@@ -18,11 +21,42 @@
 
 <script>
 import publicFootMini from "../components/publicFootMini.vue";
+import aliPayApi from "../api/postRequest.js";
+
 export default {
   name: "paySuccess",
   components: {
-    publicFootMini
-  }
+    publicFootMini,
+  },
+  mounted() {
+    console.log(window.location.href);
+    var str = window.location.href;
+    str = str.match(/out_trade_no=(\S*)&method/)[1];
+    console.log(str);
+    this.query("VCDB09227189ZXCN20");
+  },
+  methods: {
+    query(tradeid) {
+      //VCDB09227189ZXCN20
+      let data = { id: tradeid };
+      // aliPayApi
+      //   .customInsertState(data)
+      //   .then((res) => {
+      //     console.log(res.data.value);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+       aliPayApi
+        .payAliQuery(data)
+        .then((res) => {
+          console.log(res.data.value);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
 };
 </script>
 

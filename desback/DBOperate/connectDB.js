@@ -133,6 +133,14 @@ var SchemaCustom = new Schema({
     type: String,
     default: "",
   },
+  send_pay_date: {
+    type: String,
+    default: "",
+  },
+  trade_no: {
+    type: String,
+    default: "",
+  },
   isCus: {
     type: String,
     default: "",

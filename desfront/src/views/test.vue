@@ -48,11 +48,12 @@ export default {
       }
     },
     query() {
-      let data = {id:"aliPayApi"};
+      //VCDB09227189ZXCN20
+      let data = {id:"VCDB09227189ZXCN22"};
       aliPayApi
         .payAliQuery(data)
         .then((res) => {
-          console.log(res.data);
+          console.log(res.data.result.alipay_trade_query_response);
         })
         .catch((err) => {
           console.log(err);

@@ -192,6 +192,12 @@ export default {
       postString("/apis/payAliQuery", methodsAll, data, headersAll)
     );
   },
+  //支付宝修改店铺定制状态
+  customInsertState(data) {
+    return interceptor(
+      postString("/apis/customInsertState", methodsAll, data, headersAll)
+    );
+  },
   //支付宝付款超出
   payForExcess(data) {
     return interceptor(

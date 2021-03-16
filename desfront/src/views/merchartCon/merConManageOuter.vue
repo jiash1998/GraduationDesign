@@ -18,7 +18,7 @@
               :key="index"
             >
               <div class="storeImg">
-                <img :src="require('../../assets/img/'+item.photo)"/>
+                <img :src="require('../../assets/img/' + item.photo)" />
               </div>
               <div class="storeCon">
                 <p id="p2">{{ item.name }}</p>
@@ -141,6 +141,7 @@
 <script>
 import publicFootMini from "../../components/publicFootMini.vue";
 import getAllCustomSelfApi from "../../api/postRequest.js";
+import payAliApi from "../../api/postRequest.js";
 import SkeletonScreen from "../../components/skeletonScreen.vue";
 
 export default {
@@ -152,7 +153,7 @@ export default {
   data() {
     return {
       //
-      url:'../../assets/img/',
+      url: "../../assets/img/",
       //定制表
       custom: [],
       //骨架屏
@@ -185,12 +186,12 @@ export default {
   },
   methods: {
     async getData() {
-      let name ={"username": sessionStorage.getItem("username")};
+      let name = { username: sessionStorage.getItem("username") };
       console.log("name", name);
       await getAllCustomSelfApi
         .getAllCustomSelf(name)
         .then((res) => {
-          let value = res.data.value
+          let value = res.data.value;
           console.log(res.data);
           for (const i of value) {
             // i.photo = require(i.photo);
@@ -238,9 +239,19 @@ export default {
       console.log(this.custom[index]);
       //sessionStorage如何存放数组
       var customObj = JSON.stringify(this.custom[index]);
+      console.log(this.custom[index].socialCreditCode);
       console.log(customObj);
-      console.log(JSON.parse(sessionStorage.customObj));
       sessionStorage.customObj = customObj;
+      //点击时写入
+      // let socialData = { id: this.custom[index].socialCreditCode };
+      // payAliApi
+      //   .payAliQuery(socialData)
+      //   .then((res) => {
+      //     console.log(res.data.result.alipay_trade_query_response);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
       this.$router.push("/merchartContral/merConManager/merConManageInner");
       this.$router.go(0);
     },
