@@ -462,7 +462,7 @@ export default {
               header: i.header,
               phone: i.phone
             };
-            if (i.isCus === "已付款") {
+            if (i.isCus === "已定制") {
               this.stageAllStore.push(obj);
             }
           }

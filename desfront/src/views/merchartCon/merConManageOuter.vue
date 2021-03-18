@@ -25,7 +25,7 @@
                 <p id="p3">{{ item.socialCreditCode }}</p>
                 <p id="p4">
                   <span
-                    :class="item.isCus == '已付款' ? 'finished' : 'unfinished'"
+                    :class="item.isCus == '已定制' ? 'finished' : 'unfinished'"
                   ></span>
                   {{ item.isCus }}
                 </p>
@@ -74,16 +74,16 @@
                   placeholder="选择月份"
                 ></el-date-picker>
               </el-form-item>
-              <el-form-item label="状态:">
+              <!-- <el-form-item label="状态:">
                 <el-select
                   v-model="querySettle.isCus"
                   @change="manageTrade"
                   placeholder="选择状态"
                 >
                   <el-option label="全部" value="all"></el-option>
-                  <!-- <el-option label="已付款" value="yes"></el-option> -->
+       
                 </el-select>
-              </el-form-item>
+              </el-form-item> -->
             </el-form>
           </div>
           <div class="order">
@@ -110,13 +110,13 @@
                       <span>{{ props.row.payType }}</span>
                     </el-form-item>
                     <el-form-item label="订单编号">
-                      <span>{{ props.row.tradeNo }}</span>
+                      <span>{{ props.row.trade_no }}</span>
                     </el-form-item>
                     <el-form-item label="付款金额">
                       <span>{{ props.row.money }}</span>
                     </el-form-item>
                     <el-form-item label="交易时间">
-                      <span>{{ props.row.tradeTime }}</span>
+                      <span>{{ props.row.send_pay_date }}</span>
                     </el-form-item>
                   </el-form>
                 </template>
@@ -205,7 +205,7 @@ export default {
               this.tradeAll.push(i);
             }
             //获取已付款的订单
-            if (i.isCus == "已付款") {
+            if (i.isCus == "已定制") {
               this.tradeYes.push(i);
             }
           }
@@ -242,16 +242,7 @@ export default {
       console.log(this.custom[index].socialCreditCode);
       console.log(customObj);
       sessionStorage.customObj = customObj;
-      //点击时写入
-      // let socialData = { id: this.custom[index].socialCreditCode };
-      // payAliApi
-      //   .payAliQuery(socialData)
-      //   .then((res) => {
-      //     console.log(res.data.result.alipay_trade_query_response);
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
+
       this.$router.push("/merchartContral/merConManager/merConManageInner");
       this.$router.go(0);
     },
@@ -271,7 +262,7 @@ export default {
 
       this.trade = [];
       for (const i of this.tradeAll) {
-        let j = i.tradeTime.substring(0, 7).split("-");
+        let j = i.send_pay_date.substring(0, 7).split("-");
         if (j[1] <= 9) {
           j[1] = parseInt(j[1]);
         }

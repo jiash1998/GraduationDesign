@@ -17,7 +17,7 @@
             </div>
             <div class="storeName">
               {{ storeInfo.name }}
-              <p v-if="storeInfo.isCus == '已付款'">已定制</p>
+              <p v-if="storeInfo.isCus == '已定制'">已定制</p>
               <p v-else>定制中</p>
             </div>
           </div>
@@ -187,7 +187,7 @@
             </p>
             <p>
               服务开始时间：
-              <span>{{ ReturnData }}</span>
+              <span>{{ storeInfo.send_pay_date }}</span>
             </p>
           </div>
           <div class="next" :class="{ DivChange: !customCha }">
@@ -230,12 +230,12 @@
                       src="../../assets/img/zfb.jpg"
                     />
                   </el-radio>
-                  <el-radio label="微信">
+                  <!-- <el-radio label="微信">
                     <img
                       style="width:65px;height:35px;"
                       src="../../assets/img/wx.jpg"
                     />
-                  </el-radio>
+                  </el-radio> -->
                 </el-radio-group>
               </el-form-item>
             </el-form>
@@ -243,7 +243,7 @@
           <!-- 价格 -->
           <p
             class="priceP"
-            v-if="this.storeInfo.isCus === '已付款' ? false : true"
+            v-if="this.storeInfo.isCus === '已定制' ? false : true"
           >
             价格：
             <span>￥</span>
@@ -342,7 +342,7 @@ export default {
         id: "",
         money: 150,
         username: "",
-        isCus: "待付款",
+        isCus: "",
       },
       //开发状态
       developStatus: "开发中",
@@ -408,7 +408,7 @@ export default {
     toDetail() {
       let data = JSON.parse(sessionStorage.customObj);
       this.$router.push({
-        path: "/Son5GarDetail",
+        path: "/merchartContral/merConServiceDet",
         query: { id: data.id, type: data.type },
       });
     },
@@ -420,7 +420,7 @@ export default {
       this.editorCus = this.storeInfo;
       for (const i in this.editorCus) {
         switch (this.editorCus[i]) {
-          case "已付款":
+          case "已定制":
             this.developStatus = "已完成";
             // console.log("已付款");
             this.isPri = !this.isPri;
@@ -508,8 +508,9 @@ export default {
           this.garbageCycle.id = JSON.parse(
             sessionStorage.customObj
           ).socialCreditCode;
-          // console.log(sessionStorage.getItem("userName"));
-          // this.garbageCycle.username = sessionStorage.getItem("userName");
+          
+          // this.steps += 1
+
           let data = this.garbageCycle;
           data.money = calcu.setStorePrice(
             this.storeInfo.type,
@@ -524,8 +525,6 @@ export default {
             .then((res) => {
               console.log(res.data);
               window.open(res.data.result, "_ blank");
-             
-             
             })
             .catch((err) => {
               console.log(err);

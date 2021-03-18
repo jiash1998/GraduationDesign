@@ -8,7 +8,17 @@ var operateDB = require("../DBOperate/operateDB");
 var AllDB = require("../DBOperate/connectDB");
 
 //店铺全局对象
-let customObj = {};
+let customObj = {
+  socialCreditCode: "",
+  cycleTimes: "",
+  cycleDate: "",
+  sustainMonth: "",
+  payType: "",
+  money: "",
+  send_pay_date: "",
+  trade_no: "",
+  isCus: "",
+};
 
 router.get("/", (req, res) => {
   res.send("Hello");
@@ -61,6 +71,16 @@ router.post("/payAli", async (req, res) => {
     customObj = req.body;
     console.log("customobj", customObj);
   }
+  customObj.socialCreditCode = req.body.id;
+
+  customObj.cycleDate = req.body.cycleDate.join(",");
+  customObj.cycleTimes = req.body.cycleTimes.join(",");
+  customObj.payType = req.body.payType;
+  customObj.money = req.body.money;
+  customObj.sustainMonth = req.body.sustainMonth;
+  customObj.isCus = "已定制";
+
+  console.log("支付", customObj);
   return res.json({ status: 200, info: "查询成功", result });
 });
 
@@ -84,7 +104,6 @@ router.post("/payAliQuery", async (req, res) => {
   formData.addField("appId", "2021000117621383");
   formData.addField("charset", "utf-8");
   formData.addField("signType", "RSA2");
-  // formData.addField("returnUrl", "http://localhost:8081/PaySuccess");
   console.log("req.body.id", req.body.id);
 
   formData.addField("bizContent", {
@@ -99,20 +118,35 @@ router.post("/payAliQuery", async (req, res) => {
 
   request(result, (err, response, body) => {
     let obj = JSON.parse(body);
-    console.log("obj",JSON.parse(body));
+    console.log("obj", JSON.parse(body));
     //拼接写入
-    customObj.trade_no = obj.trade_no;
-    console.log("customobj",customObj);
+    customObj.trade_no = obj.alipay_trade_query_response.trade_no;
+    customObj.send_pay_date = obj.alipay_trade_query_response.send_pay_date;
+    console.log("订单查询", customObj);
     // let
-    return res.json({ status: 200, info: "查询成功", result: obj });
+    return res.json({ status: 200, info: "查询成功", value: customObj });
   });
 });
 
 //支付写入
 router.post("/customInsertState", (req, res) => {
-  console.log(req.body);
+  console.log("支付写入", req.body);
   AllDB.customs
-    .update({ socialCreditCode: req.body.id }, { $set: { isCus: "已定制" } })
+    .update(
+      { socialCreditCode: req.body.socialCreditCode },
+      {
+        $set: {
+          cycleTimes: req.body.cycleTimes,
+          cycleDate: req.body.cycleDate,
+          sustainMonth: req.body.sustainMonth,
+          payType: req.body.payType,
+          money: req.body.money,
+          send_pay_date: req.body.send_pay_date,
+          trade_no: req.body.trade_no,
+          isCus: req.body.isCus,
+        },
+      }
+    )
     .then((pro) => {
       console.log("保存成功", pro);
       return res.json({

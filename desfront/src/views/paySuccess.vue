@@ -33,24 +33,26 @@ export default {
     var str = window.location.href;
     str = str.match(/out_trade_no=(\S*)&method/)[1];
     console.log(str);
-    this.query("VCDB09227189ZXCN20");
+    this.query(str);
   },
   methods: {
     query(tradeid) {
       //VCDB09227189ZXCN20
       let data = { id: tradeid };
-      // aliPayApi
-      //   .customInsertState(data)
-      //   .then((res) => {
-      //     console.log(res.data.value);
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
-       aliPayApi
+
+      aliPayApi
         .payAliQuery(data)
         .then((res) => {
           console.log(res.data.value);
+          let data = res.data.value;
+          aliPayApi
+            .customInsertState(data)
+            .then((res) => {
+              console.log(res.data.value);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         })
         .catch((err) => {
           console.log(err);

@@ -133,6 +133,10 @@ var SchemaCustom = new Schema({
     type: String,
     default: "",
   },
+  money: {
+    type: String,
+    default: "",
+  },
   send_pay_date: {
     type: String,
     default: "",

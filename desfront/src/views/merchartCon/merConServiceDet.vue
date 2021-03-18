@@ -30,7 +30,7 @@
           </p>
           <el-table :data="susMonth" size="small" border>
             <el-table-column prop="month" label="包月时长"></el-table-column>
-            <el-table-column prop="money" label="所需费用（元）"></el-table-column>
+            <el-table-column prop="money" label="每月所需费用（元）"></el-table-column>
           </el-table>
         </div>
         <div class="con4">
