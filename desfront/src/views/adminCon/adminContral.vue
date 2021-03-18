@@ -64,11 +64,11 @@
               <i class="el-icon-data-line"></i>资源分析及回收
             </router-link>
           </el-menu-item>
-          <el-menu-item index="6">
+          <!-- <el-menu-item index="6">
             <router-link tag="div" to="/adminContral/adminRecord">
               <i class="el-icon-view"></i>记录跟踪
             </router-link>
-          </el-menu-item>
+          </el-menu-item> -->
         </el-menu>
       </div>
       <div class="bottom">

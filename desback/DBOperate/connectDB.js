@@ -278,6 +278,28 @@ var SchemaGarbageType = new Schema({
   },
 });
 
+//垃圾月产量表
+SchemaGarbageMonth = new Schema({
+  customId: {
+    type: String,
+    default: "",
+  },
+  monthNum: {
+    type: String,
+    default: "",
+  },
+  yearNum: {
+    type: String,
+    default: "",
+  },
+  production: {
+    type: String,
+    default: "",
+  },
+});
+
+//垃圾年产量总表
+
 module.exports = {
   users: mongoose.model("users", SchemaUser),
   drivers: mongoose.model("drivers", SchemaDriver),
@@ -289,4 +311,5 @@ module.exports = {
   feedbacks: mongoose.model("feedbacks", SchemaFeedback),
   garbagesecs: mongoose.model("garbagesecs", SchemaGarbageSec),
   garbagetypes: mongoose.model("garbagetypes", SchemaGarbageType),
+  garbagemonths: mongoose.model("garbagemonths", SchemaGarbageMonth),
 };

@@ -67,7 +67,7 @@ export default {
   },
   //获取店铺垃圾
   getAllStoreGarbage() {
-    return interceptor(getString("/production/getAll", methodAll));
+    return interceptor(getString("/apis/getAllStoreGarbage", methodAll));
   },
   //根据id，获取店铺垃
   getByCustomId(id) {

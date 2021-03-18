@@ -106,6 +106,9 @@
                     <el-form-item label="回收时间">
                       <span>{{ props.row.cycleTimes }}</span>
                     </el-form-item>
+                    <el-form-item label="包月时间">
+                      <span>{{ props.row.sustainMonth }}</span>
+                    </el-form-item>
                     <el-form-item label="支付方式">
                       <span>{{ props.row.payType }}</span>
                     </el-form-item>

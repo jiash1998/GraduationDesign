@@ -112,10 +112,10 @@ export default {
       postString("/apis/getCustomByName", methodsAll, data, headersAll)
     );
   },
-  //垃圾量录入
+  //垃圾量 插入店铺
   insertGarbageBatch(data) {
     return interceptor(
-      postStringJson("/production/add/batch", methodsAll, data, headersJson)
+      postStringJson("/apis/insertGarbageBatch", methodsAll, data, headersJson)
     );
   },
   insertGarbage(data) {

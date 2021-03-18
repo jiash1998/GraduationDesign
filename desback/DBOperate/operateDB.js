@@ -340,6 +340,60 @@ exports.getDriverNoticeBySendToday = (data, callback) => {
     });
 };
 
+//垃圾量 插入店铺1
+exports.insertGarbageBatch = (data, callback) => {
+  console.log("insertGarbageBatch", data);
+  AllDB.garbagemonths
+    .insertMany(data.productions)
+    .then((pro) => {
+      console.log("获取成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("获取失败", err);
+      callback(err);
+    });
+};
+
+//获取垃圾回收量 月份年份店铺1
+exports.getAllStoreGarbage = (callback) => {
+  console.log("getAllStoreGarbage");
+  AllDB.garbagemonths
+    .aggregate([
+      {
+        $lookup: {
+          from: "customs",
+          localField: "customId",
+          foreignField: "socialCreditCode",
+          as: "custom_garbage",
+        },
+      },
+      //数据打散
+      { $unwind: "$custom_garbage" },
+      //两个表数据筛选
+      {
+        $project: {
+          customId: "$customId",
+          monthNum: "$monthNum",
+          yearNum: "$yearNum",
+          production:"$production",
+          type: "$custom_garbage.type",
+          name: "$custom_garbage.name",
+          phone: "$custom_garbage.phone",
+          header: "$custom_garbage.header",
+        },
+      },
+    ])
+    .then((pro) => {
+      console.log("获取成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("获取失败", err);
+      callback(err);
+    });
+};
+
 //给用户发送通知1
 exports.addPersonalNotice = (data, callback) => {
   console.log("addPersonalNotice:", data);
@@ -423,86 +477,6 @@ exports.batchAddLatandlog = (data, callback) => {
     })
     .catch((err) => {
       console.log("发送失败", err);
-      callback(err);
-    });
-};
-
-//创建组织
-exports.createOrgan = (data, callback) => {
-  AllDB.organs
-    .insertMany(data)
-    .then((pro) => {
-      console.log("保存成功", pro);
-      AllDB.users
-        .update(
-          { username: pro[0].organBoss },
-          { $set: { organName: pro[0].organName, organCode: pro[0].organCode } }
-        )
-        .then((res) => {
-          console.log(res);
-          callback(null, pro);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    })
-    .catch((err) => {
-      console.log("保存失败", err);
-      callback(err);
-    });
-};
-
-//批准假条
-exports.replayLeave = (data, callback) => {
-  console.log(data);
-
-  AllDB.leaves
-    .update(
-      { username: data.username, time: data.time },
-      { $set: { status: "true" } }
-    )
-    .then((res) => {
-      callback(null, res);
-    })
-    .catch((err) => {
-      console.log(err);
-      callback(err);
-    });
-};
-
-//开除员工
-exports.removeOragnUser = (data, callback) => {
-  console.log(data);
-
-  AllDB.users
-    .update(
-      { username: data.username },
-      { $set: { organName: "none", organCode: "none" } }
-    )
-    .then((res) => {
-      console.log(res);
-      callback(null, res);
-    })
-    .catch((er) => {
-      console.log(err);
-      callback(err);
-    });
-};
-
-//用户模块
-//加入组织
-exports.addOrgan = (data, callback) => {
-  AllDB.users
-    .update(
-      { username: data.username },
-      { $set: { organName: data.organName, organCode: data.organCode } }
-    )
-    .then((res) => {
-      console.log(res);
-      callback(null, res);
-    })
-    .catch((er) => {
-      console.log(err);
       callback(err);
     });
 };

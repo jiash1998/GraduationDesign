@@ -12,8 +12,8 @@
           <div class="years">
             <span>年份：</span>
             <el-radio-group v-model="radio2" @change="selectYear" size="small">
+              <el-radio label="2021" border></el-radio>
               <el-radio label="2020" border></el-radio>
-              <el-radio label="2019" border></el-radio>
             </el-radio-group>
           </div>
           <div class="month">
@@ -120,7 +120,7 @@ export default {
         content: [{ validator: validateContent, trigger: "change" }]
       },
       radio1: "全部",
-      radio2: "2020",
+      radio2: "2021",
       radio3: "1",
       store: [],
       //录入数据按钮
@@ -251,7 +251,7 @@ export default {
           };
           arr.push(obj);
         }
-        // console.log(arr);
+        console.log(arr);
       }
       //按选择类型插入
       else {
@@ -282,14 +282,14 @@ export default {
         var postData = {
           productions: arr
         };
-        console.log(postData);
+        console.log("postdata",postData);
 
         insertGarbageBatchApi
           .insertGarbageBatch(postData)
           .then(res => {
             console.log(res);
 
-            if (res.data.code === 200) {
+            if (res.data.msg === "保存成功") {
               this.$message({
                 type: "success",
                 message: "插入店铺数据成功",
@@ -338,25 +338,25 @@ export default {
     },
     //店铺垃圾量录入
     insert(val) {
-      // this.stage = [];
-      // console.log(this.storeForm.data);
-      //计算超出量
-      // for (const i of form.data) {
-      //   if (i.tag === "未录" && i.reference != null && i.production != null) {
-      //     // this.stage.push(i);
-      //     let item = dealWithExcess.calcAll(i);
-      //     i.excessGar = item.excessGar;
-      //     i.excessMoney = item.excessMoney;
-      //     this.stage.push(i);
-      //   }
-      //   if (i.reference == null) {
-      //     this.$message({
-      //       type: "error",
-      //       message: "暂无参考量，无法录入",
-      //       duration: 1600
-      //     });
-      //   }
-      // }
+      this.stage = [];
+      console.log(this.storeForm.data);
+      计算超出量
+      for (const i of form.data) {
+        if (i.tag === "未录" && i.reference != null && i.production != null) {
+          // this.stage.push(i);
+          let item = dealWithExcess.calcAll(i);
+          i.excessGar = item.excessGar;
+          i.excessMoney = item.excessMoney;
+          this.stage.push(i);
+        }
+        if (i.reference == null) {
+          this.$message({
+            type: "error",
+            message: "暂无参考量，无法录入",
+            duration: 1600
+          });
+        }
+      }
 
       var data = val;
       var productions = [];
@@ -437,7 +437,7 @@ export default {
           }
         }
       }
-      // console.log(this.storeForm.data);
+      console.log("storeForm",this.storeForm.data);
       if (this.storeForm.data.length === 0) {
         this.insertBtn = true;
         this.$message({
@@ -454,9 +454,10 @@ export default {
       await getAllCustomApi
         .getAllCustom()
         .then(res => {
-          for (const i of res.data) {
+          console.log("getallcustom",res);
+          for (const i of res.data.value) {
             let obj = {
-              customId: i.id,
+              customId: i.socialCreditCode,
               name: i.name,
               type: i.type,
               header: i.header,
@@ -476,19 +477,19 @@ export default {
       await getAllStoreGarbageApi
         .getAllStoreGarbage()
         .then(res => {
-          this.storeGar = res.data;
+          this.storeGar = res.data.value;
           for (const i of this.storeGar) {
-            if (i.production != null) {
+            if (i.production != "") {
               i.tag = "已录";
             } else {
               i.tag = "未录";
             }
 
-            if (i.reference === null) {
+            if (i.reference === "") {
               i.reference = "暂无";
             }
           }
-          console.log(this.storeGar);
+          console.log("storeGar",this.storeGar);
           this.start();
         })
         .catch(err => {
