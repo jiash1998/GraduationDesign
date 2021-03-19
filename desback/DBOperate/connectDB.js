@@ -117,6 +117,10 @@ var SchemaCustom = new Schema({
     type: String,
     default: "",
   },
+  basisGarMonth:{
+    type:String,
+    defalut:""
+  },
   cycleTimes: {
     type: String,
     default: "",
@@ -296,6 +300,10 @@ SchemaGarbageMonth = new Schema({
     type: String,
     default: "",
   },
+  reference: {
+    type: String,
+    default: "",
+  }
 });
 
 //垃圾年产量总表

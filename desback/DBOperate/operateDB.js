@@ -376,11 +376,13 @@ exports.getAllStoreGarbage = (callback) => {
           customId: "$customId",
           monthNum: "$monthNum",
           yearNum: "$yearNum",
-          production:"$production",
+          production: "$production",
+          reference: "$reference",
           type: "$custom_garbage.type",
           name: "$custom_garbage.name",
           phone: "$custom_garbage.phone",
           header: "$custom_garbage.header",
+          basisGarMonth: "$custom_garbage.basisGarMonth",
         },
       },
     ])
@@ -471,6 +473,24 @@ exports.batchAddLatandlog = (data, callback) => {
   data.time = time;
   AllDB.latandlons
     .insertMany(data)
+    .then((pro) => {
+      console.log("发送成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("发送失败", err);
+      callback(err);
+    });
+};
+
+//提交店铺垃圾参考值
+exports.commitRefer = (data, callback) => {
+  console.log("commitRefer", data);
+  AllDB.garbagemonths
+    .update(
+      { customId: data.customId },
+      { $set: { reference: data.reference } }
+    )
     .then((pro) => {
       console.log("发送成功", pro);
       callback(null, pro);

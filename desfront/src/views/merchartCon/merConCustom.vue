@@ -237,6 +237,7 @@ export default {
         sex: "",
         phone: "",
         photo: "",
+        basisGarMonth: "",
         socialCreditCode: "",
         isCus: "未定制",
       },
@@ -296,7 +297,20 @@ export default {
           this.custom.address = this.address1;
           this.custom.user = this.$store.state.username;
           var data = this.custom;
-          console.log(data);
+          if (
+            data.type == "理发店" ||
+            data.type == "药店" ||
+            data.type == "宾馆" ||
+            data.type == "超市"
+          ) {
+            data.basisGarMonth = 250;
+          } else if (data.type == "其他类型") {
+            data.basisGarMonth = 200;
+          } else {
+            data.basisGarMonth = 300;
+          }
+
+          console.log("店铺data", data);
           //提交后台
           addCustomApi.merAddCustom(data).then((res) => {
             console.log(res.data);

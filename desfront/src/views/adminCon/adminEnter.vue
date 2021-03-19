@@ -50,7 +50,10 @@
               <el-table-column label="年份" width="100px">
                 <template slot-scope="scope">{{scope.row.yearNum}}</template>
               </el-table-column>
-              <el-table-column label="参考值" width="100px">
+              <el-table-column label="标准值(kg)" width="100px">
+                <template slot-scope="scope">{{scope.row.basisGarMonth}}</template>
+              </el-table-column>
+              <el-table-column label="参考值(kg)" width="100px">
                 <template slot-scope="scope">{{scope.row.reference}}</template>
               </el-table-column>
               <el-table-column label="垃圾量(kg)" width="100px">

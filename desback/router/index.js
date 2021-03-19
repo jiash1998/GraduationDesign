@@ -563,6 +563,24 @@ router.post("/batchAddLatandlog", (req, res) => {
   });
 });
 
+//提交店铺垃圾参考值
+router.post("/commitRefer", (req, res) => {
+  console.log("commitRefer", req.body);
+  operateDB.commitRefer(req.body, (err, data) => {
+    if (err) {
+      return res.json({
+        status: "保存错误",
+        msg: err,
+      });
+    }
+    return res.json({
+      status: "200",
+      value: data,
+      msg: "保存成功",
+    });
+  });
+});
+
 //商戶模块
 //店铺注册接口
 router.post("/addCustom", (req, res) => {

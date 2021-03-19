@@ -18,7 +18,7 @@
           <p>回收服务内根据店铺类型的不同，每月的免费垃圾回收量也不同。超出服务内包含的垃圾量后，将按照不同的价格标准收费。细则如下表。</p>
           <el-table :data="garbage" size="small" border>
             <el-table-column prop="type" label="店铺类型"></el-table-column>
-            <el-table-column prop="weight" label="基础垃圾回收量（Kg）"></el-table-column>
+            <el-table-column prop="weight" label="每月基础垃圾回收量（Kg）"></el-table-column>
             <el-table-column prop="over" label="超出垃圾回收价格（元/Kg）"></el-table-column>
           </el-table>
         </div>
