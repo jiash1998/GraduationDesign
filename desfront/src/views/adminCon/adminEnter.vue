@@ -246,6 +246,7 @@ export default {
         for (const i of this.stageAllStore) {
           let obj = {
             customId: i.customId,
+            type: i.type,
             monthNum: radioGroup.month,
             excess: null,
             money: null,
@@ -254,7 +255,7 @@ export default {
           };
           arr.push(obj);
         }
-        console.log(arr);
+        console.log("arr",arr);
       }
       //按选择类型插入
       else {

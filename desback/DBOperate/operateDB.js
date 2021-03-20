@@ -483,7 +483,57 @@ exports.batchAddLatandlog = (data, callback) => {
     });
 };
 
-//提交店铺垃圾参考值
+//查询垃圾存量
+exports.queryCustomByWX = (data, callback) => {
+  console.log("queryCustomByWX", data);
+  let jsonObj = {};
+  if (data.type == "全部") {
+    jsonObj = { yearNum: data.year, monthNum: data.month };
+  } else {
+    jsonObj = { yearNum: data.year, monthNum: data.month, type: data.type };
+  }
+  console.log(jsonObj);
+  AllDB.garbagemonths
+    .aggregate([
+      {
+        $lookup: {
+          from: "customs",
+          localField: "type",
+          foreignField: "type",
+          as: "query",
+        },
+      },
+      //数据打散
+      { $unwind: "$query" },
+      //数据筛选
+      //筛选字段类型严格一致
+      { $match: jsonObj },
+      //两个表数据筛选
+      {
+        $project: {
+          customId: "$customId",
+          monthNum: "$monthNum",
+          yearNum: "$yearNum",
+          production: "$production",
+          reference: "$reference",
+          type: "$query.type",
+          name: "$query.name",
+          phone: "$query.phone",
+          header: "$query.header",
+        },
+      },
+    ])
+    .then((pro) => {
+      console.log("发送成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("发送失败", err);
+      callback(err);
+    });
+};
+
+//提交店铺垃圾参考值1
 exports.commitRefer = (data, callback) => {
   console.log("commitRefer", data);
   AllDB.garbagemonths

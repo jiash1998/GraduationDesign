@@ -288,6 +288,10 @@ SchemaGarbageMonth = new Schema({
     type: String,
     default: "",
   },
+  type:{
+    type:String,
+    default:""
+  },
   monthNum: {
     type: String,
     default: "",

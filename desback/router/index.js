@@ -563,6 +563,24 @@ router.post("/batchAddLatandlog", (req, res) => {
   });
 });
 
+//查询垃圾存量
+router.post("/queryCustomByWX", (req, res) => {
+  console.log("queryCustomByWX", req.body);
+  operateDB.queryCustomByWX(req.body, (err, data) => {
+    if (err) {
+      return res.json({
+        status: "查询失败",
+        msg: err,
+      });
+    }
+    return res.json({
+      status: "200",
+      value: data,
+      msg: "查询成功",
+    });
+  });
+});
+
 //提交店铺垃圾参考值
 router.post("/commitRefer", (req, res) => {
   console.log("commitRefer", req.body);
