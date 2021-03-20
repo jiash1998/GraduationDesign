@@ -340,11 +340,24 @@ exports.getDriverNoticeBySendToday = (data, callback) => {
     });
 };
 
-//垃圾量 插入店铺1
+// 插入垃圾量店铺1
 exports.insertGarbageBatch = (data, callback) => {
-  console.log("insertGarbageBatch", data);
+  console.log("insertGarbageBatch", data.productions);
+  // AllDB.garbagemonths
+  //   .insertMany(data.productions)
+  //   .then((pro) => {
+  //     console.log("获取成功", pro);
+  //     callback(null, pro);
+  //   })
+  //   .catch((err) => {
+  //     console.log("获取失败", err);
+  //     callback(err);
+  //   });
   AllDB.garbagemonths
-    .insertMany(data.productions)
+    .update(
+      { customId: data.productions[0].customId },
+      { $set: { production: data.productions[0].production } }
+    )
     .then((pro) => {
       console.log("获取成功", pro);
       callback(null, pro);
@@ -483,14 +496,67 @@ exports.batchAddLatandlog = (data, callback) => {
     });
 };
 
-//查询垃圾存量
+//初次加载全部店铺垃圾产量1
+exports.firstQueryAllCustom = (data, callback) => {
+  console.log("firstQueryAllCustom", data);
+  AllDB.garbagemonths
+    .aggregate([
+      {
+        $lookup: {
+          from: "customs",
+          localField: "customId",
+          foreignField: "socialCreditCode",
+          as: "allcustom",
+        },
+      },
+      //数据打散
+      { $unwind: "$allcustom" },
+      //数据筛选
+      //筛选字段类型严格一致
+      { $match: { yearNum: data.year, monthNum: data.month, reference: "0" } },
+      //两个表数据筛选
+      {
+        $project: {
+          customId: "$customId",
+          monthNum: "$monthNum",
+          yearNum: "$yearNum",
+          production: "$production",
+          reference: "$reference",
+          type: "$allcustom.type",
+          name: "$allcustom.name",
+          phone: "$allcustom.phone",
+          header: "$allcustom.header",
+          isCus: "$allcustom.isCus",
+        },
+      },
+    ])
+    .then((pro) => {
+      console.log("firstQueryAllCustom发送成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("发送失败", err);
+      callback(err);
+    });
+};
+
+//查询垃圾存量1
 exports.queryCustomByWX = (data, callback) => {
   console.log("queryCustomByWX", data);
   let jsonObj = {};
   if (data.type == "全部") {
-    jsonObj = { yearNum: data.year, monthNum: data.month };
+    jsonObj = {
+      yearNum: data.year,
+      monthNum: data.month,
+      reference: data.tag == "未录" ? "0" : { $gt: "0" },
+    };
   } else {
-    jsonObj = { yearNum: data.year, monthNum: data.month, type: data.type };
+    jsonObj = {
+      yearNum: data.year,
+      monthNum: data.month,
+      type: data.type,
+      reference: data.tag == "未录" ? "0" : { $gt: "0" },
+    };
   }
   console.log(jsonObj);
   AllDB.garbagemonths

@@ -419,7 +419,7 @@ router.post("/getDriverNoticeBySendToday", (req, res) => {
   });
 });
 
-//垃圾量 插入店铺
+// 插入垃圾量店铺
 router.post("/insertGarbageBatch", (req, res) => {
   console.log("insertGarbageBatch", req.body);
   operateDB.insertGarbageBatch(req.body, (err, data) => {
@@ -562,6 +562,25 @@ router.post("/batchAddLatandlog", (req, res) => {
     });
   });
 });
+
+//初次加载全部店铺垃圾产量1
+router.post("/firstQueryAllCustom", (req, res) => {
+  console.log("firstQueryAllCustom", req.body);
+  operateDB.firstQueryAllCustom(req.body, (err, data) => {
+    if (err) {
+      return res.json({
+        status: "查询失败",
+        msg: err,
+      });
+    }
+    return res.json({
+      status: "200",
+      value: data,
+      msg: "查询成功",
+    });
+  });
+});
+
 
 //查询垃圾存量
 router.post("/queryCustomByWX", (req, res) => {

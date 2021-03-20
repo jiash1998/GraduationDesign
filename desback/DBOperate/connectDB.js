@@ -306,7 +306,7 @@ SchemaGarbageMonth = new Schema({
   },
   reference: {
     type: String,
-    default: "",
+    default: "0",
   }
 });
 
