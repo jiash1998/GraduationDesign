@@ -73,7 +73,7 @@
                 width="100px"
               ></el-table-column>
               <el-table-column
-                label="垃圾产生量(kg)"
+                label="垃圾总量(kg)"
                 prop="production"
                 width="130px"
               ></el-table-column>
@@ -233,7 +233,7 @@ export default {
     test(data) {
       let num = 0;
       for (const i of data) {
-        num += i.production;
+        num += parseInt(i.production);
       }
       let obj = {
         name: data[0].name,
@@ -243,7 +243,7 @@ export default {
         yearNum: data[0].yearNum,
         production: num,
       };
-      console.log("obj",obj);
+      console.log("testobj",obj);
       return obj;
     },
 
@@ -372,9 +372,9 @@ export default {
       };
       console.log("in drawing1",option);
       myCharts2.on("updateAxisPointer", function(event) {
-        console.log("eveent",event);
+        // console.log("eveent",event);
         var xAxisInfo = event.axesInfo[0];
-        console.log("xAxisInfo",xAxisInfo);
+        // console.log("xAxisInfo",xAxisInfo);
         if (xAxisInfo) {
           var dimension = xAxisInfo.value + 1;
           myCharts2.setOption({

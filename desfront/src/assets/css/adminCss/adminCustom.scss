@@ -16,8 +16,12 @@
         .el-form-item {
           margin: 20px 50px;
 
-          .btn{
-            margin-left: -80px;
+          #operateDiv {
+            display: flex;
+          }
+
+          .btn1 {
+            margin:0 10px 0 -80px;
           }
         }
       }

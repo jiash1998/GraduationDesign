@@ -88,8 +88,7 @@
                   <el-form-item
                     style="margin:0;"
                     v-if="
-                      scope.row.reference != '暂无' &&
-                      scope.row.tag == '未录'
+                      scope.row.reference != '暂无' && scope.row.tag == '未录'
                     "
                   >
                     <el-input
@@ -142,9 +141,17 @@
             plain
             >录入数据</el-button
           >
-          <el-button type="primary" @click="test">
-            <i class="el-icon-download"></i>
-          </el-button>
+          <download-excel
+            class="export-excel-wrapper"
+            :data="json_data"
+            :fields="json_fields"
+            title="店铺垃圾回收量细则"
+            name="店铺垃圾回收量细则.xls"
+          >
+            <el-button lass="btn2" type="primary">
+              <i class="el-icon-download"></i>
+            </el-button>
+          </download-excel>
         </div>
       </div>
     </div>
@@ -154,7 +161,6 @@
 <script>
 import getAllCustomApi from "../../api/getRequest";
 import getAllStoreGarbageApi from "../../api/getRequest";
-import exPortAllApi from "../../api/getRequest";
 import insertGarbageBatchApi from "../../api/postRequest";
 import insertGarbageApi from "../../api/postRequest";
 import dealWithExcess from "../../util/dealExcess";
@@ -176,6 +182,28 @@ export default {
       radio1: "全部",
       radio2: "2021",
       radio3: "1",
+      json_fields: {
+        店铺名称: "name",
+        社会统一信用代码: "customId",
+        店铺类型: "type",
+        店铺负责人: "header",
+        联系方式: "phone",
+        年份: "yearNum",
+        月份: "monthNum",
+        垃圾回收标准量: "basisGarMonth",
+        垃圾回收参考量: "reference",
+        垃圾回收量: "production",
+        状态: "tag",
+      },
+      json_data: [], //导出表格数据
+      json_meta: [
+        [
+          {
+            " key ": " charset ",
+            " value ": " utf- 8 ",
+          },
+        ],
+      ],
       store: [],
       //录入数据按钮
       insertBtn: true,
@@ -240,24 +268,6 @@ export default {
     this.initRadio();
   },
   methods: {
-    //excel导出
-    test() {
-      exPortAllApi
-        .exPortAll()
-        .then((res) => {
-          console.log(res.data);
-          let b = new Blob([res.data], { type: "application/vnd.ms-excel" });
-          let url = URL.createObjectURL(b);
-          let link = document.createElement("a");
-          link.download = "全年店铺资源回收情况.xlsx";
-          link.href = url;
-          link.click();
-          window.URL.revokeObjectURL(url);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
     //店铺类型筛选
     selecType(value1) {
       this.selectAll.type = value1;
@@ -478,6 +488,7 @@ export default {
         }
       }
       console.log("storeForm", this.storeForm.data);
+      this.json_data = this.storeForm.data;
       if (this.storeForm.data.length === 0) {
         this.insertBtn = true;
         this.$message({

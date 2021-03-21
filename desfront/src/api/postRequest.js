@@ -125,11 +125,11 @@ export default {
     );
   },
   //单个处理
-  insertGarbage(data) {
-    return interceptor(
-      postStringJson("/production/add", methodsAll, data, headersJson)
-    );
-  },
+  // insertGarbage(data) {
+  //   return interceptor(
+  //     postStringJson("/production/add", methodsAll, data, headersJson)
+  //   );
+  // },
 
   //回复用户反馈
   replayFeedback(data) {

@@ -73,13 +73,4 @@ export default {
   getByCustomId(id) {
     return interceptor(getString_P("/production/getByCustomId", id, methodAll));
   },
-  //excel 导出接口
-  //垃圾表
-  exPortAll() {
-    return interceptor(getStringExcel("/production/excel", methodAll));
-  },
-  //custom表
-  exPortCustAll() {
-    return interceptor(getStringExcel("/custom/excel", methodAll));
-  },
 };

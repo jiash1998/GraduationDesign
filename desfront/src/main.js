@@ -17,7 +17,8 @@ import qs from "querystring";
 // import AMap from "vue-amap";
 import VueAMap from 'vue-amap';
 
-// import * as echarts from "echarts/lib/echarts";
+import JsonExcel from "vue-json-excel";
+Vue.component("downloadExcel", JsonExcel);
 
 
 Vue.config.productionTip = false
