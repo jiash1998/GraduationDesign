@@ -7,8 +7,8 @@
           <el-table-column sortable label="身份" prop="identity"></el-table-column>
           <el-table-column label="邮箱" prop="email"></el-table-column>
           <el-table-column label="联系方式" prop="phone"></el-table-column>
-          <el-table-column label="注册店铺" prop="registered.count"></el-table-column>
-          <el-table-column label="定制店铺" prop="hasCustom.count"></el-table-column>
+          <el-table-column label="注册店铺" prop="cus"></el-table-column>
+          <el-table-column label="定制店铺" prop="isCused"></el-table-column>
           <!-- <el-table-column label="未付款店铺" prop="unpaid.count"></el-table-column> -->
           <el-table-column label="操作">
             <template slot-scope="scope">

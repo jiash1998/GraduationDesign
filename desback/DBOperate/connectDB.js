@@ -32,6 +32,14 @@ var SchemaUser = new Schema({
     type: String,
     defalut: "",
   },
+  cus: {
+    type: Number,
+    defalut: 0,
+  },
+  isCused: {
+    type: Number,
+    defalut: 0,
+  },
 });
 
 //驾驶员表

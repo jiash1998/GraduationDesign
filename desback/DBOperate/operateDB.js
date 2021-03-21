@@ -86,6 +86,11 @@ exports.addCustom = (data, callback) => {
     .insertMany(data)
     .then((pro) => {
       console.log("店铺保存成功", pro);
+      AllDB.users
+        .update({ username: data.user }, { $inc: { cus: 1} })
+        .then((res) => {
+          console.log(res);
+        });
       callback(null, pro);
     })
     .catch((err) => {

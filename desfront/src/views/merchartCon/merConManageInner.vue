@@ -508,6 +508,10 @@ export default {
           this.garbageCycle.id = JSON.parse(
             sessionStorage.customObj
           ).socialCreditCode;
+
+          this.garbageCycle.username = JSON.parse(
+            sessionStorage.customObj
+          ).user;
           
           // this.steps += 1
 

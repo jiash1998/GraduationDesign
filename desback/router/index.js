@@ -149,6 +149,11 @@ router.post("/customInsertState", (req, res) => {
     )
     .then((pro) => {
       console.log("保存成功", pro);
+      AllDB.users
+        .update({ username: req.body.username }, { $inc: { isCused: 1 } })
+        .then((res) => {
+          console.log(res);
+        });
       return res.json({
         status: 200,
         value: pro,
@@ -598,7 +603,6 @@ router.post("/firstQueryAllCustom", (req, res) => {
     });
   });
 });
-
 
 //查询垃圾存量
 router.post("/queryCustomByWX", (req, res) => {

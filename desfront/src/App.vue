@@ -24,7 +24,7 @@
           <router-link tag="span" to="/merchartContral">商户中心</router-link>
         </div>
         <div class="contralItems">
-          <router-link tag="span" to="/test">账户中心</router-link>
+          <router-link tag="span" to="/account">账户中心</router-link>
         </div>
         <!-- <div class="contralItems">
           <router-link tag="span" to="/PaySuccess">测试</router-link>

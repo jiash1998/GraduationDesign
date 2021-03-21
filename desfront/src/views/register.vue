@@ -10,10 +10,18 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item label="用户名称" prop="username">
-            <el-input v-model="register.username" placeholder="请输入用户名"></el-input>
+            <el-input
+              v-model="register.username"
+              placeholder="请输入用户名"
+            ></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="password">
-            <el-input v-model="register.password" type="password" show-password placeholder="请输入密码"></el-input>
+            <el-input
+              v-model="register.password"
+              type="password"
+              show-password
+              placeholder="请输入密码"
+            ></el-input>
           </el-form-item>
           <el-form-item label="确认密码" prop="passwordCheck">
             <el-input
@@ -24,13 +32,24 @@
             ></el-input>
           </el-form-item>
           <el-form-item label="邮箱（选填）" prop="email">
-            <el-input v-model="register.email" placeholder="请输入邮箱"></el-input>
+            <el-input
+              v-model="register.email"
+              placeholder="请输入邮箱"
+            ></el-input>
           </el-form-item>
           <el-form-item label="手机号" prop="phone">
-            <el-input v-model="register.phone" placeholder="请输入手机号"></el-input>
+            <el-input
+              v-model="register.phone"
+              placeholder="请输入手机号"
+            ></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="success" style="margin-right:10%" @click="submitCheck('register')">提交</el-button>
+            <el-button
+              type="success"
+              style="margin-right:10%"
+              @click="submitCheck('register')"
+              >提交</el-button
+            >
             <el-button type="primary" @click="toSign" plain>返回</el-button>
           </el-form-item>
         </el-form>
@@ -46,7 +65,7 @@ import PublicFood from "../components/publicFood.vue";
 export default {
   name: "register",
   components: {
-    PublicFood
+    PublicFood,
   },
   data() {
     var validateIdentity = (rule, value, callback) => {
@@ -98,7 +117,7 @@ export default {
         password: [{ validator: validatePass, trigger: "blur" }],
         passwordCheck: [{ validator: validatePassCheck, trigger: "blur" }],
         // email: [{ validator: validateEmail, trigger: "change" }],
-        phone: [{ validator: validatePhone, trigger: "change" }]
+        phone: [{ validator: validatePhone, trigger: "change" }],
       },
       register: {
         identity: "",
@@ -106,30 +125,35 @@ export default {
         password: "",
         passwordCheck: "",
         email: "",
-        phone: ""
-      }
+        phone: "",
+        cus:0,
+        isCused:0
+      },
     };
   },
   methods: {
     //判断整个注册表是否能通过
     submitCheck(formName) {
-      this.$refs[formName].validate(val => {
+      this.$refs[formName].validate((val) => {
         console.log(val);
         if (val) {
           var data = this.register;
           console.log(data);
-          comRegisterApi.comRegister(data).then(res => {
+          comRegisterApi.comRegister(data).then((res) => {
             this.$message({
               message: "注册成功",
               type: "success",
-              duration: 1500
+              duration: 1500,
             });
+            this.$router.push("/signin");
+            //路由刷新，搭载数据
+            this.$router.go(0);
           });
         } else {
           this.$message({
             message: "请完整填写信息",
             type: "error",
-            duration: 1500
+            duration: 1500,
           });
           return false;
         }
@@ -137,8 +161,8 @@ export default {
     },
     toSign() {
       this.$router.replace("/signin");
-    }
-  }
+    },
+  },
 };
 </script>
 
