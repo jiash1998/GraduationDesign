@@ -66,7 +66,7 @@
                     fill="#FF761A"
                     p-id="3835"
                   />
-                  <animateMotion path="M 0 0 V -50 Z 0" dur="3s" repeatCount="indefinite" />
+                  <animateMotion path="M 0 0 V -100 Z 0" dur="2s" repeatCount="indefinite" />
                 </g>
                 <!-- left yun -->
                 <g>
@@ -80,7 +80,7 @@
                     fill="#FFFDFD"
                     p-id="3837"
                   />
-                  <animateMotion path="M 0 0 H -80 Z 0" dur="2.5s" repeatCount="indefinite" />
+                  <animateMotion path="M 0 0 H -100 Z 0" dur="2s" repeatCount="indefinite" />
                 </g>
                 <!-- right yun -->
                 <g>
@@ -94,7 +94,7 @@
                     fill="#FFFDFD"
                     p-id="3839"
                   />
-                  <animateMotion path="M 0 0 H 70 Z 0" dur="2.2s" repeatCount="indefinite" />
+                  <animateMotion path="M 0 0 H 100 Z 0" dur="2s" repeatCount="indefinite" />
                 </g>
               </svg>
             </div>

@@ -6,18 +6,31 @@
           <div class="storeType">
             <span>店铺类型：</span>
             <el-radio-group v-model="radioAll.radio1" size="small">
-              <el-radio v-for="(item, index) in storeType" :key="index" :label="item.label" border></el-radio>
+              <el-radio
+                v-for="(item, index) in storeType"
+                :key="index"
+                :label="item.label"
+                border
+              ></el-radio>
             </el-radio-group>
           </div>
           <div class="years">
             <span>年份：</span>
             <el-radio-group v-model="radioAll.radio2" size="small">
+              <el-radio label="2021" border></el-radio>
               <el-radio label="2020" border></el-radio>
               <el-radio label="2019" border></el-radio>
             </el-radio-group>
           </div>
           <div class="operate">
-            <el-button type="primary" :disabled="!view" size="small" @click="selectData" plain>查询</el-button>
+            <el-button
+              type="primary"
+              :disabled="!view"
+              size="small"
+              @click="selectData"
+              plain
+              >查询</el-button
+            >
           </div>
         </el-card>
       </div>
@@ -48,10 +61,22 @@
             <el-table :data="GarbageAll" border>
               <el-table-column label="店铺名称" prop="name"></el-table-column>
               <el-table-column label="店铺类型" prop="type"></el-table-column>
-              <el-table-column label="负责人" prop="header" width="140px"></el-table-column>
+              <el-table-column
+                label="负责人"
+                prop="header"
+                width="140px"
+              ></el-table-column>
               <el-table-column label="联系方式" prop="phone"></el-table-column>
-              <el-table-column label="年份" prop="yearNum" width="100px"></el-table-column>
-              <el-table-column label="垃圾产生量(kg)" prop="production" width="130px"></el-table-column>
+              <el-table-column
+                label="年份"
+                prop="yearNum"
+                width="100px"
+              ></el-table-column>
+              <el-table-column
+                label="垃圾产生量(kg)"
+                prop="production"
+                width="130px"
+              ></el-table-column>
               <!-- <el-table-column label="操作">
                 <el-button type="primary" size="mini" plain>录入</el-button>
                 <el-button type="success" size="mini">编辑</el-button>
@@ -75,7 +100,7 @@ export default {
     return {
       radioAll: {
         radio1: "全部",
-        radio2: ""
+        radio2: "",
       },
       //存放表格 全年数据
       GarbageAll: [],
@@ -90,38 +115,38 @@ export default {
       view: true,
       storeType: [
         {
-          label: "全部"
+          label: "全部",
         },
         {
-          label: "中小型饭店"
+          label: "中小型饭店",
         },
         {
-          label: "快餐汉堡店"
+          label: "快餐汉堡店",
         },
         {
-          label: "烧烤店"
+          label: "烧烤店",
         },
         {
-          label: "奶茶店"
+          label: "奶茶店",
         },
         {
-          label: "办公楼"
+          label: "办公楼",
         },
         {
-          label: "火锅店"
+          label: "火锅店",
         },
         {
-          label: "理发店"
+          label: "理发店",
         },
         {
-          label: "药店"
+          label: "药店",
         },
         {
-          label: "宾馆"
+          label: "宾馆",
         },
         {
-          label: "其他类型"
-        }
+          label: "其他类型",
+        },
       ],
       //echarts
       source2: [
@@ -138,8 +163,8 @@ export default {
           "9",
           "10",
           "11",
-          "12"
-        ]
+          "12",
+        ],
       ],
       series: [
         {
@@ -149,25 +174,25 @@ export default {
           roseType: "radius",
           center: ["50%", "30%"],
           label: {
-            formatter: "{b}: {@1}" + "kg" + "({d}%)"
+            formatter: "{b}: {@1}" + "kg" + "({d}%)",
             // formatter: "{b}: {@[" + dimension + "]}" + "kg"
           },
           encode: {
             itemName: "months",
             value: "1",
-            tooltip: "1"
-          }
-        }
+            tooltip: "1",
+          },
+        },
       ],
       insertLine: { type: "line", smooth: true, seriesLayoutBy: "row" },
-      arr: []
+      arr: [],
     };
   },
   created() {
     this.getCustom();
     // this.getInfo();
     this.getAll();
-    this.radioAll.radio2 = new Date().getUTCFullYear() - 1 + "";
+    this.radioAll.radio2 = new Date().getUTCFullYear() + "";
   },
   methods: {
     //单选选择
@@ -176,18 +201,21 @@ export default {
     },
     //获取全部店铺custom表
     getCustom() {
-      getAllCustomApi.getAllCustom().then(res => {
+      getAllCustomApi.getAllCustom().then((res) => {
         var storeId2 = [];
-        for (const i of res.data) {
+        // console.log(res.data.value);
+        for (const i of res.data.value) {
           let obj = {
-            customId: i.id,
+            customId: i.socialCreditCode,
             name: i.name,
-            type: i.type
+            type: i.type,
           };
           this.storeId.push(obj);
           this.storeId2[i.id] = obj;
         }
       });
+      console.log("storeId", this.storeId);
+      console.log("storeId2", this.storeId2);
     },
 
     //切换显示
@@ -213,15 +241,17 @@ export default {
         header: data[0].header,
         phone: data[0].phone,
         yearNum: data[0].yearNum,
-        production: num
+        production: num,
       };
+      console.log("obj",obj);
       return obj;
     },
 
     //动态获取并渲染
     getAll() {
-      getAllStoreGarbageApi.getAllStoreGarbage().then(res => {
-        this.firstSort(res);
+      getAllStoreGarbageApi.getAllStoreGarbage().then((res) => {
+        console.log("getAllStoreGarbageRes",res.data.value);
+        this.firstSort(res.data.value);
       });
     },
     //第一步 分离数据
@@ -230,15 +260,16 @@ export default {
       let timeId = [];
       //First 取出选择的年份-对应的所有数据放入 arr1
       let arr1 = [];
+      console.log("irstRes",res);
       if (this.radioAll.radio1 == "全部") {
-        for (const i of res.data) {
+        for (const i of res) {
           if (i.yearNum == this.radioAll.radio2) {
             arr1.push(i);
           }
         }
         timeId = this.storeId;
       } else {
-        for (const i of res.data) {
+        for (const i of res) {
           if (
             i.yearNum == this.radioAll.radio2 &&
             i.type == this.radioAll.radio1
@@ -252,7 +283,8 @@ export default {
           }
         }
       }
-      // console.log(arr1);
+      console.log("toSecondarr1",arr1);
+      console.log("toSecondtimeId",timeId);
       this.secondSort(timeId, arr1);
     },
     //第二步 分离
@@ -297,10 +329,12 @@ export default {
         this.$message({
           message: "暂无数据",
           type: "warning",
-          duration: 1600
+          duration: 1600,
         });
       }
-      // console.log(this.source2);
+      console.log("source2",this.source2);
+      console.log("series",this.series);
+
       //绘制
       this.draw2(this.source2, this.series);
       this.storeGarMon = [];
@@ -309,11 +343,11 @@ export default {
     async getInfo() {
       await getAllCustomApi
         .getAllCustom()
-        .then(res => {
-          this.storeInfo = res.data;
-          this.viewTable(res.data);
+        .then((res) => {
+          this.storeInfo = res.data.value;
+          this.viewTable(res.data.value);
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     },
@@ -326,32 +360,34 @@ export default {
         legend: {},
         tooltip: {
           trigger: "axis",
-          showContent: false
+          showContent: false,
         },
         dataset: {
-          source: source2
+          source: source2,
         },
         xAxis: { type: "category", name: "月份" },
         yAxis: { name: "垃圾生产量(kg)" },
         grid: { top: "60%" },
-        series: series
+        series: series,
       };
-
+      console.log("in drawing1",option);
       myCharts2.on("updateAxisPointer", function(event) {
+        console.log("eveent",event);
         var xAxisInfo = event.axesInfo[0];
+        console.log("xAxisInfo",xAxisInfo);
         if (xAxisInfo) {
           var dimension = xAxisInfo.value + 1;
           myCharts2.setOption({
             series: {
               id: "pie",
               label: {
-                formatter: "{b}: {@[" + dimension + "]}" + "kg"
+                formatter: "{b}: {@[" + dimension + "]}" + "kg",
               },
               encode: {
                 value: dimension,
-                tooltip: dimension
-              }
-            }
+                tooltip: dimension,
+              },
+            },
           });
         }
       });
@@ -374,8 +410,8 @@ export default {
           "9",
           "10",
           "11",
-          "12"
-        ]
+          "12",
+        ],
       ];
       this.series = [
         {
@@ -385,17 +421,17 @@ export default {
           roseType: "radius",
           center: ["50%", "30%"],
           label: {
-            formatter: "{b}: {@1}({d}%)"
+            formatter: "{b}: {@1}({d}%)",
           },
           encode: {
             itemName: "months",
             value: "1",
-            tooltip: "1"
-          }
-        }
+            tooltip: "1",
+          },
+        },
       ];
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -340,7 +340,7 @@ export default {
         console.log("postdata", postData);
 
         insertGarbageBatchApi
-          .insertGarbageBatch(postData)
+          .insertGarbageCustom(postData)
           .then((res) => {
             console.log(res);
 

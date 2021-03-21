@@ -17,6 +17,9 @@ import qs from "querystring";
 // import AMap from "vue-amap";
 import VueAMap from 'vue-amap';
 
+// import * as echarts from "echarts/lib/echarts";
+
+
 Vue.config.productionTip = false
 
 Vue.use(ElementUI);

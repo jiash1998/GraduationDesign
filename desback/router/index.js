@@ -419,7 +419,25 @@ router.post("/getDriverNoticeBySendToday", (req, res) => {
   });
 });
 
-// 插入垃圾量店铺
+//插入未录入垃圾量店铺
+router.post("/insertGarbageCustom", (req, res) => {
+  console.log("insertGarbageCustom", req.body);
+  operateDB.insertGarbageCustom(req.body, (err, data) => {
+    if (err) {
+      return res.json({
+        status: "保存错误",
+        msg: err,
+      });
+    }
+    return res.json({
+      status: "200",
+      value: data,
+      msg: "保存成功",
+    });
+  });
+});
+
+// 批量插入店铺垃圾量
 router.post("/insertGarbageBatch", (req, res) => {
   console.log("insertGarbageBatch", req.body);
   operateDB.insertGarbageBatch(req.body, (err, data) => {

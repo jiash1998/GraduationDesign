@@ -1,74 +1,63 @@
 <template>
-  <div id="son2Test">
-    <!-- <el-form :model="uploadDataForm">
-      <el-form-item label="">
-        <el-upload
-          prop="photo"
-          action="/apis/upload"
-          :on-success="uploadSuccess"
-          :before-upload="uploadBefore"
-          accept="image/*"
-        >
-          <el-button size="mini" type="primary">点击上传</el-button>
-          <div slot="tip" class="el-upload__tip">
-            只能上传图片，且不超过5000kb
-          </div>
-        </el-upload>
-      </el-form-item>
-    </el-form> -->
-    <el-button type="" plain @click="query">query</el-button>
-  </div>
+  <!--为echarts准备一个具备大小的容器dom-->
+  <div id="main" style="width: 600px;height: 400px;"></div>
 </template>
-
 <script>
-// import getAllCustomApi from "../../api/postRequest.js";
-import aliPayApi from "../api/postRequest.js";
-
+import echarts from 'echarts'
+// import * as echarts from "echarts/lib/echarts";
 export default {
-  name: "son2Test",
+  name: "",
   data() {
     return {
-      uploadDataForm: {
-        photo: "",
-      },
+      charts: "",
+      /*  opinion: ["1", "3", "3", "4", "5"],*/
+      opinionData: ["3", "2", "4", "4", "5"],
     };
   },
-  mounted() {},
-  created() {},
+  //调用
+  mounted() {
+    this.drawLine("main");
+  },
   methods: {
-    uploadSuccess(res) {
-      console.log(res);
-      this.uploadDataForm.photo = res.data.path;
-    },
-    uploadBefore(file) {
-      let limitMax = 5000 * 1024;
-      if (file.size > limitMax) {
-        this.$messageTips("大小超出限制");
-        return false;
-      }
-    },
-    query() {
-      //VCDB09227189ZXCN20
-      let data = {id:"VCDB09227189ZXCN22"};
-      aliPayApi
-        .payAliQuery(data)
-        .then((res) => {
-          console.log(res.data.result.alipay_trade_query_response);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    drawLine(id) {
+      this.charts = echarts.init(document.getElementById(id));
+      this.charts.setOption({
+        tooltip: {
+          trigger: "axis",
+        },
+        legend: {
+          data: ["近七日收益"],
+        },
+        grid: {
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
+          containLabel: true,
+        },
+
+        toolbox: {
+          feature: {
+            saveAsImage: {},
+          },
+        },
+        xAxis: {
+          type: "category",
+          boundaryGap: false,
+          data: ["1", "2", "3", "4", "5"],
+        },
+        yAxis: {
+          type: "value",
+        },
+        series: [
+          {
+            name: "近七日收益",
+            type: "line",
+            stack: "总量",
+            data: this.opinionData,
+          },
+        ],
+      });
     },
   },
 };
 </script>
-
-<style lang="scss">
-#son2Test {
-  margin-top: 100px;
-}
-
-.el-button{
-   margin-top: 100px;
-}
-</style>

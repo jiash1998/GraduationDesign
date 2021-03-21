@@ -340,24 +340,11 @@ exports.getDriverNoticeBySendToday = (data, callback) => {
     });
 };
 
-// 插入垃圾量店铺1
-exports.insertGarbageBatch = (data, callback) => {
-  console.log("insertGarbageBatch", data.productions);
-  // AllDB.garbagemonths
-  //   .insertMany(data.productions)
-  //   .then((pro) => {
-  //     console.log("获取成功", pro);
-  //     callback(null, pro);
-  //   })
-  //   .catch((err) => {
-  //     console.log("获取失败", err);
-  //     callback(err);
-  //   });
+//插入未录入垃圾量店铺1
+exports.insertGarbageCustom = (data, callback) => {
+  console.log("insertGarbageCustom", data.productions);
   AllDB.garbagemonths
-    .update(
-      { customId: data.productions[0].customId },
-      { $set: { production: data.productions[0].production } }
-    )
+    .insertMany(data.productions)
     .then((pro) => {
       console.log("获取成功", pro);
       callback(null, pro);
@@ -366,6 +353,31 @@ exports.insertGarbageBatch = (data, callback) => {
       console.log("获取失败", err);
       callback(err);
     });
+};
+
+// 批量插入店铺垃圾量1
+exports.insertGarbageBatch = (data, callback) => {
+  console.log("insertGarbageBatch", data.productions);
+
+  data.productions.forEach((item) => {
+    AllDB.garbagemonths
+      .updateMany(
+        {
+          customId: item.customId,
+          yearNum: item.yearNum,
+          monthNum: item.monthNum,
+        },
+        { $set: { production: item.production } }
+      )
+      .then((pro) => {
+        console.log("获取成功", pro);
+        callback(null, pro);
+      })
+      .catch((err) => {
+        console.log("获取失败", err);
+        callback(err);
+      });
+  });
 };
 
 //获取垃圾回收量 月份年份店铺1

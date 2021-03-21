@@ -118,6 +118,12 @@ export default {
       postStringJson("/apis/insertGarbageBatch", methodsAll, data, headersJson)
     );
   },
+  //插入店铺 批处理
+  insertGarbageCustom(data) {
+    return interceptor(
+      postStringJson("/apis/insertGarbageCustom", methodsAll, data, headersJson)
+    );
+  },
   //单个处理
   insertGarbage(data) {
     return interceptor(
