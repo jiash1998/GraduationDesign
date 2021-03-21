@@ -334,6 +334,42 @@ router.get("/getAllReply", (req, res) => {
   });
 });
 
+//回复用户反馈
+router.post("/replayFeedback", (req, res) => {
+  console.log("replayFeedback", req.body);
+  operateDB.replayFeedback(req.body, (err, data) => {
+    if (err) {
+      return res.json({
+        status: "发送错误",
+        msg: err,
+      });
+    }
+    return res.json({
+      status: "200",
+      value: data,
+      msg: "发送成功",
+    });
+  });
+});
+
+//单条逻辑删除已经反馈信息
+router.post("/delFeedbackById", (req, res) => {
+  console.log("delFeedbackById", req.body);
+  operateDB.delFeedbackById(req.body, (err, data) => {
+    if (err) {
+      return res.json({
+        status: "删除失败",
+        msg: err,
+      });
+    }
+    return res.json({
+      status: "200",
+      value: data,
+      msg: "删除成功",
+    });
+  });
+});
+
 //注册驾驶员
 router.post("/addDriver", (req, res) => {
   console.log(req.body);

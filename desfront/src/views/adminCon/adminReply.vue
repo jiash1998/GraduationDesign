@@ -2,30 +2,29 @@
   <div id="Son7_1Replay">
     <div class="body">
       <el-card shadow="hover">
-        <el-table :data="replay">
+        <el-table ref="replay" :data="replay">
           <el-table-column
             label="用户名"
-            prop="replay.username"
+            prop="username"
           ></el-table-column>
           <el-table-column
             label="反馈内容"
-            prop="replay.content"
+            prop="content"
           ></el-table-column>
           <el-table-column
             label="反馈时间"
             sortable
-            prop="replay.feedbackDate"
+            prop="feedbackDate"
           ></el-table-column>
           <el-table-column
             label="回复内容"
-            prop="reply.content"
+            prop="content"
           ></el-table-column>
           <el-table-column
             label="回复时间"
             sortable
-            prop="reply.replyTime"
+            prop="replyTime"
           ></el-table-column>
-          <el-table-column label="操作员" prop="reply.admin"></el-table-column>
         </el-table>
       </el-card>
     </div>
@@ -50,14 +49,13 @@ export default {
       getAllReplyApi
         .getAllReply()
         .then((res) => {
-          console.log(res.data.value);
-          let arr = res.data.value;
-          for (let i = 0; i < arr.length; i++) {
-            if (arr[i].state == "未回复") {
-              this.replay[i] = arr[i];
+          console.log("res", res.data.value);
+          for (const i of res.data.value) {
+            if (i.state == "已回复") {
+              this.replay.push(i);
             }
           }
-          console.log(this.replay);
+          console.log("relpay", this.replay);
         })
         .catch((err) => {
           console.log(err);

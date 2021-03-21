@@ -134,13 +134,13 @@ export default {
   //回复用户反馈
   replayFeedback(data) {
     return interceptor(
-      postString("/replayFeedback", methodsAll, data, headersAll)
+      postString("/apis/replayFeedback", methodsAll, data, headersAll)
     );
   },
-  //逻辑删除已回复反馈
+  //单条逻辑删除已回复反馈
   delFeedbackById(id) {
     return interceptor(
-      postString("/delFeedbackById", methodsAll, id, headersAll)
+      postString("/apis/delFeedbackById", methodsAll, id, headersAll)
     );
   },
 

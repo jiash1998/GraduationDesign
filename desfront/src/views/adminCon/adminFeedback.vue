@@ -6,18 +6,40 @@
           <el-table-column type="selection"></el-table-column>
           <el-table-column prop="username" label="反馈用户"></el-table-column>
           <el-table-column prop="content" label="反馈内容"></el-table-column>
-          <el-table-column prop="feedbackDate" sortable label="反馈时间"></el-table-column>
-          <el-table-column prop="state" width="120" label="状态"></el-table-column>
+          <el-table-column
+            prop="feedbackDate"
+            sortable
+            label="反馈时间"
+          ></el-table-column>
+          <el-table-column
+            prop="state"
+            width="120"
+            label="状态"
+          ></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <el-button type="primary" v-if="scope.row.state != '未回复'" size="small" disabled>回复</el-button>
-              <el-button type="primary" v-else plain size="small" @click="replayInfo(scope.row)">回复</el-button>
+              <el-button
+                type="primary"
+                v-if="scope.row.state != '未回复'"
+                size="small"
+                disabled
+                >回复</el-button
+              >
+              <el-button
+                type="primary"
+                v-else
+                plain
+                size="small"
+                @click="replayInfo(scope.row)"
+                >回复</el-button
+              >
               <el-button
                 type="danger"
-                :disabled="scope.row.state == '未回复' ? !delBtn :delBtn"
+                :disabled="scope.row.state == '未回复' ? !delBtn : delBtn"
                 @click.native="delRow(scope.row)"
                 size="small"
-              >删除</el-button>
+                >删除</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
@@ -29,10 +51,16 @@
         <el-dialog title :visible.sync="dialogVisible" width="40%">
           <el-form :model="replay" ref="replay" :rules="rules">
             <el-form-item label prop="content">
-              <el-input v-model="replay.content" type="textarea" placeholder="请输入内容"></el-input>
+              <el-input
+                v-model="replay.content"
+                type="textarea"
+                placeholder="请输入内容"
+              ></el-input>
             </el-form-item>
             <el-form-item label>
-              <el-button type="primary" @click="replayBtn('replay')" plain>发送</el-button>
+              <el-button type="primary" @click="replayBtn('replay')" plain
+                >发送</el-button
+              >
             </el-form-item>
           </el-form>
           <!-- <span slot="footer" class="dialog-footer">
@@ -63,7 +91,7 @@ export default {
     return {
       //rules
       rules: {
-        content: [{ validator: validateContent, trigger: "change" }]
+        content: [{ validator: validateContent, trigger: "change" }],
       },
       feedback: [],
       //回复按钮展示
@@ -79,8 +107,8 @@ export default {
       replay: {
         fbId: "",
         content: "",
-        username: ""
-      }
+        username: "",
+      },
     };
   },
   mounted() {
@@ -93,8 +121,8 @@ export default {
       console.log(index);
       //点击回复某个之后，将携带信息
       this.replay = {
-        fbId: index.id,
-        username: sessionStorage.getItem("userName")
+        feedbackId: index._id,
+        username: index.username,
       };
     },
     //回复，按钮
@@ -102,17 +130,17 @@ export default {
       var data = this.replay;
       console.log(data);
 
-      this.$refs[formname].validate(val => {
+      this.$refs[formname].validate((val) => {
         if (val) {
           replayFeedbackApi
             .replayFeedback(data)
-            .then(res => {
+            .then((res) => {
               console.log(res.data);
-              if (res.data == "ok") {
+              if (res.data.msg == "发送成功") {
                 this.$message({
                   message: "回复成功",
                   type: "success",
-                  duration: 1500
+                  duration: 1500,
                 });
                 this.getInfo();
                 this.dialogVisible = false;
@@ -120,11 +148,11 @@ export default {
                 this.$message({
                   message: "回复失败",
                   type: "error",
-                  duration: 1500
+                  duration: 1500,
                 });
               }
             })
-            .catch(err => {
+            .catch((err) => {
               console.log(err);
             });
         } else {
@@ -134,31 +162,31 @@ export default {
     },
     //删除某一行
     delRow(index) {
-      var id = { id: index.id };
+      var id = { id: index._id };
       console.log(id);
 
-      delFeedbackByIdApi.
-        delFeedbackById(id)
-          .then(res => {
-            console.log(res.data);
-            if (res.data == "ok") {
-              this.$message({
-                message: "删除成功",
-                type: "success",
-                duration: 1500
-              });
-              this.getInfo();
-            } else {
-              this.$message({
-                message: "删除失败",
-                type: "error",
-                duration: 1500
-              });
-            }
-          })
-          .catch(err => {
-            console.log(err);
-          });
+      delFeedbackByIdApi
+        .delFeedbackById(id)
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.msg == "删除成功") {
+            this.$message({
+              message: "删除成功",
+              type: "success",
+              duration: 1500,
+            });
+            this.getInfo();
+          } else {
+            this.$message({
+              message: "删除失败",
+              type: "error",
+              duration: 1500,
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     /**
      * get批量逻辑删除
@@ -172,7 +200,7 @@ export default {
           this.$message({
             message: "包含未回复信息，请及时回复",
             type: "warning",
-            duration: 1500
+            duration: 1500,
           });
         } else {
           for (const i of this.$refs.feedback.selection) {
@@ -187,14 +215,14 @@ export default {
               qs.stringify(ids),
               {
                 headers: {
-                  "Content-Type": "application/x-www-form-urlencoded"
-                }
+                  "Content-Type": "application/x-www-form-urlencoded",
+                },
               }
             )
-            .then(res => {
+            .then((res) => {
               console.log(res.data);
             })
-            .catch(err => {
+            .catch((err) => {
               console.log(err);
             });
         }
@@ -203,15 +231,20 @@ export default {
     getInfo() {
       getAllFeedbackApi
         .getAllFeedBack()
-        .then(res => {
+        .then((res) => {
           console.log(res.data.value);
-          this.feedback = res.data.value;
+          // for (const i of res.data.value) {
+          //   if (i.deleted != 0) {
+          //     this.feedback.push(i);
+          //   }
+          // }
+          this.feedback=res.data.value;
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

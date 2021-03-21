@@ -87,7 +87,7 @@ exports.addCustom = (data, callback) => {
     .then((pro) => {
       console.log("店铺保存成功", pro);
       AllDB.users
-        .update({ username: data.user }, { $inc: { cus: 1} })
+        .update({ username: data.user }, { $inc: { cus: 1 } })
         .then((res) => {
           console.log(res);
         });
@@ -212,13 +212,75 @@ exports.getAllFeedBack = (callback) => {
 exports.getAllReply = (callback) => {
   console.log("getAllReply");
   AllDB.feedbacks
-    .find()
+    .aggregate([
+      {
+        $lookup: {
+          from: "replys",
+          localField: "_id".toString(),
+          foreignField: "username",
+          as: "feedback_reply",
+        },
+      },
+      //数据打散
+      { $unwind: "$feedback_reply" },
+      //两个表数据筛选
+      {
+        $project: {
+          feedbackDate: "$feedbackDate",
+          content1: "$content",
+          username: "$username",
+          replyDate: "$feedback_reply.replyDate",
+        },
+      },
+    ])
     .then((pro) => {
       console.log("获取成功", pro);
       callback(null, pro);
     })
     .catch((err) => {
       console.log("获取失败", err);
+      callback(err);
+    });
+};
+
+//回复用户反馈
+exports.replayFeedback = (data, callback) => {
+  console.log("replayFeedback:", data);
+  var date = new Date();
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var day = date.getDate();
+  var time = year + "-" + month + "-" + day;
+  data.replyDate = time;
+  console.log(data);
+  AllDB.replys
+    .insertMany(data)
+    .then((pro) => {
+      console.log("保存成功", pro);
+      AllDB.feedbacks
+        .update({ _id: data.fbId }, { $set: { state: "已回复" } })
+        .then((res) => {
+          console.log(res);
+        });
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("保存失败", err);
+      callback(err);
+    });
+};
+
+//单条逻辑删除已经回复的反馈
+exports.delFeedbackById = (data, callback) => {
+  console.log("delFeedbackById:", data);
+  AllDB.feedbacks
+    .update({ _id: data.id }, { $set: { deleted: "0" } })
+    .then((pro) => {
+      console.log("保存成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("保存失败", err);
       callback(err);
     });
 };

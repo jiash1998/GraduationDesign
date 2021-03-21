@@ -80,7 +80,7 @@ export default {
       offsetTop: 0,
       //提示
       isShow: false,
-      isDot:"",
+      isDot:false,
       identityApp: "",
     };
   },

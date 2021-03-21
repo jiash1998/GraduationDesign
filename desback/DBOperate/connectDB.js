@@ -125,9 +125,9 @@ var SchemaCustom = new Schema({
     type: String,
     default: "",
   },
-  basisGarMonth:{
-    type:String,
-    defalut:""
+  basisGarMonth: {
+    type: String,
+    defalut: "",
   },
   cycleTimes: {
     type: String,
@@ -260,6 +260,27 @@ var SchemaFeedback = new Schema({
   },
 });
 
+//回复反馈表
+var SchemaReply = new Schema({
+  username: {
+    type: String,
+    required: true,
+  },
+  feedbackId: {
+    type: String,
+    default: "",
+  },
+  replyDate: {
+    type: String,
+    required: true,
+    default: "",
+  },
+  content: {
+    type: String,
+    default: "",
+  },
+});
+
 //垃圾表
 var SchemaGarbageSec = new Schema({
   garbage_id: {
@@ -296,9 +317,9 @@ SchemaGarbageMonth = new Schema({
     type: String,
     default: "",
   },
-  type:{
-    type:String,
-    default:""
+  type: {
+    type: String,
+    default: "",
   },
   monthNum: {
     type: String,
@@ -315,7 +336,7 @@ SchemaGarbageMonth = new Schema({
   reference: {
     type: String,
     default: "0",
-  }
+  },
 });
 
 //垃圾年产量总表
@@ -329,6 +350,7 @@ module.exports = {
   latandlons: mongoose.model("latandlons", SchemaLatAndLon),
   customs: mongoose.model("customs", SchemaCustom),
   feedbacks: mongoose.model("feedbacks", SchemaFeedback),
+  replys: mongoose.model("replys", SchemaReply),
   garbagesecs: mongoose.model("garbagesecs", SchemaGarbageSec),
   garbagetypes: mongoose.model("garbagetypes", SchemaGarbageType),
   garbagemonths: mongoose.model("garbagemonths", SchemaGarbageMonth),
