@@ -163,29 +163,6 @@ var SchemaCustom = new Schema({
   },
 });
 
-//个人通知表
-var SchemaNoticeSelf = new Schema({
-  userId: {
-    type: String,
-    required: true,
-  },
-  title: {
-    type: String,
-    required: true,
-    default: "",
-  },
-  content: {
-    type: String,
-    required: true,
-    default: "",
-  },
-  time: {
-    type: String,
-    required: true,
-    default: "",
-  },
-});
-
 //驾驶员通知表
 var SchemaNoticeDriver = new Schema({
   sender: {
@@ -235,18 +212,67 @@ var SchemaLatAndLon = new Schema({
   },
 });
 
-//反馈表
-var SchemaFeedback = new Schema({
+//个人通知表
+var SchemaNoticeSelf = new Schema({
   username: {
     type: String,
     required: true,
   },
-  feedbackDate: {
+  // ntr_id: {
+  //   type: String,
+  //   required: true,
+  //   default: "",
+  // },
+  title: {
+    type: String,
+    required: true,
+    default: "个人通知",
+  },
+  content: {
     type: String,
     required: true,
     default: "",
   },
-  content: {
+  noticeSelfDate: {
+    type: String,
+    required: true,
+    default: "",
+  },
+});
+
+//管理员回复和用户反馈表
+var SchemaFeedbackAndReply = new Schema({
+  username: {
+    type: String,
+    required: true,
+  },
+  title: {
+    type: String,
+    default: "用户反馈",
+  },
+  feedbackContent: {
+    type: String,
+    default: "",
+  },
+  feedbackDate: {
+    type: String,
+    // required: true,
+    default: "",
+  },
+  feedbackId: {
+    type: String,
+    default: "",
+  },
+  replyContent: {
+    type: String,
+    default: "",
+  },
+  replyDate: {
+    type: String,
+    // required: true,
+    default: "",
+  },
+  replyId: {
     type: String,
     default: "",
   },
@@ -261,25 +287,26 @@ var SchemaFeedback = new Schema({
 });
 
 //回复反馈表
-var SchemaReply = new Schema({
-  username: {
-    type: String,
-    required: true,
-  },
-  feedbackId: {
-    type: String,
-    default: "",
-  },
-  replyDate: {
-    type: String,
-    required: true,
-    default: "",
-  },
-  content: {
-    type: String,
-    default: "",
-  },
-});
+// var SchemaReply = new Schema({
+//   username: {
+//     type: String,
+//     required: true,
+//   },
+//   // ntr_id: {
+//   //   type: String,
+//   //   // required: true,
+//   //   default: "",
+//   // },
+//   title: {
+//     type: String,
+//     default: "管理员回复",
+//   },
+//   content: {
+//     type: String,
+//     default: "",
+//   },
+ 
+// });
 
 //垃圾表
 var SchemaGarbageSec = new Schema({
@@ -349,8 +376,11 @@ module.exports = {
   noticedrivers: mongoose.model("noticedrivers", SchemaNoticeDriver),
   latandlons: mongoose.model("latandlons", SchemaLatAndLon),
   customs: mongoose.model("customs", SchemaCustom),
-  feedbacks: mongoose.model("feedbacks", SchemaFeedback),
-  replys: mongoose.model("replys", SchemaReply),
+  feedbackandreplys: mongoose.model(
+    "feedbackandreplys",
+    SchemaFeedbackAndReply
+  ),
+  // replys: mongoose.model("replys", SchemaReply),
   garbagesecs: mongoose.model("garbagesecs", SchemaGarbageSec),
   garbagetypes: mongoose.model("garbagetypes", SchemaGarbageType),
   garbagemonths: mongoose.model("garbagemonths", SchemaGarbageMonth),

@@ -5,7 +5,7 @@
         <el-form :model="feedback" :rules="feedback" refs="feedback">
           <el-form-item label>
             <el-input
-              v-model="feedback.content"
+              v-model="feedback.feedbackContent"
               type="textarea"
               placeholder="填写你想反馈的意见或者建议"
             ></el-input>
@@ -48,8 +48,9 @@ export default {
       ],
       feedback: {
         username: "",
-        content: "",
+        feedbackContent: "",
         feedbackDate: "",
+        feedbackId: "",
       },
       vm: this,
     };
@@ -59,7 +60,14 @@ export default {
       (vm) => {
         let DATE = new Date();
         vm.feedback.username = sessionStorage.getItem("username");
-        vm.feedback.feedbackDate = DATE.getFullYear() + "/" + (DATE.getMonth() + 1 )+ "/" + DATE.getDay();
+        vm.feedback.feedbackDate =
+          DATE.getFullYear() +
+          "-" +
+          (DATE.getMonth() + 1) +
+          "-" +
+          DATE.getDate();
+        vm.feedback.feedbackId =
+          DATE.getTime() + sessionStorage.getItem("username");
         var data = vm.feedback;
         console.log("Feedbackdata", data);
         addFeedbackApi

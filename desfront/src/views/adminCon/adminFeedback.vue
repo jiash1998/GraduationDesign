@@ -5,7 +5,10 @@
         <el-table ref="feedback" :data="feedback">
           <el-table-column type="selection"></el-table-column>
           <el-table-column prop="username" label="反馈用户"></el-table-column>
-          <el-table-column prop="content" label="反馈内容"></el-table-column>
+          <el-table-column
+            prop="feedbackContent"
+            label="反馈内容"
+          ></el-table-column>
           <el-table-column
             prop="feedbackDate"
             sortable
@@ -52,7 +55,7 @@
           <el-form :model="replay" ref="replay" :rules="rules">
             <el-form-item label prop="content">
               <el-input
-                v-model="replay.content"
+                v-model="replay.replyContent"
                 type="textarea"
                 placeholder="请输入内容"
               ></el-input>
@@ -91,7 +94,7 @@ export default {
     return {
       //rules
       rules: {
-        content: [{ validator: validateContent, trigger: "change" }],
+        replyContent: [{ validator: validateContent, trigger: "change" }],
       },
       feedback: [],
       //回复按钮展示
@@ -105,8 +108,10 @@ export default {
       //回复表单，
       // 需要fbId(反馈id)、username(用户名)、content(内容)、admin(站长)
       replay: {
-        fbId: "",
-        content: "",
+        feedbackId: "",
+        replyId: "",
+        replyContent: "",
+        replyDate: "",
         username: "",
       },
     };
@@ -121,7 +126,7 @@ export default {
       console.log(index);
       //点击回复某个之后，将携带信息
       this.replay = {
-        feedbackId: index._id,
+        feedbackId: index.feedbackId,
         username: index.username,
       };
     },
@@ -162,7 +167,7 @@ export default {
     },
     //删除某一行
     delRow(index) {
-      var id = { id: index._id };
+      var id = { replyId: index.replyId };
       console.log(id);
 
       delFeedbackByIdApi
@@ -193,52 +198,57 @@ export default {
      */
     get() {
       //获取table的选中数据对应数据库id
-      // console.log(data);
-      for (const iterator of this.$refs.feedback.selection) {
-        if (iterator.state == "未回复") {
-          // alert("包含未回复信息，请及时回复");
+      this.delId = [];
+      for (const i of this.$refs.feedback.selection) {
+        if (i.state == "未回复") {
           this.$message({
             message: "包含未回复信息，请及时回复",
             type: "warning",
             duration: 1500,
           });
         } else {
-          for (const i of this.$refs.feedback.selection) {
-            this.delId.push(i.id);
-          }
-          var ids = { ids: this.delId.toString() };
-          console.log(ids);
-
-          this.axios
-            .post(
-              "http://118.31.12.146:8080/batchDelFeedback",
-              qs.stringify(ids),
-              {
-                headers: {
-                  "Content-Type": "application/x-www-form-urlencoded",
-                },
-              }
-            )
-            .then((res) => {
-              console.log(res.data);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+          // var ids = { replyId: i.replyId.toString() }
+          this.delId.push(i);
         }
       }
+      // for (const i of this.$refs.feedback.selection) {
+      //   this.delId.push({replyId:i.replyId});
+      // }
+      // var ids = { id: this.delId.toString() };
+      console.log(this.delId);
+      for (const i of this.delId) {
+        delFeedbackByIdApi
+          .delFeedbackBatch(i)
+          .then((res) => {
+            console.log(res.data);
+            if (res.data.msg == "删除成功") {
+              this.$message({
+                message: "删除成功",
+                type: "success",
+                duration: 1500,
+              });
+              this.getInfo();
+            } else {
+              this.$message({
+                message: "删除失败",
+                type: "error",
+                duration: 1500,
+              });
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+      console.log("len", this.delId.length);
     },
+    //获取反馈
     getInfo() {
       getAllFeedbackApi
         .getAllFeedBack()
         .then((res) => {
           console.log(res.data.value);
-          // for (const i of res.data.value) {
-          //   if (i.deleted != 0) {
-          //     this.feedback.push(i);
-          //   }
-          // }
-          this.feedback=res.data.value;
+          this.feedback = res.data.value;
         })
         .catch((err) => {
           console.log(err);

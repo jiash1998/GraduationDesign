@@ -143,6 +143,12 @@ export default {
       postString("/apis/delFeedbackById", methodsAll, id, headersAll)
     );
   },
+  //批量逻辑删除已回复反馈
+  delFeedbackBatch(id) {
+    return interceptor(
+      postString("/apis/delFeedbackBatch", methodsAll, id, headersAll)
+    );
+  },
 
   //商家
   //录入店铺1

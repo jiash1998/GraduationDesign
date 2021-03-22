@@ -135,7 +135,7 @@ exports.getByPNoticeUsername = (data, callback) => {
 //商户反馈接口1
 exports.addFeedback = (data, callback) => {
   console.log("addFeedback:", data);
-  AllDB.feedbacks
+  AllDB.feedbackandreplys
     .insertMany(data)
     .then((pro) => {
       console.log("反馈保存成功", pro);
@@ -196,8 +196,8 @@ exports.getAllUser = (callback) => {
 //获取所有反馈1
 exports.getAllFeedBack = (callback) => {
   console.log("getAllFeedBack");
-  AllDB.feedbacks
-    .find()
+  AllDB.feedbackandreplys
+    .find({deleted:"1"})
     .then((pro) => {
       console.log("获取成功", pro);
       callback(null, pro);
@@ -211,28 +211,8 @@ exports.getAllFeedBack = (callback) => {
 //获取所有已经反馈1
 exports.getAllReply = (callback) => {
   console.log("getAllReply");
-  AllDB.feedbacks
-    .aggregate([
-      {
-        $lookup: {
-          from: "replys",
-          localField: "_id".toString(),
-          foreignField: "username",
-          as: "feedback_reply",
-        },
-      },
-      //数据打散
-      { $unwind: "$feedback_reply" },
-      //两个表数据筛选
-      {
-        $project: {
-          feedbackDate: "$feedbackDate",
-          content1: "$content",
-          username: "$username",
-          replyDate: "$feedback_reply.replyDate",
-        },
-      },
-    ])
+  AllDB.feedbackandreplys
+    .find({ state: "已回复" })
     .then((pro) => {
       console.log("获取成功", pro);
       callback(null, pro);
@@ -250,15 +230,27 @@ exports.replayFeedback = (data, callback) => {
   var year = date.getFullYear();
   var month = date.getMonth() + 1;
   var day = date.getDate();
+
   var time = year + "-" + month + "-" + day;
+  var id = date.getTime() + data.username;
+  data.replyId = id;
   data.replyDate = time;
-  console.log(data);
-  AllDB.replys
-    .insertMany(data)
+  console.log("reply", data);
+  AllDB.feedbackandreplys
+    .update(
+      { feedbackId: data.feedbackId },
+      {
+        $set: {
+          replyId: data.replyId,
+          replyContent: data.replyContent,
+          replyDate: data.replyDate,
+        },
+      }
+    )
     .then((pro) => {
       console.log("保存成功", pro);
-      AllDB.feedbacks
-        .update({ _id: data.fbId }, { $set: { state: "已回复" } })
+      AllDB.feedbackandreplys
+        .update({ feedbackId: data.feedbackId }, { $set: { state: "已回复" } })
         .then((res) => {
           console.log(res);
         });
@@ -273,8 +265,23 @@ exports.replayFeedback = (data, callback) => {
 //单条逻辑删除已经回复的反馈
 exports.delFeedbackById = (data, callback) => {
   console.log("delFeedbackById:", data);
-  AllDB.feedbacks
-    .update({ _id: data.id }, { $set: { deleted: "0" } })
+  AllDB.feedbackandreplys
+    .update({ replyId: data.replyId }, { $set: { deleted: "0" } })
+    .then((pro) => {
+      console.log("保存成功", pro);
+      callback(null, pro);
+    })
+    .catch((err) => {
+      console.log("保存失败", err);
+      callback(err);
+    });
+};
+
+//批量逻辑删除已经回复的反馈
+exports.delFeedbackBatch = (data, callback) => {
+  console.log("delFeedbackBatch2:", data);
+  AllDB.feedbackandreplys
+    .update({ replyId: data.replyId }, { $set: { deleted: "0" } })
     .then((pro) => {
       console.log("保存成功", pro);
       callback(null, pro);

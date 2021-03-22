@@ -370,6 +370,24 @@ router.post("/delFeedbackById", (req, res) => {
   });
 });
 
+//批量逻辑删除已经反馈信息
+router.post("/delFeedbackBatch", (req, res) => {
+  console.log("delFeedbackBatch", req.body);
+  operateDB.delFeedbackBatch(req.body, (err, data) => {
+    if (err) {
+      return res.json({
+        status: "删除失败",
+        msg: err,
+      });
+    }
+    return res.json({
+      status: "200",
+      value: data,
+      msg: "删除成功",
+    });
+  });
+});
+
 //注册驾驶员
 router.post("/addDriver", (req, res) => {
   console.log(req.body);

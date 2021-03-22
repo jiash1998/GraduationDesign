@@ -3,27 +3,22 @@
     <div class="body">
       <el-card shadow="hover">
         <el-table ref="replay" :data="replay">
-          <el-table-column
-            label="用户名"
-            prop="username"
-          ></el-table-column>
-          <el-table-column
-            label="反馈内容"
-            prop="content"
-          ></el-table-column>
+          <el-table-column label="用户名" prop="username"></el-table-column>
+          <el-table-column label="反馈内容" prop="feedbackContent"></el-table-column>
           <el-table-column
             label="反馈时间"
             sortable
             prop="feedbackDate"
           ></el-table-column>
           <el-table-column
+            el-table-column
             label="回复内容"
-            prop="content"
+            prop="replyContent"
           ></el-table-column>
           <el-table-column
             label="回复时间"
             sortable
-            prop="replyTime"
+            prop="replyDate"
           ></el-table-column>
         </el-table>
       </el-card>
@@ -50,11 +45,7 @@ export default {
         .getAllReply()
         .then((res) => {
           console.log("res", res.data.value);
-          for (const i of res.data.value) {
-            if (i.state == "已回复") {
-              this.replay.push(i);
-            }
-          }
+          this.replay = res.data.value;
           console.log("relpay", this.replay);
         })
         .catch((err) => {
