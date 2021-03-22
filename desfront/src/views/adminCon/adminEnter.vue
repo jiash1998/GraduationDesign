@@ -298,12 +298,29 @@ export default {
         }
       }
     },
+    process(array, key1, key2) {
+      //	用于缓存记录
+      const cache = [];
+      for (let t in array) {
+        //	检查缓存中是否已经存在
+        if (cache.find((c) => c[key1] === t[key1] && c[key2] === t[key2])) {
+          // 已经存在说明之前记录过，现在这个就是多余的，直接忽略
+          continue;
+        }
+        //	不存在就说明之前没有遇到过，把它记录下来
+        cache.push(t);
+      }
+      // 记录结果就是过滤后的结果
+      return cache;
+    },
     //按照选择类型批量插入下月店铺
     insertNew() {
       var radioGroup = this.selectAll;
       var arr = [];
       //全部插入
       if (radioGroup.type == "全部") {
+        // console.log("this.storeForm.data",this.storeForm.data);
+
         for (const i of this.stageAllStore) {
           let obj = {
             customId: i.customId,
@@ -315,6 +332,20 @@ export default {
             yearNum: radioGroup.years,
           };
           arr.push(obj);
+        }
+        console.log("arr storeForm", arr, this.storeForm.data);
+        //@@@筛查还未存在的店铺@@@
+        for (let j = 0, len = this.storeForm.data.length; j < len; j++) {
+          for (let i = 0, len2 = arr.length; i < len2; i++) {
+            if (
+              this.storeForm.data[j].customId == arr[i].customId &&
+              this.storeForm.data[j].monthNum == arr[i].monthNum &&
+              this.storeForm.data[j].yearNum == arr[i].yearNum
+            ) {
+              arr.splice(i, 1);
+              len2 = arr.length;
+            }
+          }
         }
         console.log("arr", arr);
       }
@@ -334,8 +365,8 @@ export default {
           }
         }
       }
-      // console.log(this.stageAllStore);
-      // console.log(this.storeForm.data);
+      console.log("插入店铺All", this.stageAllStore);
+      console.log("插入店铺storeform", this.storeForm.data);
       if (this.storeForm.data.length === this.stageAllStore.length) {
         console.log("all");
         this.$message({
