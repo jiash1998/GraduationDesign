@@ -233,7 +233,9 @@ export default {
     test(data) {
       let num = 0;
       for (const i of data) {
-        num += parseInt(i.production);
+        if (i.production != '') {
+          num += parseInt(i.production);
+        }
       }
       let obj = {
         name: data[0].name,

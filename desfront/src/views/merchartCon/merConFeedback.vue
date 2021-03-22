@@ -1,5 +1,5 @@
 <template>
-  <div id="son3Feedback">
+  <div id="son3Feedback" :style="backgroundDiv">
     <div class="body">
       <div class="feedbackForm">
         <el-form :model="feedback" :rules="feedback" refs="feedback">
@@ -70,6 +70,12 @@ export default {
   },
   data() {
     return {
+      backgroundDiv: {
+        backgroundImage: "url(" + require("../../assets/img/email.png") + ")",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "20% 20%",
+        backgroundPosition:"75% 30%"
+      },
       instructions: [
         "1.如有意见请如实反馈，请不要出现不文明用语，否则后果自负",
         "2.发送反馈之后，一般1-3个工作日内会收到回复邮件",

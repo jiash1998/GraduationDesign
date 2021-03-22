@@ -109,7 +109,7 @@ $AllWidth: 100%;
 
       @keyframes an5 {
         0% {
-          transform: translate(20%, 35%);
+          transform: translate(20%,40%);
         }
 
         100% {
@@ -129,8 +129,14 @@ $AllWidth: 100%;
         .animation5 {
           width: 160px;
           height: 160px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-
+          svg {
+            width: 80%;
+            margin: 20px 0px 0;
+          }
           .an5_img {
             width: 120px;
             // transform: translate(20%, 50%);

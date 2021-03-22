@@ -693,7 +693,11 @@ exports.commitRefer = (data, callback) => {
   console.log("commitRefer", data);
   AllDB.garbagemonths
     .update(
-      { customId: data.customId },
+      {
+        customId: data.customId,
+        yearNum: data.yearNum,
+        monthNum: data.monthNum,
+      },
       { $set: { reference: data.reference } }
     )
     .then((pro) => {
