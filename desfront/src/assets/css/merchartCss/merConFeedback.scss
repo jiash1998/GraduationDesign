@@ -1,14 +1,16 @@
 #son3Feedback {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  // display: flex;
+  // flex-direction: column;
   .body {
+    // display: flex;
+    // flex-direction: column;
     width: 100%;
     // position: absolute;
     // top: 115px;
     // bottom: 0px;
     // left: 0px;
-    flex: 1;
+    // flex: 1;
 
     // background-color: pink;
 
@@ -29,7 +31,7 @@
 
     .instructions {
       width: 60%;
-      margin: 50px 20% 0 20%;
+      margin: 30px 20% 0 20%;
       // background-color: goldenrod;
 
       h4 {
@@ -42,4 +44,21 @@
     }
   }
 
+  #foot {
+    width: 60%;
+    margin: 30px 20% 40px 20%;
+
+    height: 400px;
+    background-color: #eee;
+
+   .el-card{
+     
+    .title{
+      #p {
+         font-size: 0.8em;
+          color: gray;
+      }
+    }
+   }
+  }
 }

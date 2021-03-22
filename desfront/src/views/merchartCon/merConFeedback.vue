@@ -25,6 +25,34 @@
         <p v-for="(item, index) in instructions" :key="index">{{ item }}</p>
       </div>
     </div>
+    <div id="foot">
+      <el-card shadow="hover">
+        <div class="title">
+          <h4 id="titleP">💌反馈详情</h4>
+          <el-table ref="reply" :data="reply">
+            <el-table-column
+              label="反馈内容"
+              prop="feedbackContent"
+            ></el-table-column>
+            <el-table-column
+              label="反馈时间"
+              sortable
+              prop="feedbackDate"
+            ></el-table-column>
+            <el-table-column
+              el-table-column
+              label="回复内容"
+              prop="replyContent"
+            ></el-table-column>
+            <el-table-column
+              label="回复时间"
+              sortable
+              prop="replyDate"
+            ></el-table-column>
+          </el-table>
+        </div>
+      </el-card>
+    </div>
     <public-foot-mini></public-foot-mini>
   </div>
 </template>
@@ -32,6 +60,7 @@
 <script>
 import publicFootMini from "../../components/publicFootMini.vue";
 import addFeedbackApi from "../../api/postRequest.js";
+import getAllReplyApi from "../../api/getRequest.js";
 import { debounce } from "../../util/debounce";
 
 export default {
@@ -53,7 +82,11 @@ export default {
         feedbackId: "",
       },
       vm: this,
+      reply: [],
     };
+  },
+  mounted() {
+    this.getInfo();
   },
   methods: {
     postFeedback: debounce(
@@ -92,6 +125,18 @@ export default {
       3000,
       true
     ),
+    getInfo() {
+      getAllReplyApi
+        .getAllReply()
+        .then((res) => {
+          console.log("res", res.data.value);
+          this.reply = res.data.value;
+          console.log("relpay", this.reply);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
 };
 </script>

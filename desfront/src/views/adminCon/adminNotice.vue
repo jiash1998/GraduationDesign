@@ -95,7 +95,8 @@ export default {
         title: "",
         content: "",
         inputvalue: "",
-        type: ""
+        type: "",
+        time:""
       },
       vm: this,
       dynamicTags: [],

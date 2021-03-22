@@ -117,14 +117,11 @@ exports.getAllCustomSelf = (data, callback) => {
 //根据用户名id获取个人通知1
 exports.getByPNoticeUsername = (data, callback) => {
   console.log("getByPNoticeUsername:", data);
-  AllDB.users
-    .findOne({ username: data.username })
+  AllDB.noticeselfs
+    .find({ username: data.username })
     .then((res) => {
-      console.log("getByPNoticeUsername", res);
-      AllDB.noticeselfs.find({ userId: res._id }).then((res) => {
-        console.log(res);
-        callback(null, res);
-      });
+      console.log(res);
+      callback(null, res);
     })
     .catch((err) => {
       console.log(err);
@@ -165,6 +162,12 @@ exports.delCustomBySocialCode = (data, callback) => {
 //管理员模块
 //发送公告1
 exports.insertNotice = (data, callback) => {
+  var date = new Date();
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var day = date.getDate();
+  var time = year + "-" + month + "-" + day;
+  data.time = time;
   console.log("insertNotice:", data);
   AllDB.notices
     .insertMany(data)
@@ -197,7 +200,7 @@ exports.getAllUser = (callback) => {
 exports.getAllFeedBack = (callback) => {
   console.log("getAllFeedBack");
   AllDB.feedbackandreplys
-    .find({deleted:"1"})
+    .find({ deleted: "1" })
     .then((pro) => {
       console.log("获取成功", pro);
       callback(null, pro);
@@ -503,7 +506,7 @@ exports.addPersonalNotice = (data, callback) => {
   var month = date.getMonth() + 1;
   var day = date.getDate();
   var time = year + "-" + month + "-" + day;
-  data.time = time;
+  data.noticeSelfDate = time;
   console.log(data);
   AllDB.noticeselfs
     .insertMany(data)

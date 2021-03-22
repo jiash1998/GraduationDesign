@@ -218,11 +218,6 @@ var SchemaNoticeSelf = new Schema({
     type: String,
     required: true,
   },
-  // ntr_id: {
-  //   type: String,
-  //   required: true,
-  //   default: "",
-  // },
   title: {
     type: String,
     required: true,
@@ -285,28 +280,6 @@ var SchemaFeedbackAndReply = new Schema({
     default: "1",
   },
 });
-
-//回复反馈表
-// var SchemaReply = new Schema({
-//   username: {
-//     type: String,
-//     required: true,
-//   },
-//   // ntr_id: {
-//   //   type: String,
-//   //   // required: true,
-//   //   default: "",
-//   // },
-//   title: {
-//     type: String,
-//     default: "管理员回复",
-//   },
-//   content: {
-//     type: String,
-//     default: "",
-//   },
- 
-// });
 
 //垃圾表
 var SchemaGarbageSec = new Schema({

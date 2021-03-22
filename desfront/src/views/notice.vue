@@ -6,8 +6,6 @@
           <el-menu-item index="0">全部公告</el-menu-item>
           <el-menu-item index="2">商户公告</el-menu-item>
           <el-menu-item index="1">紧急公告</el-menu-item>
-          <!-- <el-menu-item index="3" v-if="noticeSelf">个人通知</el-menu-item>
-           -->
           <el-menu-item index="3">个人通知</el-menu-item>
         </el-menu>
       </div>
@@ -21,7 +19,7 @@
                 <el-tag type="warning" v-if="item.type =='商户通知'">{{item.inputvalue}}</el-tag>
                 <el-tag type="danger" v-else-if="item.type =='紧急通知'">{{item.inputvalue}}</el-tag>
                 <el-tag type="success" v-else>{{item.inputvalue}}</el-tag>
-                <span>&nbsp;&nbsp;{{item.time}}</span>
+                <span style="color:gray;">&nbsp;&nbsp;{{item.time}}</span>
               </div>
             </div>
             <div v-else>
@@ -32,7 +30,7 @@
               <div class="content" v-for="(item,index) in noticeList" :key="index" v-else>
                 <p id="p1">{{item.title}}</p>
                 <p id="p2">{{item.content}}</p>
-                <el-tag type="primary">{{item.time}}</el-tag>
+                <el-tag type="primary">{{item.noticeSelfDate}}</el-tag>
               </div>
             </div>
           </div>
@@ -88,7 +86,7 @@ export default {
       this.noticeSelf = true;
     }
     this.userName = sessionStorage.getItem("username");
-    this.getSelfNotice();
+    this.getSelfNotice(this.userName);
   },
   methods: {
     //点击展示不同类型
@@ -156,8 +154,8 @@ export default {
         });
     },
     //获取个人通知
-    getSelfNotice() {
-      var data = { username: this.userName };
+    getSelfNotice(data) {
+      var data = { username: data};
       // console.log(data);
 
       getByPNoticeUsernameApi
@@ -165,6 +163,7 @@ export default {
         .then(res => {
           this.selfNull = this.infoIsNull(res.data.value, this.selfNull);
           this.selfList = res.data.value;
+          console.log("selfList",this.selfList);
         })
         .catch(err => {
           console.log(err);

@@ -72,7 +72,7 @@ export default {
       dialogVisible: false,
       //发送通知
       notice: {
-        userId: "",
+        username: "",
         title: "",
         content: ""
       },
@@ -105,7 +105,7 @@ export default {
     postNotSelf(index) {
       this.dialogVisible = true;
       console.log(index);
-      this.notice.userId = index._id;
+      this.notice.username = index.username;
     },
     //发送
     postNotice(form) {
