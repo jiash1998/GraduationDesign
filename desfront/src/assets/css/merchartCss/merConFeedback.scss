@@ -32,7 +32,7 @@
 
     .instructions {
       width: 60%;
-      margin: 30px 20% 0 20%;
+      margin: 30px 20% 5% 20%;
       // background-color: goldenrod;
 
       h4 {
@@ -47,19 +47,18 @@
 
   #foot {
     width: 60%;
-    margin: 30px 20% 40px 20%;
+    margin: 30px 20% 10% 20%;
 
     height: 400px;
     background-color: #eee;
 
-   .el-card{
-     
-    .title{
-      #p {
-         font-size: 0.8em;
+    .el-card {
+      .title {
+        #p {
+          font-size: 0.8em;
           color: gray;
+        }
       }
     }
-   }
   }
 }

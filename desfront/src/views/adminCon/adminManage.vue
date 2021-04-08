@@ -4,8 +4,16 @@
       <el-card shadow="hover">
         <el-table :data="user">
           <el-table-column label="用户名" prop="username"></el-table-column>
-          <el-table-column sortable label="身份" prop="identity"></el-table-column>
-          <el-table-column label="邮箱" prop="email"></el-table-column>
+          <el-table-column
+            sortable
+            label="身份"
+            prop="identity"
+          ></el-table-column>
+          <el-table-column
+            label="邮箱"
+            width="200px"
+            prop="email"
+          ></el-table-column>
           <el-table-column label="联系方式" prop="phone"></el-table-column>
           <el-table-column label="注册店铺" prop="cus"></el-table-column>
           <el-table-column label="定制店铺" prop="isCused"></el-table-column>
@@ -14,11 +22,12 @@
             <template slot-scope="scope">
               <el-button
                 type="primary"
-                :disabled="scope.row.identity == '管理员' ? true :false"
+                :disabled="scope.row.identity == '管理员' ? true : false"
                 size="small"
                 @click="postNotSelf(scope.row)"
                 plain
-              >发送通知</el-button>
+                >发送通知</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
@@ -29,10 +38,15 @@
             <el-input v-model="notice.title" placeholder="输入标题"></el-input>
           </el-form-item>
           <el-form-item label="内容" prop="content">
-            <el-input v-model="notice.content" placeholder="输入内容"></el-input>
+            <el-input
+              v-model="notice.content"
+              placeholder="输入内容"
+            ></el-input>
           </el-form-item>
           <el-form-item label>
-            <el-button type="primary" @click="postNotice('notice')">发送</el-button>
+            <el-button type="primary" @click="postNotice('notice')"
+              >发送</el-button
+            >
             <el-button @click="dialogVisible = false" plain>关闭</el-button>
           </el-form-item>
         </el-form>
@@ -74,12 +88,12 @@ export default {
       notice: {
         username: "",
         title: "",
-        content: ""
+        content: "",
       },
       rules: {
         title: [{ validator: valTitle, trigger: "change" }],
-        content: [{ validator: valContent, trigger: "change" }]
-      }
+        content: [{ validator: valContent, trigger: "change" }],
+      },
     };
   },
   mounted() {
@@ -89,7 +103,7 @@ export default {
     getUser() {
       getAllUserApi
         .getAllUser()
-        .then(res => {
+        .then((res) => {
           console.log(res.data.value);
           for (const i of res.data.value) {
             if (i.email == "") {
@@ -98,7 +112,7 @@ export default {
           }
           this.user = res.data.value;
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     },
@@ -110,39 +124,39 @@ export default {
     //发送
     postNotice(form) {
       // console.log(this.notice);
-      this.$refs[form].validate(val => {
+      this.$refs[form].validate((val) => {
         if (val) {
           var data = this.notice;
           console.log(data);
           addPersonalNoticeApi
             .addPersonalNotice(data)
-            .then(res => {
+            .then((res) => {
               console.log(res.data);
               if (res.data.msg === "保存成功") {
                 this.$message({
                   message: "发送成功",
                   type: "success",
-                  duration: 1500
+                  duration: 1500,
                 });
                 localStorage.setItem("isDot", "true");
                 this.dialogVisible = false;
                 this.$refs[form].resetFields();
               }
             })
-            .catch(err => {
+            .catch((err) => {
               console.log(err);
               this.$message({
                 message: "发送失败",
                 type: "error",
-                duration: 1500
+                duration: 1500,
               });
             });
         } else {
           console.log("err");
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
