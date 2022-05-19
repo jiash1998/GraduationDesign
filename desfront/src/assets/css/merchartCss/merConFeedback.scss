@@ -1,5 +1,6 @@
 #son3Feedback {
   min-height: 100vh;
+
   // display: flex;
   // flex-direction: column;
   // background-image: ;
@@ -32,12 +33,13 @@
 
     .instructions {
       width: 60%;
-      margin: 30px 20% 0 20%;
+      margin: 30px 20% 5% 20%;
       // background-color: goldenrod;
 
       h4 {
         color: gray;
       }
+
       p {
         font-size: 0.8em;
         color: gray;
@@ -53,14 +55,13 @@
     height: 400px;
     // background-color: #eee;
 
-   .el-card{
-     
-    .title{
-      #p {
-         font-size: 0.8em;
+    .el-card {
+      .title {
+        #p {
+          font-size: 0.8em;
           color: gray;
+        }
       }
     }
-   }
   }
 }
