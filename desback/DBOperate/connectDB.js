@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 
 mongoose.connect("mongodb://localhost/GraduationBase", {
+  // 新的服务器发现和监视引擎 和url解析器 未来会弃用
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
