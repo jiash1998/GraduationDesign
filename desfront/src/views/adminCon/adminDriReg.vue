@@ -60,7 +60,9 @@ export default {
         email: "",
         phone: "",
         routeFlag: "",
-        identity: "驾驶员"
+        identity: "驾驶员",
+        cus:0,
+        isCused:0
       },
       vm: this
     };

@@ -34,7 +34,7 @@ router.post("/payAli", async (req, res) => {
   const alipaySdk = new AlipaySdk({
     appId: "2021000117621383", // 开放平台上创建应用时生成的 appId
     signType: "RSA2", // 签名算法,默认 RSA2
-    gateway: "https://openapi.alipaydev.com/gateway.do", // 支付宝网关地址 ，沙箱环境下使用时需要修改
+    gateway: "https://openapi.alipaydev.com/gateway.do", // 支付宝网关地址
     timeout: 5000,
     alipayPublicKey:
       "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAh2x1ppHmer4WTi/Hr0HUIyfT6Z12nJ4vxC8cBIqqnTMeqIQKx73qjKjA++10EVNN6lNdBzYVtDiJyWmjL/JxIGb0e30+C0nMUTT7gYNEiY9lSuCbEBzvmf3P1iQsXVDVMvs3msbqUkNCk/Ni0UsKEkH/Fj8tQd+f6xqqimN/t5ULTn58Q/zBJ5uS9bqaKWlRIg52ROrvbOElvXIoCu1J8sfyVRGuHh7d2f9VHB7ZmOCs/i7D6j3Un09hp5nJ5DyPsC6yU+W7NtlCIoqE8e1nALGtctLiDJXaffj6JP66h4YkBI+F08OxIE8hv89YUdZAS3+8RdgVSfCE4cWCszC7GQIDAQAB",
@@ -51,7 +51,6 @@ router.post("/payAli", async (req, res) => {
   formData.addField("signType", "RSA2");
   formData.addField("returnUrl", "http://localhost:8081/PaySuccess");
 
-  //VCDB09227189ZXCN20
   console.log(req.body);
   formData.addField("bizContent", {
     outTradeNo: req.body.id,
@@ -425,6 +424,24 @@ router.post("/addDriver", (req, res) => {
 });
 
 //给驾驶员发送通知
+router.post("/sendDriverNoticeToDriver", (req, res) => {
+  console.log(req.body);
+  operateDB.sendDriverNoticeToDriver(req.body, (err, data) => {
+    if (err) {
+      return res.json({
+        status: "发送错误",
+        msg: err,
+      });
+    }
+    return res.json({
+      status: "200",
+      value: data,
+      msg: "发送成功",
+    });
+  });
+});
+
+//获取经纬度
 router.post("/getLatandlogByDriver", (req, res) => {
   console.log(req.body);
   operateDB.getLatandlogByDriver(req.body, (err, data) => {
@@ -736,17 +753,17 @@ router.post(
   "/upload",
   multer({
     //设置文件存储路径
-    dest: "D:/GraduationDesign/desfront/src/assets/img/",
+    dest: "E:/GraduationDesign/desfront/src/assets/img/",
   }).array("file", 1),
   function (req, res, next) {
     let files = req.files;
     let file = files[0];
     let fileInfo = {};
     let rename = Date.now().toString() + "_" + file.originalname;
-    let path = "D:/GraduationDesign/desfront/src/assets/img/" + rename;
+    let path = "E:/GraduationDesign/desfront/src/assets/img/" + rename;
     console.log(path);
     fs.renameSync(
-      "D:/GraduationDesign/desfront/src/assets/img/" + file.filename,
+      "E:/GraduationDesign/desfront/src/assets/img/" + file.filename,
       path
     );
     //获取文件基本信息

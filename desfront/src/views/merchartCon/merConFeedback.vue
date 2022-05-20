@@ -136,7 +136,12 @@ export default {
         .getAllReply()
         .then((res) => {
           console.log("res", res.data.value);
-          this.reply = res.data.value;
+          for (const i of res.data.value) {
+              if(i.username == sessionStorage.getItem("username")){
+                  this.reply.push(i);
+              }
+          }
+          // this.reply = res.data.value;
           console.log("relpay", this.reply);
         })
         .catch((err) => {

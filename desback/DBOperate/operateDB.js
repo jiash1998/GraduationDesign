@@ -521,7 +521,7 @@ exports.addPersonalNotice = (data, callback) => {
 };
 
 //驾驶员模块
-//获取垃圾1
+//垃圾分类查询1
 exports.getGarbage = (data, callback) => {
   console.log("getGarbage1", data);
   var reg = /[\u4E00-\u9FA5]/g;
@@ -675,6 +675,7 @@ exports.queryCustomByWX = (data, callback) => {
           name: "$query.name",
           phone: "$query.phone",
           header: "$query.header",
+          isCus:"$query.isCus"
         },
       },
     ])
